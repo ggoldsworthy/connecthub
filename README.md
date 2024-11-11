@@ -1,1 +1,2 @@
 # connecthub
+TESTING CHANGES TO README
