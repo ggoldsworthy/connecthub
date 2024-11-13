@@ -15,7 +15,7 @@ public interface DeleteCommentDataAccessInterface {
     void deleteComment(String commentId);
 
     /**
-     * Finds a comment by its ID.
+     * Finds a comment by its ID
      *
      * @param commentId The ID of the comment to find.
      * @return The comment if found, or null if not.

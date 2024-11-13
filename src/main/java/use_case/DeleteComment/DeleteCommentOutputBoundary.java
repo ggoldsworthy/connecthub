@@ -1,7 +1,7 @@
 package use_case.DeleteComment;
 
 /**
- * The output boundary for the Delete Comment Use Case.
+ * The output boundary for the Delete Comment Use Case
  */
 public interface DeleteCommentOutputBoundary {
 

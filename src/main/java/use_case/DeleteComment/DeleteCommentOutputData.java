@@ -1,7 +1,7 @@
 package use_case.DeleteComment;
 
 /**
- * This class contains the output data for the deletion of a comment
+ * This class contains the output data for the deletion of a comment.
  *
  */
 public class DeleteCommentOutputData {

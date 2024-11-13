@@ -3,7 +3,7 @@ package use_case.DeleteComment;
 import entity.Comment;
 
 /**
- * Interactor responsible for deleting a comment.
+ * Interactor responsible for deleting a comment
  */
 public class DeleteCommentInteractor implements DeleteCommentInputBoundary {
 
