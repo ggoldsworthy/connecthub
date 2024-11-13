@@ -1,7 +1,7 @@
 package use_case.DeleteComment;
 
 /**
- * This interface for the DeleteComment use case,
+ * This interface for the DeleteComment use case.
  */
 public interface DeleteCommentInputBoundary {
 

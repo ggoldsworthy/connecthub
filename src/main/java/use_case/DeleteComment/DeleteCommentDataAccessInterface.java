@@ -3,7 +3,7 @@ package use_case.DeleteComment;
 import entity.Comment;
 
 /**
- * Interface for data access operations related to deleting a comment.
+ * Interface for data access operations related to deleting a comment
  */
 public interface DeleteCommentDataAccessInterface {
 
