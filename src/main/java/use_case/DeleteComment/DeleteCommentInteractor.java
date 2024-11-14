@@ -18,27 +18,26 @@ public class DeleteCommentInteractor implements DeleteCommentInputBoundary {
 
     @Override
     public void execute(DeleteCommentInputData deleteCommentInputData) {
-        if (deleteCommentInputData.getCommentId() == null ) {
-            commentPresenter.prepareFailView("commentId cannot be empty.");
-            return;
-        }
 
-        boolean deletionFailed = false;
+        boolean deletion = false;
         Comment comment = commentDataAccessObject.existsCommentById(deleteCommentInputData.getCommentId());
 
+        // TODO this implementation has to be fixed later, as it does not 
+        //  work for the database. for now just this will do
+        boolean deletionSuccessful = false;
         if (comment == null) {
-            deletionFailed = true;
+            deletionSuccessful = true;
             commentPresenter.prepareFailView("Comment not found.");
         } else {
             commentDataAccessObject.deleteComment(deleteCommentInputData.getCommentId());
 
             DeleteCommentOutputData outputData = new DeleteCommentOutputData(
                     deleteCommentInputData.getCommentId(),
-                    deletionFailed
+                    deletionSuccessful
             );
 
-            if (deletionFailed) {
-                commentPresenter.prepareFailView("Failed to delete the comment.");
+            if (deletionSuccessful) {
+                commentPresenter.prepareFailView("Successful to delete the comment.");
             } else {
                 commentPresenter.prepareSuccessView(outputData);
             }

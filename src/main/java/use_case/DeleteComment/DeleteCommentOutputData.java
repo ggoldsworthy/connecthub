@@ -7,27 +7,27 @@ package use_case.DeleteComment;
 public class DeleteCommentOutputData {
 
     private final String commentId;
-    private final boolean deletionFailed;
+    private final boolean deletionSuccessful;
 
     /**
      * Constructs a DeleteCommentOutputData object with the specified comment ID
      * and the result of the deletion attempt.
      *
      * @param commentId The ID of the comment being deleted
-     * @param deletionFailed A boolean indicating if the deletion operation failed
+     * @param deletionSuccessful A boolean indicating if the deletion operation Successful
      */
-    public DeleteCommentOutputData(String commentId, boolean deletionFailed) {
+    public DeleteCommentOutputData(String commentId, boolean deletionSuccessful) {
         this.commentId = commentId;
-        this.deletionFailed = deletionFailed;
+        this.deletionSuccessful = deletionSuccessful;
     }
 
     /**
-     * Returns whether the deletion of the comment failed.
+     * Returns whether the deletion of the comment Successful.
      *
-     * @return true if the deletion failed, false if it was successful
+     * @return true if the deletion Successful, false if it was successful
      */
-    public boolean isDeletionFailed() {
-        return deletionFailed;
+    public boolean isDeletionSuccessful() {
+        return deletionSuccessful;
     }
 
     /**

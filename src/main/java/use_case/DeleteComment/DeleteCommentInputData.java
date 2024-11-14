@@ -4,7 +4,7 @@ package use_case.DeleteComment;
 Input Data for the Delete Comment use-case .
  */
 public class DeleteCommentInputData {
-    // THIS WILL HAVE TO BE FIXED LATER WHEN WE HAVE THE DATABASE SET UP
+    // TODO will have to be changed when database is setup
     private String commentId;
 
     public DeleteCommentInputData(String commentId) {
