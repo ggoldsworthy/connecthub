@@ -16,8 +16,7 @@ public class DeleteCommentInteractor implements DeleteCommentInputBoundary {
         this.commentPresenter = commentPresenter;
     }
 
-    @Override
-    public void execute(DeleteCommentInputData deleteCommentInputData) {
+    public void deleteComment(DeleteCommentInputData deleteCommentInputData) {
 
         boolean deletion = false;
         Comment comment = commentDataAccessObject.existsCommentById(deleteCommentInputData.getCommentId());
