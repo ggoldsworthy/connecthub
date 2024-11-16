@@ -10,6 +10,8 @@ import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 
 import daos.DBUserDataAccessObject;
+import entity.CommonUserFactory;
+import entity.UserFactory;
 import controller.ViewManagerModel;
 //import controller.logged_in.LoggedInViewModel;
 //import controller.login.LoginViewModel;
@@ -29,12 +31,25 @@ public class ConnectHub {
 	 * @param args input to main
 	 */
 	public static void main(String[] args) {
-		Repositories repositories = new Repositories();
-		MongoCollection<Document> userRepository = repositories.getUserRepository();
-		MongoCollection<Document> postRepository = repositories.getPostRepository();
-		MongoCollection<Document> commentRepositroy = repositories.getCommentRepository();
+		// TODO initialize the entity (not use case) factories here
+		UserFactory commonUserFactory = new CommonUserFactory();
 
-		// TODO the repositories will be passed into DAOs
+		final Repositories repositories = new Repositories();
+		final MongoCollection<Document> userRepository = repositories.getUserRepository();
+		final MongoCollection<Document> postRepository = repositories.getPostRepository();
+		final MongoCollection<Document> commentRepositroy = repositories.getCommentRepository();
+
+		final DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(userRepository, commonUserFactory);
+		System.out.println(userDataAccessObject.existsByEmail("a@gmail.com"));
+
+		// Closes the connection with the database when the program terminates
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			@Override
+			public void run() {
+				repositories.closeDatabaseConnection();
+				System.out.println("Discconected to the database.");
+			}
+		});
 
 		// Build the main program window, the main panel containing the
 		// various cards, and the layout, and stitch them together.
@@ -60,9 +75,6 @@ public class ConnectHub {
 //		final LoginViewModel loginViewModel = new LoginViewModel();
 //		final LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
 		final SignupViewModel signupViewModel = new SignupViewModel();
-
-		// TODO Task 1.1 in a copy of this file, change this line to use the in-memory DAO.
-		final DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject();
 
 		final SignupView signupView = SignupUseCaseFactory.create(viewManagerModel,
 				signupViewModel, userDataAccessObject);
