@@ -6,7 +6,7 @@ package entity;
 public class ModeratorUserFactory implements UserFactory {
 
     @Override
-    public User create(String name, String password) {
-        return new ModeratorUser(name, password);
+    public User create(String name, String password, String userID, String birthDate, String fullName, String email) {
+        return new ModeratorUser(name, password, userID, birthDate, fullName, email);
     }
 }
