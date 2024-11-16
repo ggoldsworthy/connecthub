@@ -1,12 +1,16 @@
 package app;
 
 import java.awt.CardLayout;
+import java.util.Arrays;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import db.DBUserDataAccessObject;
+import com.mongodb.client.MongoCollection;
+import org.bson.Document;
+
+import daos.DBUserDataAccessObject;
 import controller.ViewManagerModel;
 //import controller.logged_in.LoggedInViewModel;
 //import controller.login.LoginViewModel;
@@ -26,6 +30,12 @@ public class ConnectHub {
 	 * @param args input to main
 	 */
 	public static void main(String[] args) {
+		// TODO delete this comment later, but we'll be passing these to our DAOs
+		Repositories repositories = new Repositories();
+		MongoCollection<Document> userRepository = repositories.getUserRepository();
+		MongoCollection<Document> postRepository = repositories.getPostRepository();
+		MongoCollection<Document> commentRepositroy = repositories.getCommentRepository();
+
 		// Build the main program window, the main panel containing the
 		// various cards, and the layout, and stitch them together.
 
