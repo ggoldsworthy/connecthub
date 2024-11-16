@@ -1,7 +1,6 @@
 package app;
 
 import java.awt.CardLayout;
-import java.util.Arrays;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -35,6 +34,8 @@ public class ConnectHub {
 		MongoCollection<Document> userRepository = repositories.getUserRepository();
 		MongoCollection<Document> postRepository = repositories.getPostRepository();
 		MongoCollection<Document> commentRepositroy = repositories.getCommentRepository();
+
+		// TODO the repositories will be passed into DAOs
 
 		// Build the main program window, the main panel containing the
 		// various cards, and the layout, and stitch them together.
