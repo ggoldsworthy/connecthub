@@ -29,7 +29,6 @@ public class ConnectHub {
 	 * @param args input to main
 	 */
 	public static void main(String[] args) {
-		// TODO delete this comment later, but we'll be passing these to our DAOs
 		Repositories repositories = new Repositories();
 		MongoCollection<Document> userRepository = repositories.getUserRepository();
 		MongoCollection<Document> postRepository = repositories.getPostRepository();

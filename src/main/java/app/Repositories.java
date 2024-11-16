@@ -12,7 +12,10 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-public class Repositories {
+/**
+ * Connects to the database.
+ */
+public final class Repositories {
     private MongoClient mongoClient;
     private MongoCollection<Document> userRepository;
     private MongoCollection<Document> postRepository;
@@ -34,19 +37,14 @@ public class Repositories {
         
         try {
             // Create a new client and connect to the server
-            MongoClient mongoClient = MongoClients.create(settings);
-            this.mongoClient = mongoClient;
+            this.mongoClient = MongoClients.create(settings);
 
             // Send a ping to confirm a successful connection
-            MongoDatabase database = mongoClient.getDatabase("ConnectHub");
+            MongoDatabase database = this.mongoClient.getDatabase("ConnectHub");
             
-            MongoCollection<Document> userRepository = database.getCollection("Users");
-            MongoCollection<Document> postRepository = database.getCollection("Posts");
-            MongoCollection<Document> commentRepository = database.getCollection("Comments");
-            
-            this.userRepository = userRepository;
-            this.postRepository = postRepository;
-            this.commentRepository = commentRepository;
+            this.userRepository = database.getCollection("Users");
+            this.postRepository = database.getCollection("Posts");
+            this.commentRepository = database.getCollection("Comments");
             
             System.out.println("Pinged your deployment. You successfully connected to MongoDB!");
         } catch (MongoException e) {
