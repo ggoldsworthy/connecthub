@@ -17,7 +17,7 @@ public class CommentFactory {
         Content commentContent = new CommentContent(content, attachmentPath, fileType);
         String entryID = generateID();
         List<Comment> replies = new ArrayList<Comment>();
-        Comment comment = new Comment(entryID, author, commentContent, LocalDateTime.now(), null, 
+        Comment comment = new Comment(entryID, author.getUserID(), commentContent, LocalDateTime.now(), null, 
                                 0, 0, replies);
         return comment;
     }
