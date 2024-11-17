@@ -1,6 +1,7 @@
 package use_case.getpost;
 
 import entity.Post;
+import exception.PostNotFoundException;
 
 /**
  * The Get Post Interactor.
@@ -19,9 +20,14 @@ public class GetPostInteractor implements GetPostInputBoundary {
     }
 
     @Override
-    public Post getPost(GetPostInputData postInputData) throws Exception {
+    public Post getPost(GetPostInputData postInputData) throws PostNotFoundException {
         final String entryID = postInputData.getEntryID();
-        return postDB.getPostByEntryID(entryID);
+        try {
+            return postDB.getPostByEntryID(entryID);
+        }
+        catch (PostNotFoundException ex) {
+            getPostPresenter.prepareFailView(ex.getMessage());
+            throw ex;
+        }
     }
-
 }
