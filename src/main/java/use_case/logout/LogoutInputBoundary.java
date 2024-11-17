@@ -3,8 +3,8 @@ package use_case.logout;
 public interface LogoutInputBoundary {
 
     /**
-     * LogoutUser
-     * @param LogoutInputData the input data
+     * Logout the current User
+     * @param logoutInputData the input data
      */
-    void LogoutUser(LogoutInputData LogoutInputData);
+    void logoutUser(LogoutInputData logoutInputData);
 }
