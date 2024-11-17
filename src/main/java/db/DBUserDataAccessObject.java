@@ -60,7 +60,7 @@ public class DBUserDataAccessObject implements SignupDataAccessInterface,
     }
 
     public String getCurrentUserEmail(){
-
+        return "";
     }
 
     // From LogoutDataAccessInterface
