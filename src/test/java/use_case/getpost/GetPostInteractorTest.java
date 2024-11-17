@@ -26,7 +26,7 @@ class GetPostInteractorTest {
     }
 
     @Test
-    void testGetPost_Success() throws Exception {
+    void GetPostSuccessTest() throws Exception {
         String entryID = "123";
         User author = new CommonUser("User One", "user1@example.com");
         Content content = new PostContent("This is a sample post content.", null, null);
@@ -57,7 +57,7 @@ class GetPostInteractorTest {
     }
 
     @Test
-    void testGetPost_PostNotFound() throws PostNotFoundException {
+    void GetPostPostNotFoundTest() throws PostNotFoundException {
         String entryID = "123";
         String expectedMessage = "Post with entryID " + entryID + " not found.";
         when(mockPostDB.getPostByEntryID(entryID)).thenThrow(new PostNotFoundException(entryID));
@@ -72,7 +72,7 @@ class GetPostInteractorTest {
     }
 
     @Test
-    void testGetPost_InvalidInput() {
+    void GetPostInvalidInputTest() {
         GetPostInputData inputData = new GetPostInputData(null);
         interactor = new GetPostInteractor(inputData, mockPostDB, mockPresenter);
 
@@ -80,10 +80,9 @@ class GetPostInteractorTest {
     }
 
     @Test
-    void testGetPost_PresenterCalledOnSuccess() throws Exception {
-        // Arrange
+    void GetPostPresenterCalledOnSuccessTest() throws Exception {
         String entryID = "123";
-        User author = new CommonUser("User One", "user1@example.com");
+        User author = new CommonUser("User One", "123");
         Content content = new PostContent("This is a sample post content.", null, null);
         LocalDateTime postedDate = LocalDateTime.now();
         LocalDateTime lastModifiedDate = LocalDateTime.now();

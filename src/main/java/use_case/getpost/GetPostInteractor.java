@@ -22,8 +22,18 @@ public class GetPostInteractor implements GetPostInputBoundary {
     @Override
     public Post getPost(GetPostInputData postInputData) throws PostNotFoundException {
         final String entryID = postInputData.getEntryID();
+
+        if (entryID == null) {
+            throw new IllegalArgumentException();
+        }
+
         try {
-            return postDB.getPostByEntryID(entryID);
+            final Post retrievedPost = postDB.getPostByEntryID(entryID);
+            final GetPostOutputData retrievedPostOutputData = new GetPostOutputData(
+                    retrievedPost.getEntryID(),
+                    retrievedPost.getContent());
+            getPostPresenter.prepareSuccessView(retrievedPostOutputData);
+            return retrievedPost;
         }
         catch (PostNotFoundException ex) {
             getPostPresenter.prepareFailView(ex.getMessage());
