@@ -1,7 +1,5 @@
 package use_case.logout;
 
-import org.apache.juli.logging.Log;
-
 /**
  * The Logout Interactor.
  */
