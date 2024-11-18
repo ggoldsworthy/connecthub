@@ -6,11 +6,11 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan({"app", "api"})
-public class ConnectHubWebServer {
+public class WebServer {
     public static void main(String[] args) {
         final Repositories repositories = new Repositories();
 
-        SpringApplication.run(ConnectHubWebServer.class, args);
+        SpringApplication.run(WebServer.class, args);
         
         Runtime.getRuntime().addShutdownHook(new Thread() {
 			@Override
