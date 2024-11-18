@@ -1,4 +1,5 @@
 package use_case.logout;
+
 /**
  * The Logout Interactor.
  */
