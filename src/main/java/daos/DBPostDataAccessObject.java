@@ -12,12 +12,20 @@ import use_case.get_post.GetPostDataAccessInterface;
 
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.json.JSONObject;  
 
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Projections;
+import com.mongodb.client.model.Sorts;
+import com.mongodb.client.model.UpdateOptions;
+import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.InsertOneResult;
+import com.mongodb.client.result.UpdateResult;
+
 import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.lt;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -38,7 +46,7 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
     private final String FILE_TYPE = "file_type";
     private final String POST_TITLE = "title";
     private final String CATEGORY = "category";
-    private final String POSTED_DATE = "author";
+    private final String POSTED_DATE = "posted_date";
     private final String LAST_MODIFIED = "last_modified";
     private final String LIKES = "likes";
     private final String DISLIKES = "dislikes";
@@ -60,28 +68,65 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
     }
 
     @Override
-    public Post getPostByID(String id) {
-        return this.createPost(queryOnePostBy(ENTRY_ID, id));
+    public JSONObject getPostByID(String id) {
+        return new JSONObject(queryOnePostBy(ENTRY_ID, id).toJson());
     }
 
     @Override
-    public List<Post> getPostsByCategory(String category, int postSize) {
-        return null; // TODO
+    public List<JSONObject> getPostsByCategory(String category) {
+        List<JSONObject> posts = new ArrayList<>();
+        MongoCursor<Document> retrievedPosts = this.queryMultiplePostsBy(CATEGORY, category);
+
+        try {
+            while (retrievedPosts.hasNext()) {
+                String jsonStr = retrievedPosts.next().toJson();
+                posts.add(new JSONObject(jsonStr));
+            }
+        } finally {
+            retrievedPosts.close();
+        }
     }
 
-    @Override
-    public List<Post> getPostsByTime(int postSize) { // TODO figure out the time stamp if we want this method
-        return null;
-    }
+    // @Override
+    // public List<Post> getPostsByTime(int postSize) { // TODO figure out the time stamp if we want this method
+    //     return null;
+    // }
 
     @Override 
-    public void deletePost(Post post, String postID) {
-        // TODO
+    public void deletePost(String postID) {
+        Bson query = eq(ENTRY_ID, postID);
+        
+        try {
+            this.postRepository.deleteOne(query);
+        } catch (MongoException error) {
+            // TODO throw some error, depending how the rest of the group implemts stuff.
+        }
     }
 
     @Override
     public void updatePost(Post updatedContent) {
-        // TODO
+        Document query = new Document().append(ENTRY_ID, updatedContent.getEntryID());
+
+        Bson updates = Updates.combine(
+            Updates.set(CONTENT_BODY, updatedContent.getContent().getBody()),
+            Updates.set(ATTACHMENT_PATH, updatedContent.getContent().getAttachmentPath()),
+            Updates.set(FILE_TYPE, updatedContent.getContent().getFileType()),
+            Updates.set(CATEGORY, updatedContent.getCategory()),
+            Updates.set(LAST_MODIFIED, updatedContent.getLastModifiedDate()),
+            Updates.set(LIKES, updatedContent.getLikes()),
+            Updates.set(DISLIKES, updatedContent.getDislikes()),
+            Updates.set(COMMENTS, updatedContent.getComments()) // TODO type conversion? need testing
+        );
+
+        // Instructs the driver to insert a new document if none match the query
+        UpdateOptions insertNewDoc = new UpdateOptions().upsert(true);
+
+        try {
+            UpdateResult result = this.postRepository.updateOne(query, updates, insertNewDoc);
+            System.out.println("Upserted id: " + result.getUpsertedId());
+        } catch (MongoException error) {
+            // throw err?
+        }
     }
 
     
@@ -134,39 +179,21 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
     }
 
     /**
-     * Creates a post to return when querying the database.
-     * @param userData - the data for a post.
+     * Queries multiple posts with given filters from the database.
+     * @param field - the column to to match.
+     * @param target - the target value to query for.
      */
-    private Post createPost(Document postData) {
-    //     Document data = (new Document()
-    //     .append(ENTRY_ID, post.getEntryID())
-    //     .append(AUTHOR, post.getAuthor())
-    //     .append(CONTENT_BODY, post.getContent().getBody())
-    //     .append(ATTACHMENT_PATH, post.getContent().getAttachmentPath())
-    //     .append(FILE_TYPE, post.getContent().getFileType())
-    //     .append(POST_TITLE, post.getPostTitle())
-    //     .append(CATEGORY, post.getCategory())
-    //     .append(POSTED_DATE, post.getPostedDate())
-    //     .append(LAST_MODIFIED, post.getLastModifiedDate())
-    //     .append(LIKES, post.getLikes())
-    //     .append(DISLIKES, post.getDislikes())
-    //     .append(COMMENTS, post.getComments()) // TODO figure out type conversions if neccessary
-    // );
-        final String content = postData.getString(CONTENT_BODY);
-        final String attachmentPath = postData.getString(ATTACHMENT_PATH);
-        final String fileType = postData.getString(FILE_TYPE);
-
-        return new Post(
-            postData.getString(ENTRY_ID),
-            postData.getString(AUTHOR),
-            new PostContent(content, attachmentPath, fileType),
-            LocalDateTime.parse(postData.getString(POSTED_DATE), DATE_TIME_FORMATTER),
-            LocalDateTime.parse(postData.getString(LAST_MODIFIED), DATE_TIME_FORMATTER),
-            postData.getInteger(LIKES),
-            postData.getInteger(DISLIKES),
-            postData.getString(POST_TITLE),
-            postData.getList(COMMENTS, Comment.class),
-            postData.getString(CATEGORY)
+    private MongoCursor<Document> queryMultiplePostsBy(String field, String target) {
+        Bson projectionFields = Projections.fields(
+            Projections.include(field),
+            Projections.excludeId()
         );
+
+        // Retrieves documents that match the filter, applying a projection and a descending sort to the results
+        MongoCursor<Document> cursor = this.postRepository.find(lt(field, target))
+                .projection(projectionFields)
+                .sort(Sorts.descending(POSTED_DATE)).iterator();
+        
+        return cursor;
     }
 }
