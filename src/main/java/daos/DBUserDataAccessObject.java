@@ -1,6 +1,5 @@
 package daos;
 
-import entity.CommonUser;
 import entity.User;
 import entity.UserFactory;
 import use_case.signup.SignupDataAccessInterface;
@@ -9,6 +8,7 @@ import use_case.logout.LogoutDataAccessInterface;
 
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.json.JSONObject;
 
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
@@ -32,12 +32,10 @@ public class DBUserDataAccessObject implements SignupDataAccessInterface,
     private final String POSTS = "posts";
 
     private MongoCollection<Document> userRepository;
-    private UserFactory commonUserFactory;
     private User currentUser;
 
-    public DBUserDataAccessObject(MongoCollection<Document> userRepository, UserFactory commonUserFactory) {
+    public DBUserDataAccessObject(MongoCollection<Document> userRepository) {
         this.userRepository = userRepository;
-        this.commonUserFactory = commonUserFactory;
     }
 
     @Override
@@ -62,18 +60,18 @@ public class DBUserDataAccessObject implements SignupDataAccessInterface,
     }
 
     @Override
-    public User getUserById(String userID) {
-        return this.createUser(this.queryOneUserBy(USER_ID, userID));
+    public JSONObject getUserById(String userID) {
+        return new JSONObject(this.queryOneUserBy(USER_ID, userID).toJson());
     }
     
     @Override
-    public User getUserByUsername(String username) {
-        return this.createUser(this.queryOneUserBy(USER_NAME, username));
+    public JSONObject getUserByUsername(String username) {
+        return new JSONObject(this.queryOneUserBy(USER_NAME, username).toJson());
     }
 
     @Override
-    public User getUserByEmail(String email) {
-        return this.createUser(this.queryOneUserBy(EMAIL, email));
+    public JSONObject getUserByEmail(String email) {
+        return new JSONObject(this.queryOneUserBy(EMAIL, email).toJson());
     }
     
     @Override

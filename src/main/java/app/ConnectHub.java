@@ -31,15 +31,12 @@ public class ConnectHub {
 	 * @param args input to main
 	 */
 	public static void main(String[] args) {
-		// TODO initialize the entity (not use case) factories here
-		UserFactory commonUserFactory = new CommonUserFactory();
-
 		final Repositories repositories = new Repositories();
 		final MongoCollection<Document> userRepository = repositories.getUserRepository();
 		final MongoCollection<Document> postRepository = repositories.getPostRepository();
 		final MongoCollection<Document> commentRepositroy = repositories.getCommentRepository();
 
-		final DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(userRepository, commonUserFactory);
+		final DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(userRepository);
 		System.out.println(userDataAccessObject.existsByEmail("a@gmail.com"));
 
 		// Closes the connection with the database when the program terminates
