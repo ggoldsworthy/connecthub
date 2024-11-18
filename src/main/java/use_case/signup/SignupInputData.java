@@ -1,5 +1,7 @@
 package use_case.signup;
 
+import java.util.ArrayList;
+
 /**
  * The Input Data for the Signup Use Case.
  */
@@ -12,8 +14,10 @@ public class SignupInputData {
     private final String email;
     private final String birthDate;
     private final String fullName;
+    private final ArrayList<String> moderators;
+    private final ArrayList<String> posts;
 
-    public SignupInputData(String username, String userID, String password, String repeatPassword, String email, String birthDate, String fullName) {
+    public SignupInputData(String username, String userID, String password, String repeatPassword, String email, String birthDate, String fullName, ArrayList<String> moderators, ArrayList<String> posts) {
         this.username = username;
         this.userID = userID;
         this.password = password;
@@ -21,6 +25,8 @@ public class SignupInputData {
         this.email = email;
         this.birthDate = birthDate;
         this.fullName = fullName;
+        this.moderators = moderators;
+        this.posts = posts;
     }
 
     String getUsername() {
@@ -49,5 +55,13 @@ public class SignupInputData {
 
     public String getUserID() {
         return userID;
+    }
+
+    public ArrayList<String> getModerators() {
+        return moderators;
+    }
+
+    public ArrayList<String> getPosts() {
+        return posts;
     }
 }

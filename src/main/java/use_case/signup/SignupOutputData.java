@@ -13,7 +13,8 @@ public class SignupOutputData {
 
     public SignupOutputData(String username, boolean useCaseFailed) {
         this.username = username;
-        this.userID = "123";
+        this.userID = "123"; // generate randomly
+
         this.SignupSuccessful = useCaseFailed;
     }
 

@@ -14,6 +14,8 @@ public class CommonUser implements User {
     private final String birthDate;
     private final String fullName;
     private final String email;
+    private final ArrayList<String> moderators;
+    private final ArrayList<String> posts;
     // Added attributes
     private final ArrayList<String> moderators;
     private final ArrayList<String> posts;
