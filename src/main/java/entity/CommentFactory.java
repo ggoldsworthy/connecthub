@@ -13,17 +13,11 @@ public class CommentFactory {
      * See Comment and ForumEntry for the meaning of the parameters.
      * @return the Comment object created.
      */
-    public Comment createComment(User author, String content, String attachmentPath, String fileType) {
+    public Comment createComment(String entryID, User author, String content, String attachmentPath, String fileType) {
         Content commentContent = new CommentContent(content, attachmentPath, fileType);
-        String entryID = generateID();
         List<Comment> replies = new ArrayList<Comment>();
         Comment comment = new Comment(entryID, author.getUserID(), commentContent, LocalDateTime.now(), null, 
                                 0, 0, replies);
         return comment;
-    }
-
-    private String generateID() {
-        // TODO same as PostFactory, maybe they could share a util function
-        return "";
     }
 }
