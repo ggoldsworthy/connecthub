@@ -4,7 +4,7 @@ import entity.User;
 
 public interface LogoutDataAccessInterface {
     /**
-     * Returns the email of the curren user of the application.
+     * Returns the email of the current user of the application.
      * @return the email of the current user
      */
     String getCurrentUserEmail();
