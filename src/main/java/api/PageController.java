@@ -23,8 +23,14 @@ public class PageController {
         return TEMPLATE_FILE;
     }
 
+    @GetMapping("/createPost")
+    public String createPost() {
+        return TEMPLATE_FILE;
+    }
+
     @GetMapping("/post/{id}")
     public String post(@PathVariable("id") String postID) {
         return TEMPLATE_FILE;
     }
+
 }

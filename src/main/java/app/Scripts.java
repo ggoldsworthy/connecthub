@@ -5,5 +5,6 @@ public class Scripts {
     public final String SIGN_UP_SCRIPT = ""; 
     public final String LOG_IN_SCRIPT = ""; 
     public final String POST_SCRIPT = ""; 
+    public final String CREATE_POST_SCRIPT = "";  
     public final String HOME_PAGE_SCRIPT = "";  
 }
