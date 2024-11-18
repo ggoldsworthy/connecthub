@@ -1,6 +1,7 @@
 package controller.editData;
 
-import use_case.editData.editDataInterface;
+import entity.Comment;
+import use_case.EditComment.editDataInterface;
 
 import java.util.ArrayList;
 
@@ -11,7 +12,7 @@ public class editCommentController implements editDataInterface {
         // need to find reference to user id after they have logged in
         // doesn't seem to be implemented yet
         // Pseudocode: Post post = LoginManager.CurrentlyLoggedInUser.id
-        Comment comment =
+        private Comment comment = new Comment();
 
                 // check if the user is authenticated, i.e., they are the author of the post or they are a moderator
 

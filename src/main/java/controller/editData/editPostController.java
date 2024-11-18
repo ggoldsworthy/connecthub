@@ -1,7 +1,7 @@
 package controller.editData;
 
 import entity.Post;
-import use_case.editData.editDataInterface;
+import use_case.EditComment.editDataInterface;
 import java.util.*;
 
 public class editPostController implements editDataInterface {
