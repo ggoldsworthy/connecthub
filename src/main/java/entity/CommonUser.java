@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.ArrayList;
+
 /**
  * A simple implementation of the User interface.
  */
@@ -12,14 +14,20 @@ public class CommonUser implements User {
     private final String birthDate;
     private final String fullName;
     private final String email;
+    // Added attributes
+    private final ArrayList<String> moderators;
+    private final ArrayList<String> posts;
 
-    public CommonUser(String name, String password, String userID, String birthDate, String fullName, String email) {
+
+    public CommonUser(String name, String password, String userID, String birthDate, String fullName, String email, ArrayList<String> moderators, ArrayList<String> posts) {
         this.username = name;
         this.password = password;
         this.userID = userID;
         this.birthDate = birthDate;
         this.fullName = fullName;
         this.email = email;
+        this.moderators = moderators;
+        this.posts = posts;
         this.accessLevel = 0;
     }
 
@@ -52,5 +60,13 @@ public class CommonUser implements User {
 
     public String getEmail() {
         return email;
+    }
+
+    public ArrayList<String> getModerators() {
+        return moderators;
+    }
+
+    public ArrayList<String> getPosts() {
+        return posts;
     }
 }
