@@ -16,13 +16,13 @@ public class LogoutInteractor implements LogoutInputBoundary {
 
     @Override
     public void logoutUser(LogoutInputData logoutInputData) {
-        // * get the userEmail out of the input data,
-        // * set the userEmail to null in the DAO,
-        // * instantiate the 'LogoutOutputData', which needs to contain the userEmail,
+        // * get the userID out of the input data,
+        // * set the user to null in the DAO,
+        // * instantiate the 'LogoutOutputData', which needs to contain the userID,
         // * tell the presenter to prepare a success view.
-        final String email = logoutInputData.getUserEmail();
-        logoutDB.setUser(null);
-        LogoutOutputData logoutOutputData = new LogoutOutputData(email, true);
+        final String userID = logoutInputData.getUserID();
+        logoutDB.logoutUser();
+        LogoutOutputData logoutOutputData = new LogoutOutputData(userID, true);
         logoutOutput.prepareSuccessView(logoutOutputData);
     }
 }

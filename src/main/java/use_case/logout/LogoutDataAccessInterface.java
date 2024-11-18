@@ -10,8 +10,7 @@ public interface LogoutDataAccessInterface {
     String getCurrentUserEmail();
 
     /**
-     * Sets the user indicating who is the current user of the application.
-     * @param user the new current user
+     * log out the user by setting the current User to null
      */
-    void setUser(User user);
+    void logoutUser();
 }

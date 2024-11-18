@@ -4,16 +4,16 @@ package use_case.logout;
  * Output Data for the Logout Use Case.
  */
 public class LogoutOutputData {
-    private String email;
+    private String userID;
     private boolean logoutSuccessful;
 
-    public LogoutOutputData(String email, boolean logoutSuccessful) {
-        this.email = email;
+    public LogoutOutputData(String userID, boolean logoutSuccessful) {
+        this.userID = userID;
         this.logoutSuccessful = logoutSuccessful;
     }
 
-    public String getUserEmail() {
-        return email;
+    public String getUserID() {
+        return userID;
     }
 
     public boolean isLogoutSuccessful() {
