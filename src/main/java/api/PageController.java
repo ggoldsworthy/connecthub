@@ -3,7 +3,6 @@ package api;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class PageController {
@@ -20,6 +19,13 @@ public class PageController {
 
 
     @GetMapping("/")
+    public String home(Model model) {
+        model.addAttribute(PAGE_TITLE, "Home");
+        model.addAttribute(SCRIPT, HOME_PAGE_SCRIPT);
+        return TEMPLATE_FILE;
+    }
+
+    @GetMapping("/home")
     public String homePage(Model model) {
         model.addAttribute(PAGE_TITLE, "Home");
         model.addAttribute(SCRIPT, HOME_PAGE_SCRIPT);
