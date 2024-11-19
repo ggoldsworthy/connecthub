@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
 /**
  * The View for the Signup Use Case.
@@ -87,8 +88,10 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                                     currentState.getRepeatPassword(),
                                     currentState.getEmail(),
                                     currentState.getBirthdate(),
-                                    currentState.getFullName()
-                            );
+                                    currentState.getFullName(),
+                                    null,
+                                    null
+                            ); // TODO change null to the actual values
                         }
                     }
                 }
