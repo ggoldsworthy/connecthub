@@ -1,21 +1,12 @@
 export default function Entry(props) {
-    return (
-        <div className="entry-form">
-            <h2 className="form-type">{props.formType.toUpperCase()}</h2>
-            <div className="form-container">{props.form}</div>
-            <div className="switch-form">
-                {props.formType.toUpperCase === "LOGIN" ? (
-                    <>
-                        <p>Haven't signed up yet?</p>
-                        <button>Sign Up</button>
-                    </>
-                ) : (
-                    <>
-                        <p>Already have an account?</p>
-                        <button>Log In</button>
-                    </>
-                )}
-            </div>
-        </div>
-    )
+  const formType = props.formType.toUpperCase();
+
+  return (
+    <div className="entry-form">
+      <h2 className="form-type">{formType}</h2>
+      <div className="form-container">{props.form}</div>
+      {formType === "LOGIN" ? <p className="switch-form-txt">Haven't signed up yet?</p> : <p className="switch-form-bxt">Already have an account?</p>}
+      {formType === "LOGIN" ? <button className="switch-form-btn">Sign Up</button> : <button className="switch-form-btn">Log In</button>}
+    </div>
+  )
 }
