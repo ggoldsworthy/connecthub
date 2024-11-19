@@ -1,5 +1,7 @@
+import Entry from "../common/Entry.jsx"
+
 export default function SignUp(props) {
     return (
-        <div>hi</div>
+        null
     )
 }
