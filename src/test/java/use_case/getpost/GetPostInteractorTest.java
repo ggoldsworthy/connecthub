@@ -27,7 +27,7 @@ class GetPostInteractorTest {
     @Test
     void GetPostSuccessTest() throws Exception {
         String entryID = "123";
-        User author = new CommonUser("User One", "user1@example.com");
+        User author = new CommonUser("User One", "1234", "1", "bday", "name", "user1@example.com", null, null);
         Content content = new PostContent("This is a sample post content.", null, null);
         LocalDateTime postedDate = LocalDateTime.now();
         LocalDateTime lastModifiedDate = LocalDateTime.now();
@@ -84,7 +84,9 @@ class GetPostInteractorTest {
     @Test
     void GetPostPresenterCalledOnSuccessTest() throws Exception {
         String entryID = "123";
-        User author = new CommonUser("User One", "123");
+        User author = new CommonUser("User One", "1234", "1", "bday", "name", "user1@example.com", null, null);
+
+        // User author = new CommonUser("User One", "123");
         Content content = new PostContent("This is a sample post content.", null, null);
         LocalDateTime postedDate = LocalDateTime.now();
         LocalDateTime lastModifiedDate = LocalDateTime.now();

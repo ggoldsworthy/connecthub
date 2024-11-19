@@ -73,8 +73,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
         cancel = new JButton(SignupViewModel.CANCEL_BUTTON_LABEL);
         buttons.add(cancel);
-         public void execute(String username, String userID, String password1, String password2, String email,
-                        String birthDate, String fullName, ArrayList<String> moderators, ArrayList<String> posts) {
 
         signUp.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
