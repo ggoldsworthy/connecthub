@@ -36,6 +36,13 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
+        test: /\.svg$/,
+        type: 'asset/resource',  
+        generator: {
+          filename: 'assets/[name][hash][ext][query]',  
+        },
+      },
+      {
         test: /\.css$/i,
         use: [MiniCssExtractPlugin.loader, "css-loader"],
       },

@@ -48,7 +48,7 @@ function SignUpForm() {
         <input name="confirmPassword" id="confirm-password-input" placeholder="" ref={confirmPasswordRef} onChange={handlePasswordChange} />
       </div>
 
-      <button type="submit">SIGNUP</button>
+      <button type="submit">Sign up</button>
     </form>
   )
 }
