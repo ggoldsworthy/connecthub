@@ -10,6 +10,7 @@ const presets = [
 module.exports = {
   mode: "development",
   entry: {
+    "js/styles/app": "./styles/style.css",
     "js/sign_up/app": "./js/sign_up/main.js",
   },
   output: {
