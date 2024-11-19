@@ -1,11 +1,10 @@
-package use_case;
+package use_case.getpost;
 
 import entity.*;
 import exception.PostNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import use_case.getpost.*;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
