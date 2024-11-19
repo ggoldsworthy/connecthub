@@ -8,23 +8,16 @@ public class ModeratorUser implements User {
     private final String name;
     private final String password;
     private final int accessLevel;
-    private final String userID;
-    private final String birthDate;
-    private final String fullName;
-    private final String email;
 
-    public ModeratorUser(String name, String password, String userID, String birthDate, String fullName, String email) {
+
+    public ModeratorUser(String name, String password) {
         this.name = name;
         this.password = password;
-        this.userID = userID;
-        this.birthDate = birthDate;
-        this.fullName = fullName;
-        this.email = email;
         this.accessLevel = 1;
     }
 
     @Override
-    public String getUsername() {
+    public String getName() {
         return name;
     }
 
@@ -35,19 +28,4 @@ public class ModeratorUser implements User {
 
     public int getAccessLevel() {return accessLevel; }
 
-    public String getUserID() {
-        return userID;
-    }
-
-    public String getBirthDate() {
-        return birthDate;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
 }

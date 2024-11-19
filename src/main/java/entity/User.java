@@ -9,7 +9,7 @@ public interface User {
      * Returns the username of the user.
      * @return the username of the user.
      */
-    String getUsername();
+    String getName();
 
     /**
      * Returns the password of the user.
