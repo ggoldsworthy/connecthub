@@ -95,19 +95,15 @@ public class DBUserDataAccessObject implements SignupDataAccessInterface,
      */
     private void insertUserToDB(User user) {
         try {
-            Document data = new Document(); // temporary data placeholder
-            // TODO most of the user.get methods don't exists yet, need to wait for Izabelle to finish it up. Commenting this so program can build
-            
-            // Document data = new Document()
-            //     .append(USER_ID, user.getUserID())
-            //     .append(USER_NAME, user.getUserName())
-            //     .append(PASSWORD, user.getPassword())
-            //     .append(EMAIL, user.getEmail())
-            //     .append(BIRTH_DATE, user.getBirthDate())
-            //     .append(FULL_NAME, user.getFullName())
-            //     .append(MODERATING, user.getModerating())
-            //     .append(POSTS, user.getPosts()
-            // );
+            Document data = new Document()
+                .append(USER_ID, user.getUserID())
+                .append(USER_NAME, user.getUsername())
+                .append(PASSWORD, user.getPassword())
+                .append(EMAIL, user.getEmail())
+                .append(BIRTH_DATE, user.getBirthDate())
+                .append(FULL_NAME, user.getFullName())
+                .append(MODERATING, user.getModerating())
+                .append(POSTS, user.getPosts());
 
             InsertOneResult result = this.userRepository.insertOne(data);
             System.out.println("Successfully inserted user with insert id: " + result.getInsertedId());
@@ -133,24 +129,5 @@ public class DBUserDataAccessObject implements SignupDataAccessInterface,
             .first();
 
         return doc;
-    }
-
-    /**
-     * Creates a CommonUser to return when querying the database.
-     * @param userData - the data for a user.
-     */
-    private User createUser(Document userData) {
-        // TODO the order of the parameters may need to change depending on how Izabelle implemennts the factory
-        // return this.commonUserFactory.create(
-        //     userData.getString(USER_ID),
-        //     userData.getString(USER_NAME),
-        //     userData.getString(PASSWORD),
-        //     userData.getString(EMAIL),
-        //     userData.getString(BIRTH_DATE),
-        //     userData.getString(FULL_NAME),
-        //     userData.getString(MODERATING), // TODO may need to do type conversion, need more details form izabell
-        //     userData.getString(POSTS) // ^
-        // );
-        return null;
     }
 }
