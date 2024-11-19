@@ -25,7 +25,7 @@ public class SignupController {
         final SignupInputData signupInputData = new SignupInputData(
                 username, userID, password1, password2, email, birthDate, fullName);
 
-        SignupInputBoundary.SignupUser(signupInputData);
+        SignupInputBoundary.signupUser(signupInputData);
     }
 
     /**
