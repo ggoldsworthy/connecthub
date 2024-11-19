@@ -20,7 +20,7 @@ public class GetPostInteractor implements GetPostInputBoundary {
     }
 
     @Override
-    public Post getPost(GetPostInputData postInputData) throws PostNotFoundException {
+    public Post getPost(GetPostInputData postInputData) throws IllegalArgumentException {
         final String entryID = postInputData.getEntryID();
 
         if (entryID == null) {
@@ -35,9 +35,9 @@ public class GetPostInteractor implements GetPostInputBoundary {
             getPostPresenter.prepareSuccessView(retrievedPostOutputData);
             return retrievedPost;
         }
-        catch (PostNotFoundException ex) {
+        catch (Exception ex) {
             getPostPresenter.prepareFailView(ex.getMessage());
-            throw ex;
+            return null;
         }
     }
 }

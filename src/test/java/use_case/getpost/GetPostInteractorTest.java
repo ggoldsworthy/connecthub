@@ -54,10 +54,12 @@ class GetPostInteractorTest {
 
         assertEquals(expectedPost, result);
         verify(mockPostDB).getPostByEntryID(entryID);
+        // Check that presenter was called
+        verify(mockPresenter).prepareSuccessView(new GetPostOutputData(entryID, content));
     }
 
     @Test
-    void GetPostPostNotFoundTest() throws PostNotFoundException {
+    void GetPostPostNotFoundTest() throws Exception {
         String entryID = "123";
         String expectedMessage = "Post with entryID " + entryID + " not found.";
         when(mockPostDB.getPostByEntryID(entryID)).thenThrow(new PostNotFoundException(entryID));
@@ -65,10 +67,11 @@ class GetPostInteractorTest {
         GetPostInputData inputData = new GetPostInputData(entryID);
         interactor = new GetPostInteractor(inputData, mockPostDB, mockPresenter);
 
-        Exception exception = assertThrows(PostNotFoundException.class, () -> interactor.getPost(inputData));
-        assertEquals(expectedMessage, exception.getMessage());
-        verify(mockPostDB).getPostByEntryID(entryID); // Verify DB interaction
-        verify(mockPresenter).prepareFailView(expectedMessage); // Ensure failure handling
+        Post result = interactor.getPost(inputData);
+
+        assertNull(result);
+        verify(mockPostDB).getPostByEntryID(entryID);
+        verify(mockPresenter).prepareFailView(expectedMessage);
     }
 
     @Test
