@@ -15,9 +15,9 @@ import use_case.signup.SignupInputData;
 public class Authentification {
     private SignupInputBoundary signUpInteractor;
 
-    public Authentification(SignupInputBoundary signUpInteractor) {
-        this.signUpInteractor = signUpInteractor;
-    }
+    // public Authentification(SignupInputBoundary signUpInteractor) {
+    //     this.signUpInteractor = signUpInteractor;
+    // }
 
     @PostMapping
     public ResponseEntity<String> createUser(@RequestBody String username,
