@@ -3,7 +3,6 @@ package use_case.getpost;
 import java.util.List;
 
 import entity.Post;
-import exception.PostNotFoundException;
 
 /**
  * DAO for the Get Post Use Case.

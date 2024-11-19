@@ -1,7 +1,6 @@
 package use_case.getpost;
 
 import entity.Post;
-import exception.PostNotFoundException;
 
 /**
  * The Get Post Interactor.
