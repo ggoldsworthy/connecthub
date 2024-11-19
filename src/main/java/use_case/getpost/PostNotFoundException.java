@@ -1,4 +1,4 @@
-package exception;
+package use_case.getpost;
 
 /**
  * Exception thrown when a post cannot be found by its entryID.

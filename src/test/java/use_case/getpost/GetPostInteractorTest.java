@@ -1,7 +1,7 @@
 package use_case.getpost;
 
 import entity.*;
-import exception.PostNotFoundException;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
