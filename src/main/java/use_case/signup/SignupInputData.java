@@ -14,10 +14,10 @@ public class SignupInputData {
     private final String email;
     private final String birthDate;
     private final String fullName;
-    private final ArrayList<String> moderators;
+    private final ArrayList<String> moderating;
     private final ArrayList<String> posts;
 
-    public SignupInputData(String username, String userID, String password, String repeatPassword, String email, String birthDate, String fullName, ArrayList<String> moderators, ArrayList<String> posts) {
+    public SignupInputData(String username, String userID, String password, String repeatPassword, String email, String birthDate, String fullName, ArrayList<String> moderating, ArrayList<String> posts) {
         this.username = username;
         this.userID = userID;
         this.password = password;
@@ -25,7 +25,7 @@ public class SignupInputData {
         this.email = email;
         this.birthDate = birthDate;
         this.fullName = fullName;
-        this.moderators = moderators;
+        this.moderating = moderating;
         this.posts = posts;
     }
 
@@ -57,8 +57,8 @@ public class SignupInputData {
         return userID;
     }
 
-    public ArrayList<String> getModerators() {
-        return moderators;
+    public ArrayList<String> getModerating() {
+        return moderating;
     }
 
     public ArrayList<String> getPosts() {

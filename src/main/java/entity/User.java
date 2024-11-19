@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.ArrayList;
+
 /**
  * The representation of a user in our program.
  */
@@ -29,4 +31,9 @@ public interface User {
 
     String getBirthDate();
 
+    String getFullName();
+
+    public ArrayList<String> getModerating();
+
+    public ArrayList<String> getPosts();
 }
