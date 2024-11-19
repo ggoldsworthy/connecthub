@@ -16,12 +16,14 @@ public class PageController {
     private final String TEMPLATE_FILE = "index";
     private final String PAGE_TITLE = "page_title";
     private final String SCRIPT = "script";
+    private final String DIV_ID = "div_id";
 
 
     @GetMapping("/")
     public String home(Model model) {
         model.addAttribute(PAGE_TITLE, "Home");
         model.addAttribute(SCRIPT, HOME_PAGE_SCRIPT);
+        model.addAttribute(DIV_ID, "signUpDiv");
         return TEMPLATE_FILE;
     }
 
@@ -29,6 +31,7 @@ public class PageController {
     public String homePage(Model model) {
         model.addAttribute(PAGE_TITLE, "Home");
         model.addAttribute(SCRIPT, HOME_PAGE_SCRIPT);
+        model.addAttribute(DIV_ID, "homeDiv");
         return TEMPLATE_FILE;
     }
 
@@ -36,6 +39,7 @@ public class PageController {
     public String signIn(Model model) {
         model.addAttribute(PAGE_TITLE, "Sign Up");
         model.addAttribute(SCRIPT, SIGN_UP_SCRIPT);
+        model.addAttribute(DIV_ID, "homeDiv");
         return TEMPLATE_FILE;
     }
 
@@ -43,6 +47,7 @@ public class PageController {
     public String login(Model model) {
         model.addAttribute(PAGE_TITLE, "Log In");
         model.addAttribute(SCRIPT, LOG_IN_SCRIPT);
+        model.addAttribute(DIV_ID, "loginDiv");
         return TEMPLATE_FILE;
     }
 
@@ -50,6 +55,7 @@ public class PageController {
     public String createPost(Model model) {
         model.addAttribute(PAGE_TITLE, "Create Post");
         model.addAttribute(SCRIPT, CREATE_POST_SCRIPT);
+        model.addAttribute(DIV_ID, "createPostDiv");
         return TEMPLATE_FILE;
     }
 
@@ -57,7 +63,7 @@ public class PageController {
     public String post( Model model) {
         model.addAttribute(PAGE_TITLE, "Home");
         model.addAttribute(SCRIPT, POST_SCRIPT);
+        model.addAttribute(DIV_ID, "postDiv");
         return TEMPLATE_FILE;
     }
-
 }
