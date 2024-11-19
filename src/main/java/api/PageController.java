@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class PageController {
     // bundled JavaScript files
-    private final String SIGN_UP_SCRIPT = ""; 
+    private final String SIGN_UP_SCRIPT = "/js/sign_up/app.js"; 
     private final String LOG_IN_SCRIPT = ""; 
     private final String POST_SCRIPT = ""; 
     private final String CREATE_POST_SCRIPT = "";  
@@ -23,7 +23,7 @@ public class PageController {
     public String home(Model model) {
         model.addAttribute(PAGE_TITLE, "Home");
         model.addAttribute(SCRIPT, HOME_PAGE_SCRIPT);
-        model.addAttribute(DIV_ID, "signUpDiv");
+        model.addAttribute(DIV_ID, "homeDiv");
         return TEMPLATE_FILE;
     }
 
@@ -35,11 +35,11 @@ public class PageController {
         return TEMPLATE_FILE;
     }
 
-    @GetMapping("/signin")
+    @GetMapping("/signup")
     public String signIn(Model model) {
         model.addAttribute(PAGE_TITLE, "Sign Up");
         model.addAttribute(SCRIPT, SIGN_UP_SCRIPT);
-        model.addAttribute(DIV_ID, "homeDiv");
+        model.addAttribute(DIV_ID, "signUpDiv");
         return TEMPLATE_FILE;
     }
 
