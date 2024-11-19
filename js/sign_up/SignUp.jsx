@@ -1,8 +1,8 @@
 import { useRef, useState } from "react"
 import Entry from "../common/Entry.jsx"
 
-export default function SignUp(props) {
-  return <Entry formType="login" form={<SignUpForm />} />
+export default function SignUp() {
+  return <Entry formType="signup" form={<SignUpForm />} />
 }
 
 function SignUpForm() {
