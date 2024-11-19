@@ -64,6 +64,7 @@ h1, h2, h3, h4, h5, h6 {
 
   --BACKGROUND: #343440;
   --TEXT: #f5f5f5;
+  --TEXT_SECONDARY: #aeaeae;
   --PRIMARY: #484a61;
   --SECONDARY: #727ba4;
   --ACCENT: #7eb7d0;
@@ -98,7 +99,7 @@ html, body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
+  gap: 1.4rem;
   background-color: var(--PRIMARY);
   box-sizing: border-box;
   padding: 0 3rem 1rem;
@@ -172,5 +173,27 @@ input {
 }
 
 .form button:hover {
+  opacity: 0.8;
+}
+
+.switch-form-txt {
+  font-style: italic;
+  color: var(--TEXT);
+  margin-bottom: -25px;
+}
+
+.switch-form-btn {
+  border: none;
+  background-color: transparent;
+  font-size: var(--TEXT_SAMLL);
+  color: var(--ACCENT);
+  padding: 0;
+}
+
+.switch-form-btn:hover {
+  /* border: none;
+  background-color: transparent;
+  font-size: var(--TEXT_SAMLL);
+  color: var(--ACCENT); */
   opacity: 0.8;
 }
