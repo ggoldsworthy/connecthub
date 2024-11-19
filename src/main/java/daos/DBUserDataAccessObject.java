@@ -1,7 +1,6 @@
 package daos;
 
 import entity.User;
-import entity.UserFactory;
 import use_case.signup.SignupDataAccessInterface;
 import use_case.login.LoginDataAccessInterface;
 import use_case.logout.LogoutDataAccessInterface;

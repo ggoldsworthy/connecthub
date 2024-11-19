@@ -1,5 +1,7 @@
 package use_case.signup;
 
+import org.json.JSONObject;
+
 import entity.User;
 
 /**

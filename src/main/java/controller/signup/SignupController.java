@@ -23,9 +23,9 @@ public class SignupController {
      * @param password2 the password repeated
      */
     public void execute(String username, String userID, String password1, String password2, String email,
-                        String birthDate, String fullName, ArrayList<String> moderators, ArrayList<String> posts) {
+                        String birthDate, String fullName, ArrayList<String> moderating, ArrayList<String> posts) {
         final SignupInputData signupInputData = new SignupInputData(
-                username, userID, password1, password2, email, birthDate, fullName, moderators,posts );
+                username, userID, password1, password2, email, birthDate, fullName, moderating,posts );
 
         SignupInputBoundary.SignupUser(signupInputData);
     }
