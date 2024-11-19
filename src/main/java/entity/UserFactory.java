@@ -15,6 +15,7 @@ public interface UserFactory {
      * @param posts
      * @return the new user
      */
-    User create(String name, String password, String userID, String birthDate, String fullName, String email, ArrayList moderating, ArrayList posts);
+    User create(String name, String password, String userID, String birthDate, String fullName, 
+                String email, ArrayList<String> moderating, ArrayList<String> posts);
 
 }

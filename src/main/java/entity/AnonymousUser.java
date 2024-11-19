@@ -19,7 +19,8 @@ public class AnonymousUser implements User {
 
 
 
-    public AnonymousUser(String name, String password, String userID, String birthDate, String fullName, String email, ArrayList<String> moderators, ArrayList<String> posts) {
+    public AnonymousUser(String name, String password, String userID, String birthDate, String fullName, 
+                         String email, ArrayList<String> moderators, ArrayList<String> posts) {
         this.username = name;
         this.password = password;
         this.userID = userID;

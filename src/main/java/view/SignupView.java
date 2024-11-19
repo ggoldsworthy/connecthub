@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
 /**
  * The View for the Signup Use Case.
@@ -72,6 +73,8 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
         cancel = new JButton(SignupViewModel.CANCEL_BUTTON_LABEL);
         buttons.add(cancel);
+         public void execute(String username, String userID, String password1, String password2, String email,
+                        String birthDate, String fullName, ArrayList<String> moderators, ArrayList<String> posts) {
 
         signUp.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
@@ -87,8 +90,10 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                                     currentState.getRepeatPassword(),
                                     currentState.getEmail(),
                                     currentState.getBirthdate(),
-                                    currentState.getFullName()
-                            );
+                                    currentState.getFullName(),
+                                    null,
+                                    null
+                            ); // TODO change null to the actual values
                         }
                     }
                 }
