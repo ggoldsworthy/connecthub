@@ -1,8 +1,6 @@
 package use_case.login;
 
 import entity.UserFactory;
-import use_case.signup.AccountDoesNotExistException;
-import use_case.signup.IncorrectPasswordException;
 import entity.User;
 
 import java.util.ArrayList;
