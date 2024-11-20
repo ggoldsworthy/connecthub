@@ -4,12 +4,14 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInputData;
+import use_case.signup.UserExistsException;
 
 @RestController
 public class Authentification {
@@ -26,16 +28,15 @@ public class Authentification {
             requestBody.get("password"),
             requestBody.get("confirmation"),
             requestBody.get("email"),
-            requestBody.get("birthDate"),
-            requestBody.get("fullName")
+            requestBody.get("birth_date"),
+            requestBody.get("full_name")
         );
 
-        // make signupUser return status code
         try {
             signUpInteractor.signupUser(signupInputData);
-            return ResponseEntity.status(HttpStatus.OK).body("Signed up user successfully");
-        } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("");
+            return ResponseEntity.status(HttpStatus.OK).body("Signed up user successfully.");
+        } catch (UserExistsException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User exists.");
         }
     } 
 }
