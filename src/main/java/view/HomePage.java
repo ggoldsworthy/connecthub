@@ -172,7 +172,6 @@ public class HomePage {
             contentArea.add(postSpacer);
             contentArea.add(createPostBox("Post Title " + i,
                     "content of post " + i, i, mainContent));
-
         }
 
         final JScrollPane scrollPane = new JScrollPane(contentArea);
@@ -180,6 +179,12 @@ public class HomePage {
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
         homepage.add(scrollPane, BorderLayout.CENTER);
+
+        // Add a right padding panel to center posts
+        final JPanel rightPaddingPanel = new JPanel();
+        rightPaddingPanel.setBackground(PANEL_COLOR);
+        rightPaddingPanel.setPreferredSize(new Dimension(147, homepage.getHeight()));
+        homepage.add(rightPaddingPanel, BorderLayout.EAST);
 
         return homepage;
     }
