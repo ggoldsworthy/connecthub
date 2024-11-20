@@ -3,40 +3,13 @@ package view;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
+import view.StyleConstants;
 import javax.swing.*;
 
 /**
  * The Home Page view.
  */
 public class HomePage {
-
-    // Styles
-    public static final Color BACKGROUND_COLOR = new Color(30, 30, 30);
-    public static final Color PANEL_COLOR = new Color(50, 50, 60);
-    public static final Color HEADER_COLOR = new Color(19, 19, 223);
-    public static final Color BUTTON_COLOR = new Color(0, 123, 255);
-    public static final Color TEXT_COLOR = Color.WHITE;
-    public static final Font HEADER_FONT = new Font("Arial", Font.BOLD, 16);
-
-    // Border for titles, labels, buttons
-    public static final int BORDER_TOP = 5;
-    public static final int BORDER_BOTTOM = 5;
-    public static final int BORDER_LEFT = 15;
-    public static final int BORDER_RIGHT = 15;
-
-    // Program window dimensions
-    public static final int APP_WIDTH = 1000;
-    public static final int APP_HEIGHT = 600;
-
-    // Post box
-    public static final int POST_WIDTH = 700;
-    public static final int POST_HEIGHT = 150;
-
-    public static final int POST_TITLE_FONT_SIZE = 18;
-
-    // Font to use
-    public static final String FONT_TYPE = "Arial";
 
     public static void main(String[] args) {
 
@@ -45,7 +18,7 @@ public class HomePage {
 
         // Terminate program when you click the 'X' button
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(APP_WIDTH, APP_HEIGHT);
+        frame.setSize(StyleConstants.APP_WIDTH, StyleConstants.APP_HEIGHT);
         frame.setLayout(new BorderLayout());
 
         // Create a CardLayout for the main content area
@@ -65,12 +38,12 @@ public class HomePage {
         // The nav bar has the App name on the left, the search bar in the middle,
         // a search button to the right of the search box, and a profile button on the right most side
         final JPanel navBar = new JPanel(new BorderLayout());
-        navBar.setBackground(HEADER_COLOR);
+        navBar.setBackground(StyleConstants.HEADER_COLOR);
         navBar.setPreferredSize(new Dimension(frame.getWidth(), 50));
 
         // Add the app name to the nav bar and allow users to click on it to go to the home page
         final JLabel titleLabel = new JLabel("Connect Hub");
-        titleLabel.setForeground(TEXT_COLOR);
+        titleLabel.setForeground(StyleConstants.TEXT_COLOR);
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         // Change the cursor to the pointing-hand upon hover
         // Line 69, 70 is from
@@ -83,23 +56,23 @@ public class HomePage {
                 cl.show(mainContent, "Homepage");
             }
         });
-        titleLabel.setFont(HEADER_FONT);
-        titleLabel.setBorder(BorderFactory.createEmptyBorder(BORDER_TOP, BORDER_LEFT, BORDER_BOTTOM, BORDER_RIGHT));
+        titleLabel.setFont(StyleConstants.HEADER_FONT);
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(StyleConstants.BORDER_TOP, StyleConstants.BORDER_LEFT, StyleConstants.BORDER_BOTTOM, StyleConstants.BORDER_RIGHT));
         // Add title label to leftmost side of the navbar panel
         navBar.add(titleLabel, BorderLayout.WEST);
 
         // Search bar
         // Create a panel for the search bar then add this to the nav bar
         final JPanel searchPanel = new JPanel(new BorderLayout());
-        searchPanel.setBackground(HEADER_COLOR);
+        searchPanel.setBackground(StyleConstants.HEADER_COLOR);
         final JTextField searchBar = new JTextField();
-        searchBar.setBackground(PANEL_COLOR);
-        searchBar.setForeground(TEXT_COLOR);
-        searchBar.setCaretColor(TEXT_COLOR);
+        searchBar.setBackground(StyleConstants.PANEL_COLOR);
+        searchBar.setForeground(StyleConstants.TEXT_COLOR);
+        searchBar.setCaretColor(StyleConstants.TEXT_COLOR);
         searchBar.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         final JButton searchButton = new JButton("Search");
-        searchButton.setBackground(BUTTON_COLOR);
-        searchButton.setForeground(TEXT_COLOR);
+        searchButton.setBackground(StyleConstants.BUTTON_COLOR);
+        searchButton.setForeground(StyleConstants.TEXT_COLOR);
         searchPanel.add(searchBar, BorderLayout.CENTER);
         searchPanel.add(searchButton, BorderLayout.EAST);
         // Add to nav bar
@@ -107,13 +80,33 @@ public class HomePage {
 
         // Profile button
         final JButton profileButton = new JButton("Profile");
-        profileButton.setBackground(BUTTON_COLOR);
-        profileButton.setForeground(TEXT_COLOR);
+        profileButton.setBackground(StyleConstants.BUTTON_COLOR);
+        profileButton.setForeground(StyleConstants.TEXT_COLOR);
         navBar.add(profileButton, BorderLayout.EAST);
         // Using lambda expression syntax
         // See https://stackoverflow.com/questions/284899/how-do-you-add-an-actionlistener-onto-a-jbutton-in-java
-        profileButton.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Didn't make user profile view yet"));
+        // profileButton.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Didn't make user profile view yet"));
         navBar.add(profileButton, BorderLayout.EAST);
+
+        // Add a drop down menu when you click on the User Profile button
+        final JPopupMenu profileMenu = new JPopupMenu();
+        // Add "Settings" button to the popup menu
+        final JMenuItem settingsButton = new JMenuItem("Settings");
+        settingsButton.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Settings clicked"));
+        profileMenu.add(settingsButton);
+
+        // Add "Logout" button to the popup menu
+        final JMenuItem logoutButton = new JMenuItem("Logout");
+        logoutButton.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Logout clicked"));
+        profileMenu.add(logoutButton);
+
+        // Add an ActionListener to the profile button to show the popup menu
+        profileButton.addActionListener(e -> {
+            profileMenu.show(profileButton, 0, profileButton.getHeight());
+        });
+
+        // Make the frame visible
+        frame.setVisible(true);
 
         // Add navigation bar and main content to frame
         frame.add(navBar, BorderLayout.NORTH);
@@ -127,12 +120,55 @@ public class HomePage {
     private static JPanel createHomepageView(JPanel mainContent) {
         final JPanel homepage = new JPanel();
         homepage.setLayout(new BorderLayout());
-        homepage.setBackground(BACKGROUND_COLOR);
+        homepage.setBackground(StyleConstants.BACKGROUND_COLOR);
         homepage.setLayout(new BorderLayout());
 
         // Navigation panel for filtering
+        final JPanel navigationPanel = createNavigationPane(homepage);
+        homepage.add(navigationPanel, BorderLayout.WEST);
+
+        // Content area where we actually populate posts
+        final JPanel contentArea = new JPanel();
+        contentArea.setLayout(new BoxLayout(contentArea, BoxLayout.Y_AXIS));
+        contentArea.setBackground(Color.WHITE);
+
+        // Add mock posts
+        // postSpacer separates posts
+        postPopulator(contentArea, mainContent);
+
+        final JScrollPane scrollPane = new JScrollPane(contentArea);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+        homepage.add(scrollPane, BorderLayout.CENTER);
+
+        // Add a right padding panel to center posts
+        final JPanel rightPaddingPanel = new JPanel();
+        rightPaddingPanel.setBackground(StyleConstants.PANEL_COLOR);
+        rightPaddingPanel.setPreferredSize(new Dimension(147, homepage.getHeight()));
+        homepage.add(rightPaddingPanel, BorderLayout.EAST);
+
+        return homepage;
+    }
+
+    private static void postPopulator(JPanel panelToPopulate, JPanel mainContent) {
+        for (int i = 1; i <= 6; i++) {
+            // Can't add the same component multiple times so we must create new postSpacers within the loop
+            final JPanel postSpacer = new JPanel();
+            postSpacer.setBackground(StyleConstants.PANEL_COLOR);
+            postSpacer.setPreferredSize(new Dimension(0, 20));
+            panelToPopulate.add(postSpacer);
+            panelToPopulate.add(createPostBox("Post Title " + i,
+                    "content of post " + i, i, mainContent));
+        }
+    }
+
+    // Create a post box
+
+    private static JPanel createNavigationPane(JPanel homepage){
+        // Navigation panel for filtering
         final JPanel navigationPanel = new JPanel();
-        navigationPanel.setBackground(PANEL_COLOR);
+        navigationPanel.setBackground(StyleConstants.PANEL_COLOR);
         navigationPanel.setLayout(new BoxLayout(navigationPanel, BoxLayout.Y_AXIS));
         navigationPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
 
@@ -148,48 +184,17 @@ public class HomePage {
                 new JButton("Category 3")
         };
         for (JButton button : categoryButtons) {
-            button.setBackground(BUTTON_COLOR);
-            button.setForeground(TEXT_COLOR);
+            button.setBackground(StyleConstants.BUTTON_COLOR);
+            button.setForeground(StyleConstants.TEXT_COLOR);
             button.setFocusPainted(false);
             button.setAlignmentX(Component.CENTER_ALIGNMENT);
             navigationPanel.add(Box.createVerticalStrut(10));
             navigationPanel.add(button);
         }
-        homepage.add(navigationPanel, BorderLayout.WEST);
 
-        // Content area where we actually populate posts
-        final JPanel contentArea = new JPanel();
-        contentArea.setLayout(new BoxLayout(contentArea, BoxLayout.Y_AXIS));
-        contentArea.setBackground(Color.WHITE);
-
-        // Add mock posts
-        // postSpacer separates posts
-        for (int i = 1; i <= 6; i++) {
-            // Can't add the same component multiple times so we must create new postSpacers withing the loop
-            final JPanel postSpacer = new JPanel();
-            postSpacer.setBackground(PANEL_COLOR);
-            postSpacer.setPreferredSize(new Dimension(0, 20));
-            contentArea.add(postSpacer);
-            contentArea.add(createPostBox("Post Title " + i,
-                    "content of post " + i, i, mainContent));
-        }
-
-        final JScrollPane scrollPane = new JScrollPane(contentArea);
-        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-
-        homepage.add(scrollPane, BorderLayout.CENTER);
-
-        // Add a right padding panel to center posts
-        final JPanel rightPaddingPanel = new JPanel();
-        rightPaddingPanel.setBackground(PANEL_COLOR);
-        rightPaddingPanel.setPreferredSize(new Dimension(147, homepage.getHeight()));
-        homepage.add(rightPaddingPanel, BorderLayout.EAST);
-
-        return homepage;
+        return navigationPanel;
     }
 
-    // Create a post box
     private static JPanel createPostBox(String title, String content, int postId, JPanel mainContent) {
         final JPanel postBox = new JPanel();
         postBox.setLayout(new BorderLayout());
@@ -197,7 +202,7 @@ public class HomePage {
                 BorderFactory.createLineBorder(Color.GRAY, 1),
                 BorderFactory.createEmptyBorder(10, 10, 10, 10)));
         postBox.setBackground(Color.WHITE);
-        postBox.setPreferredSize(new Dimension(POST_WIDTH, POST_HEIGHT));
+        postBox.setPreferredSize(new Dimension(StyleConstants.POST_WIDTH, StyleConstants.POST_HEIGHT));
 
         // Post title
         final JLabel postTitle = new JLabel(title);
@@ -207,7 +212,7 @@ public class HomePage {
 
         // Post content
         final JTextArea postContent = new JTextArea(content);
-        postContent.setFont(new Font(FONT_TYPE, Font.PLAIN, 14));
+        postContent.setFont(new Font(StyleConstants.FONT_TYPE, Font.PLAIN, 14));
         postContent.setForeground(Color.BLACK);
         postContent.setLineWrap(true);
         postContent.setWrapStyleWord(true);
@@ -246,72 +251,25 @@ public class HomePage {
 
     private static JButton createStyledButton(String text) {
         final JButton button = new JButton(text);
-        button.setFont(new Font(FONT_TYPE, Font.PLAIN, 12));
-        button.setBackground(new Color(230, 230, 230)); // Light gray background
+        button.setFont(new Font(StyleConstants.FONT_TYPE, Font.PLAIN, 12));
+        // Light gray background for button
+        button.setBackground(new Color(230, 230, 230));
         button.setForeground(Color.DARK_GRAY);
         button.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.GRAY, 1),
-                BorderFactory.createEmptyBorder(5, 15, 5, 15))); // Padding inside button
-        button.setFocusPainted(false); // Removes the box appearing when clicking on button
+                // Padding inside button
+                BorderFactory.createEmptyBorder(5, 15, 5, 15)));
+        // Removes the box appearing when clicking on button
+        button.setFocusPainted(false);
         return button;
     }
 
     // Open post view within the same frame
     private static void openPostView(JPanel mainContent, String title, String content) {
-        final JPanel postView = new JPanel(new BorderLayout());
-        postView.setBackground(Color.WHITE);
-
-        // Post title
-        final JLabel postTitle = new JLabel(title);
-        postTitle.setFont(new Font(FONT_TYPE, Font.BOLD, 16));
-        postTitle.setForeground(Color.DARK_GRAY);
-        postTitle.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1),
-                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-        postView.add(postTitle, BorderLayout.NORTH);
-
-        // Post content
-        final JTextArea postContent = new JTextArea(content);
-        postContent.setFont(new Font(FONT_TYPE, Font.PLAIN, 14));
-        postContent.setForeground(Color.BLACK);
-        postContent.setLineWrap(true);
-        postContent.setWrapStyleWord(true);
-        postContent.setEditable(false);
-        postContent.setBackground(new Color(245, 245, 245));
-        postContent.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1),
-                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-        postView.add(new JScrollPane(postContent), BorderLayout.CENTER);
-
-        // Comments section
-        final JPanel commentsPanel = new JPanel();
-        commentsPanel.setLayout(new BoxLayout(commentsPanel, BoxLayout.Y_AXIS));
-        commentsPanel.setBackground(Color.WHITE);
-        commentsPanel.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createLineBorder(Color.GRAY, 1),
-                "Comments",
-                0, // Default title alignment
-                0, // Default font style
-                new Font(FONT_TYPE, Font.BOLD, 14),
-                Color.DARK_GRAY)); // title border
-
-        // Add dummy comments - Replace this with dynamic content later
-        for (int i = 1; i <= 5; i++) {
-            final JLabel comment = new JLabel("Comment " + i + ": This is a sample comment.");
-            comment.setFont(new Font(FONT_TYPE, Font.PLAIN, 12));
-            comment.setForeground(Color.DARK_GRAY);
-            comment.setBackground(Color.WHITE);
-            comment.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-            // Padding for comments
-            commentsPanel.add(comment);
-        }
-
-        final JScrollPane commentsScrollPane = new JScrollPane(commentsPanel);
-        commentsScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-        postView.add(commentsScrollPane, BorderLayout.SOUTH);
-
-        // Switch to post view
+        final JPanel postView = new PostView(mainContent, title, content).getPostView();
         final CardLayout layout = (CardLayout) mainContent.getLayout();
+
+        // Move to controller
         mainContent.add(postView, "PostView");
         layout.show(mainContent, "PostView");
     }
