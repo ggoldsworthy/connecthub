@@ -1,8 +1,14 @@
 package use_case.login;
 
-import entity.CommonUser;
+import entity.UserFactory;
+import use_case.signup.AccountDoesNotExistException;
+import use_case.signup.IncorrectPasswordException;
 import entity.User;
-import entity.CommonUserFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -11,42 +17,65 @@ import org.json.JSONObject;
 public class LoginInteractor implements use_case.login.LoginInputBoundary {
     private final use_case.login.LoginDataAccessInterface loginDB;
     private final LoginOutputBoundary loginOutput;
+    private final UserFactory userFactory;
 
     public LoginInteractor(LoginDataAccessInterface userDataAccessInterface,
-                           LoginOutputBoundary loginOutputBoundary) {
+                           LoginOutputBoundary loginOutputBoundary,
+                           UserFactory userFactory) {
         this.loginDB = userDataAccessInterface;
         this.loginOutput = loginOutputBoundary;
+        this.userFactory = userFactory;
     }
 
     @Override
     public void LoginUser(use_case.login.LoginInputData loginInputData) {
         final String email = loginInputData.getEmail();
         final String password = loginInputData.getPassword();
-        if (!loginDB.existByEmail(email)) {
+        if (!loginDB.existsByEmail(email)) {
             loginOutput.prepareFailView(email + ": Account does not exist.");
+            throw new AccountDoesNotExistException(email + ": Account does not exist.");
         }
         else {
-            final String pwd = loginDB.getUserByEmail(email).getString("email");
+            final JSONObject userData = loginDB.getUserByEmail(loginInputData.getEmail());
+            final User user = this.jsonObjectToUser(userData);
+            final String pwd = user.getPassword();
             if (!password.equals(pwd)) {
                 loginOutput.prepareFailView("Incorrect password for \"" + email + "\".");
+                throw new IncorrectPasswordException(email + ": Account does not exist.");
             }
             else {
-                final JSONObject user = loginDB.getUserByEmail(loginInputData.getEmail());
-                loginDB.setCurrentUser(jsonObjectToUser(user));
+                loginDB.setCurrentUser(user);
                 final LoginOutputData loginOutputData = new LoginOutputData(
-                        user.getString("username"), user.getString("password"), true);
+                        user.getUsername(), user.getPassword(), true);
                 loginOutput.prepareSuccessView(loginOutputData);
             }
         }
     }
 
-    //private User jsonObjectToUser(JSONObject user) {
-        //final String username = user.getString("username");
+    private User jsonObjectToUser(JSONObject user) {
+        JSONArray moderatingData = user.getJSONArray("moderating");
+        List<String> moderating = new ArrayList<>();
+        for (int i = 0; i < moderatingData.length(); i++){ 
+            moderating.add(moderatingData.getString(i));
+        } 
 
-        //final User u = new CommonUser(user.getString("username"),user.getString("password"),user.getString("userId"),
-        //        user.getString("birth_date"), user.getString("full_name"), user.getString("email"),
-        //        user.getJSONArray("moderating"), user.getJSONArray("posts"));
-        //return u;
+        JSONArray postsData = user.getJSONArray("posts");
+        List<String> posts = new ArrayList<>();
+        for (int i = 0; i < postsData.length(); i++){ 
+            posts.add(postsData.getString(i));
+        } 
 
-    //}
+        User currentUser = this.userFactory.create(
+            user.getString("username"), 
+            user.getString("password"),
+            user.getString("userId"),
+            user.getString("birth_date"),
+            user.getString("full_name"),
+            user.getString("email"),
+            moderating,
+            posts
+        );
+
+        return currentUser;
+    }
 }

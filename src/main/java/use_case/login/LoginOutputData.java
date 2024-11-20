@@ -40,4 +40,8 @@ public class LoginOutputData {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public boolean isLoginSuccessful() {
+        return loginSuccessful;
+    }
 }

@@ -17,4 +17,9 @@ public interface LoginDataAccessInterface {
      */
     void setCurrentUser(User user);
 
+    /**
+     * Check whether user exists by email.
+     * @param email - email to query for.
+     */
+    boolean existsByEmail(String email);
 }

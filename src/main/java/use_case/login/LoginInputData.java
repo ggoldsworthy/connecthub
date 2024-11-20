@@ -1,7 +1,5 @@
 package use_case.login;
 
-import use_case.logout.LogoutInputBoundary;
-
 public class LoginInputData {
 
     private String email;

@@ -7,8 +7,8 @@ import entity.PostFactory;
 // TODO rename to whatever package/class name created by others
 import use_case.create_post.CreatePostDataAccessInterface;
 import use_case.delete_post.DeletePostDataAccessInterface;
+import use_case.getpost.GetPostDataAccessInterface;
 import use_case.update_post.UpdatePostDataAccessInterface;
-import use_case.get_post.GetPostDataAccessInterface;
 
 import org.bson.Document;
 import org.bson.conversions.Bson;
