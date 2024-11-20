@@ -18,7 +18,7 @@ public class Post extends ForumEntry {
      * @param category - the category of this post.
      * See ForumEntry for other parameters
      */
-    public Post(String entryID, User author, Content content, LocalDateTime postedDate,
+    public Post(String entryID, String author, Content content, LocalDateTime postedDate,
                 LocalDateTime lastModifiedDate, int likes, int dislikes, String postTitle, 
                 List<Comment> comments, String category) {
         super(entryID, author, content, postedDate, lastModifiedDate, likes, dislikes);
