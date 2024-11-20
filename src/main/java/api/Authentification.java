@@ -1,35 +1,35 @@
 package api;
 
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInputData;
 
 @RestController
-@RequestMapping("/signup")
 public class Authentification {
     private SignupInputBoundary signUpInteractor;
 
-    // public Authentification(SignupInputBoundary signUpInteractor) {
-    //     this.signUpInteractor = signUpInteractor;
-    // }
+    public Authentification(SignupInputBoundary signUpInteractor) {
+        this.signUpInteractor = signUpInteractor;
+    }
 
-    @PostMapping
-    public ResponseEntity<String> createUser(@RequestBody String username,
-                           @RequestBody String userID,
-                           @RequestBody String password1, 
-                           @RequestBody String password2,
-                           @RequestBody String email, 
-                           @RequestBody String birthDate,
-                           @RequestBody String fullName) {
+    @PostMapping("/signup")
+    public ResponseEntity<String> createUser(@RequestBody Map<String, String> requestBody) {
         final SignupInputData signupInputData = new SignupInputData(
-            username, userID, password1, password2, email, birthDate, fullName);
-        
+            requestBody.get("username"), 
+            requestBody.get("password"),
+            requestBody.get("confirmation"),
+            requestBody.get("email"),
+            requestBody.get("birthDate"),
+            requestBody.get("fullName")
+        );
+
         // make signupUser return status code
         try {
             signUpInteractor.signupUser(signupInputData);

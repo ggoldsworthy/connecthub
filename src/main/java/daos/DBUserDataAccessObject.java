@@ -44,18 +44,18 @@ public class DBUserDataAccessObject implements SignupDataAccessInterface,
     
     @Override
     public boolean existsByID(String userID) {
-        return this.queryOneUserBy(USER_ID, userID) == null;
+        return this.queryOneUserBy(USER_ID, userID) != null;
     }
 
     @Override
     public boolean existsByUsername(String username) {
-        return this.queryOneUserBy(USER_NAME, username) == null;
+        return this.queryOneUserBy(USER_NAME, username) != null;
     }
 
 
     @Override
     public boolean existsByEmail(String email) {
-        return this.queryOneUserBy(EMAIL, email) == null;
+        return this.queryOneUserBy(EMAIL, email) != null;
     }
 
     @Override

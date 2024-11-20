@@ -25,7 +25,7 @@ public class SignupController {
     public void execute(String username, String userID, String password1, String password2, String email,
                         String birthDate, String fullName, ArrayList<String> moderating, ArrayList<String> posts) {
         final SignupInputData signupInputData = new SignupInputData(
-                username, userID, password1, password2, email, birthDate, fullName, moderating,posts );
+                username, password1, password2, email, birthDate, fullName);
 
         SignupInputBoundary.signupUser(signupInputData);
     }

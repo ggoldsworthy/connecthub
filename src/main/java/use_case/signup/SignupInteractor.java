@@ -4,6 +4,7 @@ import entity.User;
 import entity.UserFactory;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * The Signup Interactor.
@@ -33,14 +34,13 @@ public class SignupInteractor implements SignupInputBoundary {
             final User user = userFactory.create(
                 signupInputData.getUsername(), 
                 signupInputData.getPassword(), 
-                signupInputData.getUserID(), 
+                generateUserID(), 
                 signupInputData.getBirthDate(), 
                 signupInputData.getFullName(), 
                 signupInputData.getEmail(), 
                 new ArrayList<String>(), 
                 new ArrayList<String>() 
             );
-            
             SignupDB.save(user);
 
             final SignupOutputData signupOutputData = new SignupOutputData(user.getUsername(), false);
@@ -51,5 +51,10 @@ public class SignupInteractor implements SignupInputBoundary {
     @Override
     public void switchToLoginView() {
         userPresenter.switchToLoginView();
+    }
+
+    private String generateUserID() {
+        UUID uniqueID = UUID.randomUUID(); 
+        return uniqueID.toString();
     }
 }
