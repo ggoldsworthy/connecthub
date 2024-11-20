@@ -1,5 +1,8 @@
 import { useRef } from "react"
 import Entry from "../common/Entry.jsx"
+import { signUpUser } from "../api/authentification.js"
+
+const SIGN_UP_URL = "/signup"
 
 export default function SignUp() {
   return <Entry formType="signup" form={<SignUpForm />} />
@@ -18,9 +21,24 @@ function SignUpForm() {
     const confirmPasswordVal = confirmPasswordRef.current.value;
     matchMessage.current.innerText = passwordVal === confirmPasswordVal ?  "" : "password don't match";
   }
+
+  const signUp = (e) => {
+    e.preventDefault();
+
+    const userData = {
+      "username": "user1",
+      "password": "1234",
+      "confirmation": "1234",
+      "email": "abcd@gmail.com",
+      "birth_date": "10001010",
+      "full_name": "Doodle Wacker"
+    }
+
+    signUpUser(SIGN_UP_URL, userData)
+  }
   
   return (
-    <form className="form" action="">
+    <form className="form" onSubmit={signUp}>
       <div id="email-input" className="input-group">
         <label>Email: </label>
         <input name="email" id="email-input" placeholder="doctor.giggle.touch@gmail.com" ref={emailRef} />

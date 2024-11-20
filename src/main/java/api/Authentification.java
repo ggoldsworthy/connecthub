@@ -4,7 +4,6 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,9 +33,9 @@ public class Authentification {
 
         try {
             signUpInteractor.signupUser(signupInputData);
-            return ResponseEntity.status(HttpStatus.OK).body("Signed up user successfully.");
+            return ResponseEntity.status(HttpStatus.OK).body("Signed up user successfully");
         } catch (UserExistsException ex) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User exists.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User with email exists");
         }
     } 
 }
