@@ -13,9 +13,13 @@ import controller.signup.SignupViewModel;
 import daos.DBUserDataAccessObject;
 import entity.CommonUserFactory;
 import entity.UserFactory;
+import use_case.login.LoginInputBoundary;
+import use_case.login.LoginInteractor;
+import use_case.login.LoginOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
+import view.SignupView;
 
 @Configuration
 public class AppConfig {
@@ -53,12 +57,27 @@ public class AppConfig {
         return new SignupViewModel();
     }
 
-    // Presenters
     @Bean
-    public SignupOutputBoundary signupPresenter(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel) {
-        return new SignupPresenter(viewManagerModel, signupViewModel); // Adjust dependencies if needed
+    public LoginViewModel loginViewModel() {
+        return new LoginViewModel();
     }
 
+    // Presenters
+    @Bean
+    public SignupOutputBoundary signupPresenter(ViewManagerModel viewManagerModel, 
+                                                SignupViewModel signupViewModel,
+                                                LoginViewModel loginViewModel) {
+        return new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel); // Adjust dependencies if needed
+    }
+
+    @Bean 
+    public LoginOutputBoundary loginPresenter(ViewManagerModel viewManagerModel, 
+                                              LoginViewModel loginViewModel, 
+                                              SignupViewModel signupViewModel) {
+        return new LoginPresenter(viewManagerModel, loginViewModel);
+    }
+
+    // Services
     @Bean
     public SignupInputBoundary signupInteractor(DBUserDataAccessObject userDAO,
                                                 SignupOutputBoundary signupPresenter,
@@ -66,9 +85,17 @@ public class AppConfig {
         return new SignupInteractor(userDAO, signupPresenter, userFactory);
     }
 
+    @Bean 
+    public LoginInputBoundary loginInteractor(DBUserDataAccessObject userDAO,
+                                              LoginOutputBoundary loginPresenter,
+                                              UserFactory userFactory) {
+        return new LoginInteractor(userDAO, loginPresenter, userFactory);
+    }
+
     // RestAPIs
     @Bean
-    public Authentification authentification(SignupInputBoundary signupInteractor) {
-        return new Authentification(signupInteractor);
+    public Authentification authentification(SignupInputBoundary signupInteractor,
+                                             LoginInputBoundary loginInteractor) {
+        return new Authentification(signupInteractor, loginInteractor);
     }
 }
