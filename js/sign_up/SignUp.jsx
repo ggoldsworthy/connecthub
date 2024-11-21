@@ -15,6 +15,7 @@ function SignUpForm() {
   const emailRef = useRef(null)
   const usernameRef = useRef(null)
   const fullNameRef = useRef(null)
+  const birthDateRef = useRef(null)
   const passwordRef = useRef(null)
   const confirmPasswordRef = useRef(null)
   const matchMessage = useRef(null)
@@ -56,6 +57,11 @@ function SignUpForm() {
       <div id="full-name-input" className="input-group">
         <label>Full Name: </label>
         <input name="fullName" id="full-name-input" placeholder="Doodle Wacker" ref={fullNameRef} />
+      </div>
+
+      <div id="birth-date-input" className="input-group">
+        <label>Birth Date (YYYYMMDD): </label>
+        <input name="birthDate" id="birth-date-input" placeholder="20241120" ref={birthDateRef} />
       </div>
 
       <div id="password-input" className="input-group">
