@@ -6,12 +6,10 @@ import use_case.login.LoginDataAccessInterface;
 import use_case.logout.LogoutDataAccessInterface;
 
 import org.bson.Document;
-import org.bson.conversions.Bson;
 import org.json.JSONObject;
 
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.Projections;
 import com.mongodb.client.result.InsertOneResult;
 import static com.mongodb.client.model.Filters.eq;
 
@@ -117,14 +115,8 @@ public class DBUserDataAccessObject implements SignupDataAccessInterface,
      * @param target - the target value to query for.
      */
     private Document queryOneUserBy(String field, String target) {
-        Bson projectionFields = Projections.fields(
-            Projections.include(field),
-            Projections.excludeId()
-        );
-        
         Document doc = this.userRepository
             .find(eq(field, target))
-            .projection(projectionFields)
             .first();
 
         return doc;
