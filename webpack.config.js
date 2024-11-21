@@ -12,6 +12,7 @@ module.exports = {
   entry: {
     "js/styles/app": "./styles/style.css",
     "js/sign_up/app": "./js/sign_up/main.js",
+    "/js/login/app": "/js/login/main.js",
   },
   output: {
     path: path.resolve(__dirname, path.resolve(__dirname, 'src/main/resources/static')),

@@ -9,11 +9,16 @@ import com.mongodb.client.MongoCollection;
 
 import api.Authentification;
 import controller.ViewManagerModel;
+import controller.login.LoginPresenter;
+import controller.login.LoginViewModel;
 import controller.signup.SignupPresenter;
 import controller.signup.SignupViewModel;
 import daos.DBUserDataAccessObject;
 import entity.CommonUserFactory;
 import entity.UserFactory;
+import use_case.login.LoginInputBoundary;
+import use_case.login.LoginInteractor;
+import use_case.login.LoginOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
@@ -35,17 +40,18 @@ public class WebServer {
 		final ViewManagerModel viewManagerModel = new ViewManagerModel();
 
         final SignupViewModel signupViewModel = new SignupViewModel();
-		// final LoginViewModel loginViewModel = new LoginViewModel(); TODO add back
+		final LoginViewModel loginViewModel = new LoginViewModel();
 
 		// Presenters (irrelavent for a web application)
-		final SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel, signupViewModel); // TODO add loginViewModel back when neccessary
+		final SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel);
+		final LoginOutputBoundary loginPresenter = new LoginPresenter(viewManagerModel, loginViewModel, signupViewModel); 
 
 		// Service Interactors
 		final SignupInputBoundary signUpInteractor = new SignupInteractor(userDAO, signupOutputBoundary, commonUserFactory);
-
+		final LoginInputBoundary loginInteractor = new LoginInteractor(userDAO, loginPresenter, commonUserFactory);
 
 		// RestAPI 
-		new Authentification(signUpInteractor); // TODO add the rest of the interactors
+		new Authentification(signUpInteractor, loginInteractor); // TODO add the rest of the interactors
 
 		// Application Start
         SpringApplication.run(WebServer.class, args);

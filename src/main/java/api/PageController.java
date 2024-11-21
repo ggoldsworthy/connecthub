@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class PageController {
     // bundled JavaScript files
     private final String SIGN_UP_SCRIPT = "/js/sign_up/app.js"; 
-    private final String LOG_IN_SCRIPT = ""; 
+    private final String LOG_IN_SCRIPT = "/js/login/app.js"; 
     private final String POST_SCRIPT = ""; 
     private final String CREATE_POST_SCRIPT = "";  
     private final String HOME_PAGE_SCRIPT = "";  
