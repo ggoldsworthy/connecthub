@@ -5,8 +5,10 @@ export default function Entry(props) {
     <div className="entry-form">
       <h2 className="form-type">{formType}</h2>
       <div className="form-container">{props.form}</div>
-      {formType === "LOGIN" ? <p className="switch-form-txt">Haven't signed up yet?</p> : <p className="switch-form-txt">Already have an account?</p>}
-      {formType === "LOGIN" ? <button className="switch-form-btn">Sign Up</button> : <button className="switch-form-btn">Log In</button>}
+      <p className="switch-form-txt">{formType === "LOGIN" ? "Haven't signed up yet?" : "Already have an account?"}</p>
+      <button onClick={() => props.navigateTo(formType === "LOGIN" ? props.signUpUrl : props.loginUrl)} className="switch-form-btn">
+        {formType === "LOGIN" ? "Sign Up" : "Log In"}
+      </button>
     </div>
   )
 }

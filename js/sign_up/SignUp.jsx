@@ -8,7 +8,7 @@ const LOGIN_URL = "/login"
 const HOME_URL = "/"
 
 export default function SignUp() {
-  return <Entry formType="signup" form={<SignUpForm />} />
+  return <Entry formType="signup" form={<SignUpForm />} navigateTo={navigateTo} signUpUrl={SIGN_UP_URL} loginUrl={LOGIN_URL} />
 }
 
 function SignUpForm() {
@@ -29,13 +29,30 @@ function SignUpForm() {
   const signUp = (e) => {
     e.preventDefault();
 
+    const email = emailRef.current.value
+    const username = usernameRef.current.value
+    const fullName = fullNameRef.current.value
+    const birthDate = birthDateRef.current.value 
+    const password = passwordRef.current.value 
+    const confirmPassword = confirmPasswordRef.current.value
+
+    if (email === "" || username === "" || fullName === "" || birthDate === "" || password === "" || confirmPassword === "") {
+      window.alert("Please fill in all data")
+      return 
+    } 
+    
+    if (password != confirmPassword) {
+      window.alert("Password does not match")
+      return 
+    }
+
     const userData = {
-      "username": "user1",
-      "password": "1234",
-      "confirmation": "1234",
-      "email": "abcd@gmail.com",
-      "birth_date": "10001010",
-      "full_name": "Doodle Wacker"
+      "username": username,
+      "password": password,
+      "confirmation": confirmPassword,
+      "email": email,
+      "birth_date": birthDate,
+      "full_name": fullName
     }
 
     signUpUser(SIGN_UP_URL, userData)
