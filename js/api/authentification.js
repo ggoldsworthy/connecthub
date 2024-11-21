@@ -21,7 +21,12 @@ export function logInUser(url, payload) {
     .then(response => {
     })
     .catch(error => {
-      // TODO differentiate errors
-      console.log(error)
+      if (error.response) {
+        window.alert(`Error: ${error.response.data}`);
+      } else if (error.request) {
+        window.alert('No response received from the server.');
+      } else {
+        window.alert('Error setting up the request: ' + error.message);
+      }
     })
 }

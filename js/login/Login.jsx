@@ -32,8 +32,7 @@ function LoginForm() {
     }
 
     logInUser(LOGIN_URL, loginData)
-    console.log(loginData)
-    // navigateTo(HOME_URL)
+    navigateTo(HOME_URL)
   }
     
   return (
