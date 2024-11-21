@@ -48,7 +48,7 @@ public class Authentification {
         }
     } 
 
-    @GetMapping("/login")
+    @GetMapping("/login-user")
     public ResponseEntity<String> logInUser(@RequestBody Map<String, String> requestBody) {
         final LoginInputData loginInputData = new LoginInputData(
             requestBody.get("email"), 
@@ -62,8 +62,9 @@ public class Authentification {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with email not found");
         } catch (IncorrectPasswordException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Incorrect password");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Something went wrong...");
-        }
+        } 
+        // catch (Exception e) {
+        //     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Something went wrong...");
+        // }
     }
 }
