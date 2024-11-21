@@ -14,3 +14,13 @@ export function signUpUser(url, payload) {
       window.alert(`ERROR: ${error.response.data}`)
     })
 } 
+
+export function logInUser(url, payload) {
+  return api 
+    .get(url, payload, REQ_HEADER)
+    .then(response => {
+    })
+    .catch(error => {
+      // TODO differentiate errors
+    })
+}
