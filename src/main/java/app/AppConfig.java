@@ -8,6 +8,8 @@ import com.mongodb.client.MongoCollection;
 
 import api.Authentification;
 import controller.ViewManagerModel;
+import controller.login.LoginPresenter;
+import controller.login.LoginViewModel;
 import controller.signup.SignupPresenter;
 import controller.signup.SignupViewModel;
 import daos.DBUserDataAccessObject;
@@ -19,7 +21,6 @@ import use_case.login.LoginOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import view.SignupView;
 
 @Configuration
 public class AppConfig {
@@ -74,7 +75,7 @@ public class AppConfig {
     public LoginOutputBoundary loginPresenter(ViewManagerModel viewManagerModel, 
                                               LoginViewModel loginViewModel, 
                                               SignupViewModel signupViewModel) {
-        return new LoginPresenter(viewManagerModel, loginViewModel);
+        return new LoginPresenter(viewManagerModel, loginViewModel, signupViewModel);
     }
 
     // Services
