@@ -4,7 +4,6 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,7 +47,7 @@ public class Authentification {
         }
     } 
 
-    @GetMapping("/login-user")
+    @PostMapping("/login")
     public ResponseEntity<String> logInUser(@RequestBody Map<String, String> requestBody) {
         final LoginInputData loginInputData = new LoginInputData(
             requestBody.get("email"), 
@@ -62,9 +61,8 @@ public class Authentification {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with email not found");
         } catch (IncorrectPasswordException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Incorrect password");
-        } 
-        // catch (Exception e) {
-        //     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Something went wrong...");
-        // }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Something went wrong...");
+        }
     }
 }

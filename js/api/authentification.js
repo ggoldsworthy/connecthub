@@ -17,10 +17,11 @@ export function signUpUser(url, payload) {
 
 export function logInUser(url, payload) {
   return api 
-    .get(url, payload, REQ_HEADER)
+    .post(url, payload, REQ_HEADER)
     .then(response => {
     })
     .catch(error => {
       // TODO differentiate errors
+      console.log(error)
     })
 }

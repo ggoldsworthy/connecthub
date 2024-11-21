@@ -7,7 +7,7 @@ const SIGN_UP_URL = "/signup"
 const LOGIN_URL = "/login"
 const HOME_URL = "/"
 
-export default function SignUp() {
+export default function Login() {
   return <Entry formType="login" form={<LoginForm />} navigateTo={navigateTo} signUpUrl={SIGN_UP_URL} loginUrl={LOGIN_URL} />
 }
 
@@ -32,7 +32,8 @@ function LoginForm() {
     }
 
     logInUser(LOGIN_URL, loginData)
-    navigateTo(HOME_URL)
+    console.log(loginData)
+    // navigateTo(HOME_URL)
   }
     
   return (
