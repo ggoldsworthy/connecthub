@@ -55,8 +55,8 @@ public class AppConfig {
 
     // Presenters
     @Bean
-    public SignupOutputBoundary signupPresenter(SignupViewModel signupViewModel) {
-        return new SignupPresenter(null, signupViewModel); // Adjust dependencies if needed
+    public SignupOutputBoundary signupPresenter(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel) {
+        return new SignupPresenter(viewManagerModel, signupViewModel); // Adjust dependencies if needed
     }
 
     @Bean

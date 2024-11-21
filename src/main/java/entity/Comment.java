@@ -14,7 +14,7 @@ public class Comment extends ForumEntry {
      * @param replies - the replies to this comment.
      * See ForumEntry for other parameters
      */
-    public Comment(String entryID, User author, Content content, LocalDateTime postedDate,
+    public Comment(String entryID, String author, Content content, LocalDateTime postedDate,
                    LocalDateTime lastModifiedDate, int likes, int dislikes, List<Comment> replies) {
         super(entryID, author, content, postedDate, lastModifiedDate, likes, dislikes);
         this.replies = replies;

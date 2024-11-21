@@ -33,7 +33,7 @@ public class Authentification {
 
         try {
             signUpInteractor.signupUser(signupInputData);
-            return ResponseEntity.status(HttpStatus.OK).body("Signed up user successfully");
+            return ResponseEntity.status(HttpStatus.OK).body("Signed up successfully!");
         } catch (UserExistsException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User with email exists");
         }

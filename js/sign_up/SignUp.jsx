@@ -1,8 +1,11 @@
 import { useRef } from "react"
 import Entry from "../common/Entry.jsx"
 import { signUpUser } from "../api/authentification.js"
+import { navigateTo } from "../api/utils.js"
 
 const SIGN_UP_URL = "/signup"
+const LOGIN_URL = "/login"
+const HOME_URL = "/"
 
 export default function SignUp() {
   return <Entry formType="signup" form={<SignUpForm />} />
@@ -35,10 +38,11 @@ function SignUpForm() {
     }
 
     signUpUser(SIGN_UP_URL, userData)
+    navigateTo(HOME_URL)
   }
   
   return (
-    <form className="form" onSubmit={signUp}>
+    <form className="form">
       <div id="email-input" className="input-group">
         <label>Email: </label>
         <input name="email" id="email-input" placeholder="doctor.giggle.touch@gmail.com" ref={emailRef} />
@@ -66,7 +70,7 @@ function SignUpForm() {
         <input name="confirmPassword" id="confirm-password-input" placeholder="" ref={confirmPasswordRef} onChange={handlePasswordChange} />
       </div>
 
-      <button type="submit">Sign up</button>
+      <button onClick={signUp}>Sign up</button>
     </form>
   )
 }

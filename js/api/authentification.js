@@ -9,8 +9,6 @@ export function signUpUser(url, payload) {
   return api
     .post(url, payload, REQ_HEADER)
     .then(response => {
-      console.log(response)
-    //   window.alert(`${response.data}`)
     })
     .catch(error => {
       window.alert(`ERROR: ${error.response.data}`)
