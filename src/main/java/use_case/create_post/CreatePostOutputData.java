@@ -1,84 +1,70 @@
 package use_case.create_post;
 
 import entity.Comment;
-import entity.PostContent;
-import entity.User;
+import entity.Content;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class CreatePostOutputData {
-
-    private final String entryID;
-    private final String author;
-    private final PostContent content;
-    private final LocalDateTime timestamp;
-    private final int dislikes;
-    private final int likes;
+    private String entryID;
+    private String author;
+    private Content content;
+    private LocalDateTime postedDate;
+    private LocalDateTime lastModifiedDate; 
+    private int likes;
+    private int dislikes;
     private final String postTitle;
-    private final List<User> moderators;
     private final List<Comment> comments;
     private final String category;
     private final boolean creationSuccessful;
 
-    public CreatePostOutputData(String entryID, String author, PostContent content, LocalDateTime timestamp, int dislikes, int likes, String postTitle, List<User> moderators, List<Comment> comments, String category, boolean creationSuccessful) {
+    public CreatePostOutputData(String entryID, String author, Content content, LocalDateTime postedDate, 
+                                LocalDateTime lastModified, int dislikes, int likes, String postTitle, 
+                                List<Comment> comments, String category, boolean creationSuccessful) {
         this.entryID = entryID;
         this.author = author;
         this.content = content;
-        this.timestamp = timestamp;
+        this.postedDate = postedDate;
+        this.lastModifiedDate = lastModified;
         this.dislikes = dislikes;
         this.likes = likes;
         this.postTitle = postTitle;
-        this.moderators = moderators;
         this.comments = comments;
         this.category = category;
-//        this.author = author;
-//        this.content = content;
-//        this.timestamp = timestamp;
-//        this.dislikes = dislikes;
-//        this.likes = likes;
-//        this.postTitle = postTitle;
-//        this.moderators = moderators;
-//        this.comments = comments;
-//        this.category = category;
         this.creationSuccessful = creationSuccessful;
     }
 
-
     public String getEntryID() {
         return entryID;
-    }
-
-    public boolean isCreationSuccessful() {
-        return creationSuccessful;
     }
 
     public String getAuthor() {
         return author;
     }
 
-    public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
-
-    public int getDislikes() {
-        return dislikes;
-    }
-
-    public PostContent getContent() {
+    public Content getContent() {
         return content;
+    }
+
+    public LocalDateTime getPostedDate() {
+        return postedDate;
+    }
+
+    public LocalDateTime getLastModifiedDate() {
+        return lastModifiedDate;
     }
 
     public int getLikes() {
         return likes;
     }
 
-    public String getPostTitle() {
-        return postTitle;
+    public int getDislikes() {
+        return dislikes;
     }
 
-    public List<User> getModerators() {
-        return moderators;
+    public String getPostTitle() {
+        return postTitle;
     }
 
     public List<Comment> getComments() {
@@ -87,5 +73,9 @@ public class CreatePostOutputData {
 
     public String getCategory() {
         return category;
+    }
+
+    public boolean isCreationSuccessful() {
+        return creationSuccessful;
     }
 }

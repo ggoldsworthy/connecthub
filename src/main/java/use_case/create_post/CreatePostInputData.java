@@ -2,19 +2,16 @@ package use_case.create_post;
 
 import entity.Comment;
 import entity.User;
-import entity.PostContent;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 
 public class CreatePostInputData {
 
-    private final String entryID;
     private final String author;
-    private final PostContent content;
-    private final LocalDateTime timestamp;
-    private final LocalDateTime lastModified;
+    private final String postCotent;
+    private final String attachmentPath;
+    private final String fileType;
     private final int dislikes;
     private final int likes;
     private final String postTitle;
@@ -23,12 +20,13 @@ public class CreatePostInputData {
     private final String category;
 
 
-    public CreatePostInputData(String entryID, String author, PostContent content, LocalDateTime timestamp, LocalDateTime lastModified, int dislikes, int likes, String postTitle, List<User> moderators, List<Comment> comments, String category) {
-        this.entryID = entryID;
+    public CreatePostInputData(String author, String postContent, String attachmentPath, 
+                               String fileType, int dislikes, int likes, String postTitle, 
+                               List<User> moderators, List<Comment> comments, String category) {
         this.author = author;
-        this.content = content;
-        this.timestamp = timestamp;
-        this.lastModified = lastModified;
+        this.postCotent = postContent;
+        this.attachmentPath = attachmentPath;
+        this.fileType = fileType;
         this.dislikes = dislikes;
         this.likes = likes;
         this.postTitle = postTitle;
@@ -37,47 +35,53 @@ public class CreatePostInputData {
         this.category = category;
     }
 
-    public String getEntryID() {
-        return entryID;
-    }
 
     public String getAuthor() {
         return author;
     }
 
-    public PostContent getContent() {
-        return content;
+
+    public String getPostCotent() {
+        return postCotent;
     }
 
-    public LocalDateTime getTimestamp() {
-        return timestamp;
+
+    public String getAttachmentPath() {
+        return attachmentPath;
     }
+
+
+    public String getFileType() {
+        return fileType;
+    }
+
 
     public int getDislikes() {
         return dislikes;
     }
 
+
     public int getLikes() {
         return likes;
     }
+
 
     public String getPostTitle() {
         return postTitle;
     }
 
+
     public List<User> getModerators() {
         return moderators;
     }
+
 
     public List<Comment> getComments() {
         return comments;
     }
 
+
     public String getCategory() {
         return category;
-    }
-
-    public LocalDateTime getLastModified() {
-        return lastModified;
     }
 }

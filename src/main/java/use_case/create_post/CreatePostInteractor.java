@@ -2,38 +2,64 @@ package use_case.create_post;
 
 import entity.*;
 
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.UUID;
+
+import daos.DBUserDataAccessObject;
 
 public class CreatePostInteractor implements CreatePostInputBoundary {
     private final CreatePostDataAccessInterface dataAccess;
+    private final DBUserDataAccessObject userRepo;
     private final CreatePostOutputBoundary userPresenter;
+    private final PostFactory postFactory;
 
-    public CreatePostInteractor(CreatePostDataAccessInterface dataAccess, CreatePostOutputBoundary outputBoundary) {
+    public CreatePostInteractor(CreatePostDataAccessInterface dataAccess, 
+                                DBUserDataAccessObject userRepo,
+                                CreatePostOutputBoundary outputBoundary, 
+                                PostFactory postFactory) {
         this.dataAccess = dataAccess;
+        this.userRepo = userRepo;
         this.userPresenter = outputBoundary;
+        this.postFactory = postFactory;
     }
 
     @Override
     public void createPost(CreatePostInputData inputData) {
-        // TODO: more logic and database?
-        // shoudl i add null here
         if (inputData.getPostTitle().isEmpty()) {
             userPresenter.prepareFailView("Please add title!");
-        } else if (inputData.getCategory() == null) {
+            throw new PostCreationFailedException("Please add title!");
+        } else if (inputData.getCategory() == null || inputData.getCategory().equals("")) {
             userPresenter.prepareFailView("Please choose category!");
-        } else if (dataAccess.existsByTitle(inputData.getPostTitle())) {
-            throw new IllegalArgumentException("Post with the same title already exists.");
+            throw new PostCreationFailedException("Please choose category!");
+        } else if (inputData.getPostCotent() == null || inputData.getPostCotent().equals("")) {
+            // post content is the body text of the post, not the entire content with attachment path and file type
+            userPresenter.prepareFailView("Please fill in post contents!");
+            throw new PostCreationFailedException("Please fill in post contents!");
         } else {
-            final Post post = new Post(inputData.getEntryID(), inputData.getAuthor(), inputData.getContent(), inputData.getTimestamp(),
-                    inputData.getLastModified(), inputData.getLikes(), inputData.getDislikes(), inputData.getPostTitle(),
-                    inputData.getComments(), inputData.getCategory());
+            final Post post = this.postFactory.createPost(
+                UUID.randomUUID().toString(),
+                userRepo.getCurrentUser(),
+                inputData.getPostCotent(),
+                inputData.getAttachmentPath(),
+                inputData.getFileType(),
+                inputData.getPostTitle(),
+                inputData.getCategory()
+            );
 
+            dataAccess.createPost(post);
 
-            dataAccess.create(post);
-
-
-            final CreatePostOutputData outputData = new CreatePostOutputData(inputData.getEntryID(), inputData.getAuthor(), inputData.getContent(), inputData.getTimestamp(), inputData.getDislikes(), inputData.getLikes(), inputData.getPostTitle(), inputData.getModerators(), inputData.getComments(), inputData.getCategory(), true);
+            final CreatePostOutputData outputData = new CreatePostOutputData(
+                post.getEntryID(),
+                post.getAuthor(),
+                post.getContent(),
+                post.getPostedDate(),
+                post.getLastModifiedDate(),
+                post.getLikes(),
+                post.getDislikes(),
+                post.getPostTitle(),
+                post.getComments(),
+                post.getCategory(),
+                true
+            );
             userPresenter.prepareSuccessView(outputData);
         }
     }
