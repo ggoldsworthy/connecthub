@@ -5,6 +5,9 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * The Navigation Bar (top side of the homepage)
+ */
 public class Navbar {
     public static JPanel createNavBar(JFrame frame, JPanel mainContent) {
         final JPanel navBar = new JPanel(new BorderLayout());

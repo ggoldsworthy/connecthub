@@ -3,6 +3,9 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Posts displayed on the homepage are shown in individual PostBoxes
+ */
 public class PostBox {
     private JPanel postBox;
     private String title;

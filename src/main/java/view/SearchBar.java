@@ -3,6 +3,9 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The Search Bar located on the top of the page. The search bar is placed within the navigation bar
+ */
 public class SearchBar {
     public static JPanel createSearchPanel() {
         final JPanel searchPanel = new JPanel(new BorderLayout());

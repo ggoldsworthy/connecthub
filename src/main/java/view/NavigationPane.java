@@ -3,6 +3,9 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The Navigation Pane
+ */
 public class NavigationPane {
     public static JPanel createNavigationPane(JPanel homepage) {
         final JPanel navigationPanel = new JPanel();

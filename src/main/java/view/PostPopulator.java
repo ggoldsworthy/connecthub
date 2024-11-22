@@ -3,6 +3,9 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Populate the home page with posts.
+ */
 public class PostPopulator {
     public static void populate(JPanel panelToPopulate, JPanel mainContent) {
         for (int i = 1; i <= 6; i++) {

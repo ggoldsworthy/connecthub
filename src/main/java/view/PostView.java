@@ -3,6 +3,9 @@ package view;
 import java.awt.*;
 import javax.swing.*;
 
+/**
+ * The View for an individual Post.
+ */
 public class PostView extends JPanel {
     private final JPanel mainContent;
     private final String title;
