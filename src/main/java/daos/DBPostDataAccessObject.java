@@ -8,7 +8,8 @@ import entity.PostFactory;
 import use_case.create_post.CreatePostDataAccessInterface;
 import use_case.delete_post.DeletePostDataAccessInterface;
 import use_case.getpost.GetPostDataAccessInterface;
-import use_case.update_post.UpdatePostDataAccessInterface;
+import use_case.getpost.PostNotFoundException;
+import use_case.edit_post.EditPostDataAccessInterface;
 
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -36,7 +37,7 @@ import java.util.List;
  */
 public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
                                                DeletePostDataAccessInterface,
-                                               UpdatePostDataAccessInterface,
+                                               EditPostDataAccessInterface,
                                                GetPostDataAccessInterface {
     private final String ENTRY_ID = "post_id";
     private final String AUTHOR = "author";
@@ -67,7 +68,7 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
     }
 
     @Override
-    public JSONObject getPostByID(String id) {
+    public JSONObject getPostByEntryID(String id) {
         return new JSONObject(queryOnePostBy(ENTRY_ID, id).toJson());
     }
 
@@ -84,6 +85,11 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
         } finally {
             retrievedPosts.close();
         }
+    }
+
+    @Override
+    public List<Post> getAllPostsByUserID(String userID) {
+        return null;
     }
 
     // @Override
