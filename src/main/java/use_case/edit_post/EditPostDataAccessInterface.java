@@ -8,5 +8,5 @@ public interface EditPostDataAccessInterface {
 
     void updatePost(Post post);
 
-    JSONObject getPostByID(String postID);
+    JSONObject getPostByEntryID(String postID);
 }
