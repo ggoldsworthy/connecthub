@@ -3,6 +3,9 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The View for the Home Page.
+ */
 public class HomePageView {
     public static JPanel createHomepageView(JPanel mainContent) {
         final JPanel homepage = new JPanel();
