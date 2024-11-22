@@ -1,4 +1,4 @@
-package use_case.createPost;
+package use_case.create_post;
 
 import entity.Comment;
 import entity.User;
