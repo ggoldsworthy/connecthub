@@ -1,14 +1,10 @@
 package daos;
 
-import entity.Comment;
 import entity.Post;
-import entity.PostContent;
-import entity.PostFactory;
 // TODO rename to whatever package/class name created by others
 import use_case.create_post.CreatePostDataAccessInterface;
 import use_case.delete_post.DeletePostDataAccessInterface;
 import use_case.getpost.GetPostDataAccessInterface;
-import use_case.getpost.PostNotFoundException;
 import use_case.edit_post.EditPostDataAccessInterface;
 
 import org.bson.Document;
@@ -27,7 +23,6 @@ import com.mongodb.client.result.UpdateResult;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.lt;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +56,10 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
     }
 
     // TODO check if there's any other operations missing
+    @Override
+    public boolean existsByID(String postId) {
+        return this.getPostByEntryID(postId) != null;
+    }
 
     @Override
     public void createPost(Post post) {
@@ -72,20 +71,21 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
         return new JSONObject(queryOnePostBy(ENTRY_ID, id).toJson());
     }
 
-    @Override
-    public List<JSONObject> getPostsByCategory(String category) {
-        List<JSONObject> posts = new ArrayList<>();
-        MongoCursor<Document> retrievedPosts = this.queryMultiplePostsBy(CATEGORY, category);
+    // TODO used for filtering posts, not implemented yet
+    // @Override
+    // public List<JSONObject> getPostsByCategory(String category) {
+    //     List<JSONObject> posts = new ArrayList<>();
+    //     MongoCursor<Document> retrievedPosts = this.queryMultiplePostsBy(CATEGORY, category);
 
-        try {
-            while (retrievedPosts.hasNext()) {
-                String jsonStr = retrievedPosts.next().toJson();
-                posts.add(new JSONObject(jsonStr));
-            }
-        } finally {
-            retrievedPosts.close();
-        }
-    }
+    //     try {
+    //         while (retrievedPosts.hasNext()) {
+    //             String jsonStr = retrievedPosts.next().toJson();
+    //             posts.add(new JSONObject(jsonStr));
+    //         }
+    //     } finally {
+    //         retrievedPosts.close();
+    //     }
+    // }
 
     @Override
     public List<Post> getAllPostsByUserID(String userID) {
