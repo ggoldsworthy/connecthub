@@ -1,23 +1,22 @@
 package app;
 
-import java.awt.CardLayout;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.WindowConstants;
+import javax.swing.*;
 
 import com.mongodb.client.MongoCollection;
+import controller.post.PostViewModel;
 import org.bson.Document;
-
 import daos.DBUserDataAccessObject;
 import controller.ViewManagerModel;
-//import controller.logged_in.LoggedInViewModel;
+import daos.DBUserDataAccessObject;
+import entity.CommonUserFactory;
+import controller.ViewManagerModel;
+import controller.homepage.HomepageViewModel;
 //import controller.login.LoginViewModel;
-import controller.signup.SignupViewModel;
-//import view.LoggedInView;
-//import view.LoginView;
-import view.SignupView;
-import view.ViewManager;
+//import view.LoginUseCaseFactory;
+import view.*;
+
+import java.util.List;
+import java.awt.*;
 
 /**
  * The version of Main with an external database used to persist user data.
@@ -29,56 +28,61 @@ public class ConnectHub {
 	 * @param args input to main
 	 */
 	public static void main(String[] args) {
-		Repositories repositories = new Repositories();
-		MongoCollection<Document> userRepository = repositories.getUserRepository();
-		MongoCollection<Document> postRepository = repositories.getPostRepository();
-		MongoCollection<Document> commentRepositroy = repositories.getCommentRepository();
-
-		// TODO the repositories will be passed into DAOs
-
-		// Build the main program window, the main panel containing the
-		// various cards, and the layout, and stitch them together.
-
-		// The main application window.
 		final JFrame application = new JFrame("ConnectHub");
 		application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		application.setSize(StyleConstants.APP_WIDTH, StyleConstants.APP_HEIGHT);
 
 		final CardLayout cardLayout = new CardLayout();
-
-		// The various View objects. Only one view is visible at a time.
 		final JPanel views = new JPanel(cardLayout);
 		application.add(views);
 
-		// This keeps track of and manages which view is currently showing.
 		final ViewManagerModel viewManagerModel = new ViewManagerModel();
 		new ViewManager(views, cardLayout, viewManagerModel);
 
-		// The data for the views, such as username and password, are in the ViewModels.
-		// This information will be changed by a presenter object that is reporting the
-		// results from the use case. The ViewModels are "observable", and will
-		// be "observed" by the Views.
 //		final LoginViewModel loginViewModel = new LoginViewModel();
-//		final LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
-		final SignupViewModel signupViewModel = new SignupViewModel();
+		final HomepageViewModel homePageViewModel = new HomepageViewModel();
+//		final PostViewModel postPageViewModel = new PostViewModel();
+//		final DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(new CommonUserFactory());
 
-		// TODO Task 1.1 in a copy of this file, change this line to use the in-memory DAO.
-		final DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject();
+		// Create and add views
+//		views.add(LoginUseCaseFactory.create(viewManagerModel, loginViewModel, homePageViewModel, userDataAccessObject),
+//				"login");
+		views.add(HomepageUseCaseFactory.create(viewManagerModel, homePageViewModel), "home");
 
-		final SignupView signupView = SignupUseCaseFactory.create(viewManagerModel,
-				signupViewModel, userDataAccessObject);
-		views.add(signupView, signupView.getViewName());
-
-//		final LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel,
-//				loggedInViewModel, userDataAccessObject);
-//		views.add(loginView, loginView.getViewName());
-//
-//		final LoggedInView loggedInView = ChangePasswordUseCaseFactory.create(viewManagerModel,
-//				loggedInViewModel, userDataAccessObject);
-//		views.add(loggedInView, loggedInView.getViewName());
-
-		viewManagerModel.setState(signupView.getViewName());
+		// Start at home
+		viewManagerModel.setState("home");
 		viewManagerModel.firePropertyChanged();
 
+
+//		// Initialize post boxes dynamically from database
+//		DBUserDataAccessObject dbUserDataAccessObject = new DBUserDataAccessObject(new CommonUserFactory());
+//		MongoCollection<Document> postsCollection = dbUserDataAccessObject.getPostsCollection(); // Fetch posts collection
+
+
+		// Dummy post data to be displayed
+		List<String> dummyTitles = List.of("Post 1", "Post 2", "Post 3");
+		List<String> dummyContents = List.of(
+				"This is the content of the first post.",
+				"This is the content of the second post.",
+				"This is the content of the third post."
+		);
+
+			// Create and add the PostBoxes with dummy data
+		for (int i = 0; i < dummyTitles.size(); i++) {
+			String title = dummyTitles.get(i);
+			String content = dummyContents.get(i);
+
+			// Create a PostViewModel for each dummy post
+			PostViewModel postViewModel = new PostViewModel(title, content);
+
+			// Pass the 'views' panel and the 'postViewModel' to the PostView constructor
+			views.add(new PostView(views, postViewModel), title); // Use the title as a unique identifier for each post
+		}
+
+
+		// Create and add the navigation bar
+		final JPanel navBar = Navbar.createNavBar(application, views);
+		application.add(navBar, BorderLayout.NORTH);
 		application.pack();
 		application.setVisible(true);
 	}

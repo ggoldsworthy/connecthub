@@ -1,5 +1,7 @@
 package view;
 
+import controller.post.PostViewModel;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,11 +13,13 @@ public class PostBox {
     private String title;
     private String content;
     private JPanel mainContent;
+    private int postId;
 
     public PostBox(String title, String content, int postId, JPanel mainContent) {
         this.title = title;
         this.content = content;
         this.mainContent = mainContent; // Initialize mainContent here
+        this.postId = postId;
 
         this.postBox = new JPanel();
         postBox.setLayout(new BorderLayout());
@@ -54,12 +58,22 @@ public class PostBox {
         final JButton likeButton = createStyledButton("Like");
         final JButton dislikeButton = createStyledButton("Dislike");
         final JButton viewPostButton = createStyledButton("View Post");
+        viewPostButton.addActionListener(e -> {
+            // Create the PostView for this post
+            PostViewModel postViewModel = new PostViewModel(this.title, this.content);
+            PostView postView = new PostView(this.mainContent, postViewModel);
+
+            // Add the PostView to the mainContent
+            this.mainContent.add(postView, "PostView" + title);  // Unique identifier for each post
+
+            // Switch to the "PostView" card
+            CardLayout layout = (CardLayout) this.mainContent.getLayout();
+            layout.show(this.mainContent, "PostView" + title);  // Show the specific post view
+        });
+
 
         likeButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Liked post " + postId));
         dislikeButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Disliked post " + postId));
-
-        // Replace content area with post view when clicked
-        viewPostButton.addActionListener(e -> openPostView(this.mainContent, this.title, this.content));
 
         buttonPanel.add(likeButton);
         buttonPanel.add(dislikeButton);
@@ -87,11 +101,4 @@ public class PostBox {
         return button;
     }
 
-    private static void openPostView(JPanel mainContent, String title, String content) {
-        final JPanel postView = new PostView(mainContent, title, content).getPostView();
-        final CardLayout layout = (CardLayout) mainContent.getLayout();
-
-        mainContent.add(postView, "PostView");
-        layout.show(mainContent, "PostView");
-    }
 }
