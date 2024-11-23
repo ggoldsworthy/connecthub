@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 import controller.homepage.HomepageState;
 import controller.homepage.HomepageViewModel;
@@ -10,6 +11,11 @@ import controller.homepage.HomepageViewModel;
  * The View for the Home Page.
  */
 public class HomePageView {
+    private ArrayList<PostBox> posts;
+
+    public HomePageView() {
+        this.posts = new ArrayList<PostBox>();
+    }
 
     public static JPanel createHomepageView(JPanel mainContent, HomepageViewModel homePageViewModel) {
         final JPanel homepage = new JPanel();
@@ -56,5 +62,9 @@ public class HomePageView {
         });
 
         return homepage;
+    }
+
+    public ArrayList<PostBox> getPostContainers() {
+        return this.posts;
     }
 }
