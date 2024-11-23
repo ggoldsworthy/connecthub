@@ -5,6 +5,8 @@ import java.util.List;
 import entity.Comment;
 
 public class PostState {
+    private String postID = "";
+    private String postIDError;
     private String postTitle = "";
     private String postTitleError;
     private String postContent = "";
@@ -12,6 +14,22 @@ public class PostState {
     private List<Comment> comments = new ArrayList<>();
     private List<Comment> commentsError;
     
+    public String getPostID() {
+        return postID;
+    }
+
+    public void setPostID(String postID) {
+        this.postID = postID;
+    }
+
+    public String getPostIDError() {
+        return postIDError;
+    }
+
+    public void setPostIDError(String postIDError) {
+        this.postIDError = postIDError;
+    }
+
     public String getPostTitle() {
         return postTitle;
     }

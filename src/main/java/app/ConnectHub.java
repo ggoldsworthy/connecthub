@@ -9,14 +9,18 @@ import javax.swing.WindowConstants;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 
+import daos.DBPostDataAccessObject;
 import daos.DBUserDataAccessObject;
 import entity.CommonUserFactory;
 import entity.UserFactory;
 import controller.ViewManagerModel;
 import controller.login.LoginViewModel;
+import controller.post.PostState;
+import controller.post.PostViewModel;
 //import controller.logged_in.LoggedInViewModel;
 //import controller.login.LoginViewModel;
 import controller.signup.SignupViewModel;
+import view.PostView;
 //import view.LoggedInView;
 //import view.LoginView;
 import view.SignupView;
@@ -38,7 +42,7 @@ public class ConnectHub {
 		final MongoCollection<Document> commentRepositroy = repositories.getCommentRepository();
 
 		final DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(userRepository);
-		System.out.println(userDataAccessObject.existsByEmail("a@gmail.com"));
+		final DBPostDataAccessObject postDataAccessObject = new DBPostDataAccessObject(postRepository);
 
 		// Closes the connection with the database when the program terminates
 		Runtime.getRuntime().addShutdownHook(new Thread() {
@@ -74,6 +78,7 @@ public class ConnectHub {
 //		final LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
 		final SignupViewModel signupViewModel = new SignupViewModel();
 		final LoginViewModel loginViewModel = new LoginViewModel();
+		final PostViewModel postViewModel = new PostViewModel();
 
 		final SignupView signupView = SignupUseCaseFactory.create(viewManagerModel,
 				signupViewModel, loginViewModel, userDataAccessObject);
@@ -86,8 +91,12 @@ public class ConnectHub {
 //		final LoggedInView loggedInView = ChangePasswordUseCaseFactory.create(viewManagerModel,
 //				loggedInViewModel, userDataAccessObject);
 //		views.add(loggedInView, loggedInView.getViewName());
+		
+		final PostView postView = GetPostUseCaseFactory.create(viewManagerModel, postViewModel, postDataAccessObject);
+		views.add(postView, postView.getViewName());
 
 		viewManagerModel.setState(signupView.getViewName());
+		// viewManagerModel.setState(postView.getViewName());
 		viewManagerModel.firePropertyChanged();
 
 		application.pack();

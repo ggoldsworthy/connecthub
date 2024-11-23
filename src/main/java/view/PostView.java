@@ -4,6 +4,7 @@ import controller.post.PostController;
 import controller.post.PostState;
 import controller.post.PostViewModel;
 import controller.signup.SignupState;
+import entity.Comment;
 import use_case.getpost.GetPostInputBoundary;
 
 import java.awt.*;
@@ -36,6 +37,18 @@ public class PostView extends JPanel implements PropertyChangeListener {
         // final JPanel navBar = Navbar.createNavBar(mainContent);
         // add(navBar, BorderLayout.NORTH);
 
+        // Back button (won't implement this for now)
+        // JButton backButton = new JButton("Back");
+        // backButton.setFont(new Font(FONT_TYPE, Font.BOLD, 14));
+        // backButton.setBackground(new Color(200, 200, 200));
+        // backButton.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        // backButton.addActionListener(e -> {
+        //     CardLayout layout = (CardLayout) mainContent.getLayout();
+        //     layout.show(mainContent, "Homepage");
+        // });
+
+        // titlePanel.add(backButton, BorderLayout.EAST);
+
         // Post title
         JPanel titlePanel = new JPanel(new BorderLayout());
         postTitle.setFont(new Font(FONT_TYPE, Font.BOLD, 16));
@@ -45,17 +58,6 @@ public class PostView extends JPanel implements PropertyChangeListener {
                 BorderFactory.createEmptyBorder(10, 10, 10, 10)));
 
         titlePanel.add(postTitle, BorderLayout.WEST);
-
-        JButton backButton = new JButton("Back");
-        backButton.setFont(new Font(FONT_TYPE, Font.BOLD, 14));
-        backButton.setBackground(new Color(200, 200, 200));
-        backButton.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-        backButton.addActionListener(e -> {
-            CardLayout layout = (CardLayout) mainContent.getLayout();
-            layout.show(mainContent, "Homepage");
-        });
-
-        titlePanel.add(backButton, BorderLayout.EAST);
 
         // Post content
         postContent.setFont(new Font(FONT_TYPE, Font.PLAIN, 14));
@@ -102,19 +104,18 @@ public class PostView extends JPanel implements PropertyChangeListener {
         this.postTitle.setText(state.getPostTitle());
     }
 
-    private void setPostContent() {
+    public void setPostContent(PostState state) {
+        this.postContent.setText(state.getPostContent());
     }
 
-    private void setComments() {
-
-
-        // List<String> comments = viewModel.getComments();
-        // for (String comment : comments) {
-        //     JLabel commentLabel = new JLabel(comment);
-        //     commentLabel.setFont(new Font(FONT_TYPE, Font.PLAIN, 12));
-        //     commentLabel.setForeground(Color.DARK_GRAY);
-        //     commentLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-        //     commentsPanel.add(commentLabel);
-        // }
+    public void setComments(PostState state) {
+        List<Comment> comments = state.getComments();
+        for (Comment comment : comments) {
+            JLabel commentLabel = new JLabel(comment.getContent().getBody());
+            commentLabel.setFont(new Font(FONT_TYPE, Font.PLAIN, 12));
+            commentLabel.setForeground(Color.DARK_GRAY);
+            commentLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+            commentsPanel.add(commentLabel);
+        }
     }
 }
