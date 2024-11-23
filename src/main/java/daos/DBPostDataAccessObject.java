@@ -85,6 +85,7 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
         } finally {
             retrievedPosts.close();
         }
+        return posts;
     }
 
     @Override

@@ -27,7 +27,7 @@ public class GetPostInteractor implements GetPostInputBoundary {
     @Override
     public Post getPost(GetPostInputData postInputData) throws IllegalArgumentException {
         final String entryID = postInputData.getEntryID();
-
+        System.out.println(entryID);
         if (entryID == null) {
             throw new IllegalArgumentException();
         }
@@ -45,6 +45,7 @@ public class GetPostInteractor implements GetPostInputBoundary {
         }
         catch (Exception ex) {
             getPostPresenter.prepareFailView(ex.getMessage());
+            System.out.println(ex.getMessage());
             return null;
         }
     }
@@ -74,6 +75,7 @@ public class GetPostInteractor implements GetPostInputBoundary {
                 comments,
                 postData.getString("category")
         );
+        System.out.println(postData);
         return post;
     }
 }
