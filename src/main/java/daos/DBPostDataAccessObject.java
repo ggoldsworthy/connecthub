@@ -1,14 +1,10 @@
 package daos;
 
-import entity.Comment;
 import entity.Post;
-import entity.PostContent;
-import entity.PostFactory;
 // TODO rename to whatever package/class name created by others
 import use_case.create_post.CreatePostDataAccessInterface;
 import use_case.delete_post.DeletePostDataAccessInterface;
 import use_case.getpost.GetPostDataAccessInterface;
-import use_case.getpost.PostNotFoundException;
 import use_case.edit_post.EditPostDataAccessInterface;
 
 import org.bson.Document;
@@ -27,7 +23,6 @@ import com.mongodb.client.result.UpdateResult;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.lt;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -98,7 +93,7 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
     // }
 
     @Override 
-    public void deletePost(String postID) {
+    public boolean deletePost(String postID) {
         Bson query = eq(ENTRY_ID, postID);
         
         try {
@@ -106,7 +101,29 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
         } catch (MongoException error) {
             // TODO throw some error, depending how the rest of the group implemts stuff.
         }
+        return false;
     }
+
+    @Override
+    public Post getPostByEntryId(String postId) {
+        // TODO this has to be changed but i dont really know how,
+        //  and for error problems i will just leave it
+        return null;
+    }
+
+    @Override
+    public boolean postExistsByID(String postId) {
+        try {
+            Document doc = queryOnePostBy(ENTRY_ID, postId);
+
+            return doc != null;
+        } catch (Exception e) {
+            System.err.println("Error checking if post exists by ID: " + e.getMessage());
+            return false;
+        }
+    }
+
+
 
     @Override
     public void updatePost(Post updatedContent) {

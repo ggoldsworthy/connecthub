@@ -1,7 +1,7 @@
 package use_case.delete_post;
 
 /**
- * This class contains the output data for the deletion of a Post
+ * This class contains the output data for the deletion of a Post.
  *
  */
 public class DeletePostOutputData {

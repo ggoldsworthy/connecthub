@@ -13,7 +13,7 @@ public interface DeletePostDataAccessInterface {
      * Retrieves a post by its ID.
      *
      * @param postId The ID of the post to retrieve.
-     * @return The Post object if found, or null if not.
+     * @return The Post object if found, or null if not
      */
     Post getPostByEntryId(String postId);
 

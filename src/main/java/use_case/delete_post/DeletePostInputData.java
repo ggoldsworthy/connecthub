@@ -1,7 +1,7 @@
 package use_case.delete_post;
 
 /**
- Input Data for the Delete Post use-case.
+ Input Data for the Delete Post use-case
  */
 public class DeletePostInputData {
     private String postId;
