@@ -26,7 +26,7 @@ public interface GetPostDataAccessInterface {
 
     /**
      * Retrieve all posts in the database.
-     * @return a list of Post objects
+     * @return a list of post json data
      */
     List<JSONObject> getAllPosts();
 }
