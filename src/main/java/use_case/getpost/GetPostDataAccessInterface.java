@@ -2,7 +2,6 @@ package use_case.getpost;
 
 import java.util.List;
 
-import entity.Post;
 import org.json.JSONObject;
 
 /**

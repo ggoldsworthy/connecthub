@@ -4,6 +4,7 @@ import entity.Comment;
 import entity.Content;
 import entity.Post;
 import entity.PostContent;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -46,6 +47,18 @@ public class GetPostInteractor implements GetPostInputBoundary {
             getPostPresenter.prepareFailView(ex.getMessage());
             return null;
         }
+    }
+
+    @Override
+    public List<Post> getAllPosts() {
+        List<JSONObject> postDatas = this.postDB.getAllPosts();
+        List<Post> posts = new ArrayList<>();
+
+        for (JSONObject postData : postDatas) {
+            posts.add(this.jsonToPost(postData));
+        }
+
+        return posts;
     }
 
     private Post jsonToPost(JSONObject postData) {

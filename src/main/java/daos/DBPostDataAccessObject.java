@@ -162,8 +162,8 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
                 .append(FILE_TYPE, post.getContent().getFileType())
                 .append(POST_TITLE, post.getPostTitle())
                 .append(CATEGORY, post.getCategory())
-                .append(POSTED_DATE, post.getPostedDate())
-                .append(LAST_MODIFIED, post.getLastModifiedDate())
+                .append(POSTED_DATE, post.getPostedDate().toString())
+                .append(LAST_MODIFIED, post.getLastModifiedDate().toString())
                 .append(LIKES, post.getLikes())
                 .append(DISLIKES, post.getDislikes())
                 .append(COMMENTS, post.getComments()) // TODO figure out type conversions if neccessary
