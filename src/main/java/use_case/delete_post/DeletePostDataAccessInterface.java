@@ -3,7 +3,7 @@ package use_case.delete_post;
 import entity.Post;
 
 /**
- * Interface for data access operations related to deleting a post
+ * Interface for data access operations related to deleting a post.
  */
 public interface DeletePostDataAccessInterface {
 

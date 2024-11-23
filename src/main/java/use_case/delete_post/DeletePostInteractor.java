@@ -4,7 +4,7 @@ import daos.DBUserDataAccessObject;
 import entity.Post;
 
 /**
- * interactor for deletepost.
+ * interactor for delete post
  */
 public class DeletePostInteractor implements DeletePostInputBoundary {
 
