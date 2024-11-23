@@ -1,14 +1,11 @@
 package daos;
 
-import entity.Comment;
 import entity.Post;
-import entity.PostContent;
-import entity.PostFactory;
 // TODO rename to whatever package/class name created by others
 import use_case.create_post.CreatePostDataAccessInterface;
 import use_case.delete_post.DeletePostDataAccessInterface;
-import use_case.update_post.UpdatePostDataAccessInterface;
-import use_case.get_post.GetPostDataAccessInterface;
+import use_case.getpost.GetPostDataAccessInterface;
+import use_case.edit_post.EditPostDataAccessInterface;
 
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -17,7 +14,6 @@ import org.json.JSONObject;
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
-import com.mongodb.client.model.Projections;
 import com.mongodb.client.model.Sorts;
 import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.model.Updates;
@@ -27,7 +23,6 @@ import com.mongodb.client.result.UpdateResult;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.lt;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +32,7 @@ import java.util.List;
  */
 public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
                                                DeletePostDataAccessInterface,
-                                               UpdatePostDataAccessInterface,
+                                               EditPostDataAccessInterface,
                                                GetPostDataAccessInterface {
     private final String ENTRY_ID = "post_id";
     private final String AUTHOR = "author";
@@ -61,6 +56,10 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
     }
 
     // TODO check if there's any other operations missing
+    @Override
+    public boolean existsByID(String postId) {
+        return this.getPostByEntryID(postId) != null;
+    }
 
     @Override
     public void createPost(Post post) {
@@ -68,23 +67,29 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
     }
 
     @Override
-    public JSONObject getPostByID(String id) {
+    public JSONObject getPostByEntryID(String id) {
         return new JSONObject(queryOnePostBy(ENTRY_ID, id).toJson());
     }
 
-    @Override
-    public List<JSONObject> getPostsByCategory(String category) {
-        List<JSONObject> posts = new ArrayList<>();
-        MongoCursor<Document> retrievedPosts = this.queryMultiplePostsBy(CATEGORY, category);
+    // TODO used for filtering posts, not implemented yet
+    // @Override
+    // public List<JSONObject> getPostsByCategory(String category) {
+    //     List<JSONObject> posts = new ArrayList<>();
+    //     MongoCursor<Document> retrievedPosts = this.queryMultiplePostsBy(CATEGORY, category);
 
-        try {
-            while (retrievedPosts.hasNext()) {
-                String jsonStr = retrievedPosts.next().toJson();
-                posts.add(new JSONObject(jsonStr));
-            }
-        } finally {
-            retrievedPosts.close();
-        }
+    //     try {
+    //         while (retrievedPosts.hasNext()) {
+    //             String jsonStr = retrievedPosts.next().toJson();
+    //             posts.add(new JSONObject(jsonStr));
+    //         }
+    //     } finally {
+    //         retrievedPosts.close();
+    //     }
+    // }
+
+    @Override
+    public List<Post> getAllPostsByUserID(String userID) {
+        return null;
     }
 
     // @Override
@@ -165,14 +170,8 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
      * @param target - the target value to query for.
      */
     private Document queryOnePostBy(String field, String target) {
-        Bson projectionFields = Projections.fields(
-            Projections.include(field),
-            Projections.excludeId()
-        );
-        
         Document doc = this.postRepository
             .find(eq(field, target))
-            .projection(projectionFields)
             .first();
 
         return doc;
@@ -184,14 +183,7 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
      * @param target - the target value to query for.
      */
     private MongoCursor<Document> queryMultiplePostsBy(String field, String target) {
-        Bson projectionFields = Projections.fields(
-            Projections.include(field),
-            Projections.excludeId()
-        );
-
-        // Retrieves documents that match the filter, applying a projection and a descending sort to the results
         MongoCursor<Document> cursor = this.postRepository.find(lt(field, target))
-                .projection(projectionFields)
                 .sort(Sorts.descending(POSTED_DATE)).iterator();
         
         return cursor;

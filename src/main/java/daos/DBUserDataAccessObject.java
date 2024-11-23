@@ -11,8 +11,10 @@ import org.json.JSONObject;
 
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.Projections;
+import com.mongodb.client.model.UpdateOptions;
+import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.InsertOneResult;
+
 import static com.mongodb.client.model.Filters.eq;
 
 /**
@@ -44,18 +46,18 @@ public class DBUserDataAccessObject implements SignupDataAccessInterface,
     
     @Override
     public boolean existsByID(String userID) {
-        return this.queryOneUserBy(USER_ID, userID) == null;
+        return this.queryOneUserBy(USER_ID, userID) != null;
     }
 
     @Override
     public boolean existsByUsername(String username) {
-        return this.queryOneUserBy(USER_NAME, username) == null;
+        return this.queryOneUserBy(USER_NAME, username) != null;
     }
 
 
     @Override
     public boolean existsByEmail(String email) {
-        return this.queryOneUserBy(EMAIL, email) == null;
+        return this.queryOneUserBy(EMAIL, email) != null;
     }
 
     @Override
@@ -88,6 +90,32 @@ public class DBUserDataAccessObject implements SignupDataAccessInterface,
         this.setCurrentUser(null);
     }
 
+    // @Override
+    public void updateUserPosts(User updatedContent) {
+        Document query = new Document().append(USER_ID, updatedContent.getUserID());
+
+        // Probably not be neccessary to replace the entire thing, will test them 
+        Bson updates = Updates.combine(
+            Updates.set(USER_ID, updatedContent.getUserID()),
+            Updates.set(USER_NAME, updatedContent.getUsername()),
+            Updates.set(PASSWORD, updatedContent.getPassword()),
+            Updates.set(EMAIL, updatedContent.getEmail()),
+            Updates.set(BIRTH_DATE, updatedContent.getBirthDate()),
+            Updates.set(FULL_NAME, updatedContent.getFullName()),
+            Updates.set(MODERATING, updatedContent.getModerating()),
+            Updates.set(POSTS, updatedContent.getPosts()) // TODO type conversion? need testing
+        );
+
+        // Instructs the driver to insert a new document if none match the query
+        UpdateOptions insertNewDoc = new UpdateOptions().upsert(true);
+
+        try {
+            this.userRepository.updateOne(query, updates, insertNewDoc);
+        } catch (MongoException error) {
+            // throw err?
+        }
+    }
+
     /**
      * Inserts the given user into the database.
      * @param user - a user in the application.
@@ -117,14 +145,8 @@ public class DBUserDataAccessObject implements SignupDataAccessInterface,
      * @param target - the target value to query for.
      */
     private Document queryOneUserBy(String field, String target) {
-        Bson projectionFields = Projections.fields(
-            Projections.include(field),
-            Projections.excludeId()
-        );
-        
         Document doc = this.userRepository
             .find(eq(field, target))
-            .projection(projectionFields)
             .first();
 
         return doc;
