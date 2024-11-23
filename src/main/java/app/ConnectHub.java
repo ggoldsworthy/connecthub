@@ -29,17 +29,27 @@ public class ConnectHub {
 	 */
 	public static void main(String[] args) {
 		final JFrame application = new JFrame("ConnectHub");
+
+		// Close the app when clicking X
 		application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+		// Set window size
 		application.setSize(StyleConstants.APP_WIDTH, StyleConstants.APP_HEIGHT);
 
+		// cardLayout is assigned to views which manages different views
 		final CardLayout cardLayout = new CardLayout();
 		final JPanel views = new JPanel(cardLayout);
+
+		// Add views to the main application frame
 		application.add(views);
 
+		// View manager manages the current view
 		final ViewManagerModel viewManagerModel = new ViewManagerModel();
 		new ViewManager(views, cardLayout, viewManagerModel);
 
 //		final LoginViewModel loginViewModel = new LoginViewModel();
+
+		// Add the homepage view model
 		final HomepageViewModel homePageViewModel = new HomepageViewModel();
 //		final PostViewModel postPageViewModel = new PostViewModel();
 //		final DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(new CommonUserFactory());
@@ -47,19 +57,17 @@ public class ConnectHub {
 		// Create and add views
 //		views.add(LoginUseCaseFactory.create(viewManagerModel, loginViewModel, homePageViewModel, userDataAccessObject),
 //				"login");
+
+		// Add the built homepage to the views panel, and label the card "home"
 		views.add(HomepageUseCaseFactory.create(viewManagerModel, homePageViewModel), "home");
 
-		// Start at home
+		// Set the initial view to the home page
 		viewManagerModel.setState("home");
+		// Swtich to the homepage
 		viewManagerModel.firePropertyChanged();
 
-
-//		// Initialize post boxes dynamically from database
-//		DBUserDataAccessObject dbUserDataAccessObject = new DBUserDataAccessObject(new CommonUserFactory());
-//		MongoCollection<Document> postsCollection = dbUserDataAccessObject.getPostsCollection(); // Fetch posts collection
-
-
-		// Dummy post data to be displayed
+		// THIS IS JUST DUMMY POSTS
+		// TODO: Replace with Posts from MongoDB
 		List<String> dummyTitles = List.of("Post 1", "Post 2", "Post 3");
 		List<String> dummyContents = List.of(
 				"This is the content of the first post.",
