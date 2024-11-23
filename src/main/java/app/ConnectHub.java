@@ -11,8 +11,6 @@ import daos.DBUserDataAccessObject;
 import entity.CommonUserFactory;
 import controller.ViewManagerModel;
 import controller.homepage.HomepageViewModel;
-//import controller.login.LoginViewModel;
-//import view.LoginUseCaseFactory;
 import view.*;
 
 import java.util.List;
@@ -47,23 +45,15 @@ public class ConnectHub {
 		final ViewManagerModel viewManagerModel = new ViewManagerModel();
 		new ViewManager(views, cardLayout, viewManagerModel);
 
-//		final LoginViewModel loginViewModel = new LoginViewModel();
-
 		// Add the homepage view model
 		final HomepageViewModel homePageViewModel = new HomepageViewModel();
-//		final PostViewModel postPageViewModel = new PostViewModel();
-//		final DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(new CommonUserFactory());
 
 		// Create and add views
-//		views.add(LoginUseCaseFactory.create(viewManagerModel, loginViewModel, homePageViewModel, userDataAccessObject),
-//				"login");
-
-		// Add the built homepage to the views panel, and label the card "home"
 		views.add(HomepageUseCaseFactory.create(viewManagerModel, homePageViewModel), "home");
 
-		// Set the initial view to the home page
+		// Start home page
 		viewManagerModel.setState("home");
-		// Swtich to the homepage
+		// Switch to the homepage
 		viewManagerModel.firePropertyChanged();
 
 		// THIS IS JUST DUMMY POSTS
@@ -75,7 +65,7 @@ public class ConnectHub {
 				"This is the content of the third post."
 		);
 
-			// Create and add the PostBoxes with dummy data
+		// Create and add the PostBoxes with dummy data
 		for (int i = 0; i < dummyTitles.size(); i++) {
 			String title = dummyTitles.get(i);
 			String content = dummyContents.get(i);
@@ -87,10 +77,18 @@ public class ConnectHub {
 			views.add(new PostView(views, postViewModel), title); // Use the title as a unique identifier for each post
 		}
 
+		// Add a button to navigate to a PostView
+		JButton postButton = new JButton("View Post 1");
+		postButton.addActionListener(e -> {
+			// Switch to PostView when the button is clicked
+			cardLayout.show(views, "Post 1");  // Show the post view for the first dummy post
+		});
 
 		// Create and add the navigation bar
-		final JPanel navBar = Navbar.createNavBar(application, views);
+		final JPanel navBar = Navbar.createNavBar(views);
 		application.add(navBar, BorderLayout.NORTH);
+		application.add(postButton, BorderLayout.SOUTH); // Adding button at the bottom
+
 		application.pack();
 		application.setVisible(true);
 	}

@@ -23,7 +23,7 @@ public class HomePage {
         mainContent.add(homepageView, "Homepage");
         mainContent.add(postView, "PostView");
 
-        final JPanel navBar = Navbar.createNavBar(frame, mainContent);
+        final JPanel navBar = Navbar.createNavBar(mainContent);
 
         frame.add(navBar, BorderLayout.NORTH);
         frame.add(mainContent, BorderLayout.CENTER);

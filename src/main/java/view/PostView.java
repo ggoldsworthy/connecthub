@@ -4,11 +4,8 @@ import controller.post.PostViewModel;
 
 import java.awt.*;
 import javax.swing.*;
-import java.util.List; // Ensure this is imported
+import java.util.List;
 
-/**
- * The View for an individual Post.
- */
 public class PostView extends JPanel {
     private final JPanel mainContent;
     private final PostViewModel viewModel;
@@ -23,6 +20,11 @@ public class PostView extends JPanel {
         setLayout(new BorderLayout());
         setBackground(new Color(120, 133, 133));
 
+        // Add navbar
+        final JPanel navBar = Navbar.createNavBar(mainContent);
+        add(navBar, BorderLayout.NORTH);
+
+        // Add content of PostView
         add(createTitlePanel(), BorderLayout.NORTH);
         add(createContentPanel(), BorderLayout.CENTER);
         add(createCommentsPanel(), BorderLayout.SOUTH);
@@ -79,7 +81,6 @@ public class PostView extends JPanel {
                 new Font(FONT_TYPE, Font.BOLD, 14),
                 Color.DARK_GRAY));
 
-        // Ensure the getComments method returns a List<String>
         List<String> comments = viewModel.getComments();
         for (String comment : comments) {
             JLabel commentLabel = new JLabel(comment);
@@ -91,5 +92,4 @@ public class PostView extends JPanel {
 
         return new JScrollPane(commentsPanel);
     }
-
 }

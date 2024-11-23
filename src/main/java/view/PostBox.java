@@ -60,15 +60,19 @@ public class PostBox {
         final JButton viewPostButton = createStyledButton("View Post");
         viewPostButton.addActionListener(e -> {
             // Create the PostView for this post
+            System.out.println("CLICKED VIEW POST");
             PostViewModel postViewModel = new PostViewModel(this.title, this.content);
             PostView postView = new PostView(this.mainContent, postViewModel);
 
-            // Add the PostView to the mainContent
-            this.mainContent.add(postView, "PostView" + title);  // Unique identifier for each post
+            // Use a unique identifier that doesn't conflict
+            String postViewId = "PostView" + postId;  // Unique identifier using postId
 
-            // Switch to the "PostView" card
+            // Add the PostView to the mainContent
+            this.mainContent.add(postView, postViewId);  // Use postId for unique key
+
+            // Switch to the "PostView" card the unique identifier
             CardLayout layout = (CardLayout) this.mainContent.getLayout();
-            layout.show(this.mainContent, "PostView" + title);  // Show the specific post view
+            layout.show(this.mainContent, postViewId);  // Show the specific post view
         });
 
 
