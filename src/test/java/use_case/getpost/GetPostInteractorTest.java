@@ -1,14 +1,14 @@
 package use_case.getpost;
 
 import entity.*;
-
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,114 +24,125 @@ class GetPostInteractorTest {
     void setUp() {
         mockPostDB = Mockito.mock(GetPostDataAccessInterface.class);
         mockPresenter = Mockito.mock(GetPostOutputBoundary.class);
+        interactor = new GetPostInteractor(mockPostDB, mockPresenter);
     }
 
-//    @Test
-//    void GetPostSuccessTest() throws Exception {
-//        String entryID = "123";
-//        User author = new CommonUser("User One", "1234", "1", "bday", "name", "user1@example.com", null, null);
-//        Content content = new PostContent("This is a sample post content.", null, null);
-//        LocalDateTime postedDate = LocalDateTime.now();
-//        LocalDateTime lastModifiedDate = LocalDateTime.now();
-//        Post expectedPost = new Post(
-//                entryID,
-//                author.getUserID(),
-//                content,
-//                postedDate,
-//                lastModifiedDate,
-//                10,
-//                2,
-//                "Sample Post Title",
-//                Collections.emptyList(),
-//                "General"
-//        );
-//
-//        when(mockPostDB.getPostByEntryID(entryID)).thenReturn(expectedPost);
-//
-//        GetPostInputData inputData = new GetPostInputData(entryID);
-//        interactor = new GetPostInteractor(mockPostDB, mockPresenter);
-//
-//        Post result = interactor.getPost(inputData);
-//
-//        assertEquals(expectedPost, result);
-//        verify(mockPostDB).getPostByEntryID(entryID);
-//        // Check that presenter was called
-//        verify(mockPresenter).prepareSuccessView(new GetPostOutputData(entryID, content));
-//    }
-//
-//    @Test
-//    void GetPostPostNotFoundTest() throws Exception {
-//        String entryID = "123";
-//        String expectedMessage = "Post with entryID " + entryID + " not found.";
-//        when(mockPostDB.getPostByEntryID(entryID)).thenThrow(new PostNotFoundException(entryID));
-//
-//        GetPostInputData inputData = new GetPostInputData(entryID);
-//        interactor = new GetPostInteractor(mockPostDB, mockPresenter);
-//
-//        Post result = interactor.getPost(inputData);
-//
-//        assertNull(result);
-//        verify(mockPostDB).getPostByEntryID(entryID);
-//        verify(mockPresenter).prepareFailView(expectedMessage);
-//    }
-//
-//    @Test
-//    void GetPostInvalidInputTest() {
-//        GetPostInputData inputData = new GetPostInputData(null);
-//        interactor = new GetPostInteractor(mockPostDB, mockPresenter);
-//
-//        assertThrows(IllegalArgumentException.class, () -> interactor.getPost(inputData));
-//    }
+    @Test
+    void GetPostSuccessTest() throws Exception {
+        String entryID = "123";
+        String author = "Author1";
+        String contentBody = "This is the content.";
+        String attachmentPath = "path/to/attachment";
+        String fileType = "text/plain";
+        String title = "Sample Post";
+        String category = "General";
+        LocalDateTime postedDate = LocalDateTime.now().withNano(0);
+        LocalDateTime lastModified = LocalDateTime.now().withNano(0);
+        int likes = 5;
+        int dislikes = 2;
+
+        JSONObject postJSON = new JSONObject();
+        postJSON.put("post_id", entryID);
+        postJSON.put("author", author);
+        postJSON.put("content_body", contentBody);
+        postJSON.put("attachment_path", attachmentPath);
+        postJSON.put("file_type", fileType);
+        postJSON.put("title", title);
+        postJSON.put("category", category);
+        postJSON.put("posted_date", postedDate.toString());
+        postJSON.put("last_modified", lastModified.toString());
+        postJSON.put("likes", likes);
+        postJSON.put("dislikes", dislikes);
+        postJSON.put("comments", new JSONArray());
+
+        when(mockPostDB.getPostByEntryID(entryID)).thenReturn(postJSON);
+
+        GetPostInputData inputData = new GetPostInputData(entryID);
+
+        Content expectedContent = new PostContent(contentBody, attachmentPath, fileType);
+        Post expectedPost = new Post(
+                entryID, author, expectedContent, postedDate, lastModified, likes, dislikes, title, Collections.emptyList(), category
+        );
+
+        GetPostOutputData expectedOutputData = new GetPostOutputData(entryID, expectedContent);
+
+        Post result = interactor.getPost(inputData);
+
+        // Assert field by field if needed
+        assertEquals(expectedPost, result, "Post objects dont match");
+
+        verify(mockPostDB).getPostByEntryID(entryID);
+        verify(mockPresenter).prepareSuccessView(expectedOutputData);
+    }
+
+
+    @Test
+    void GetPostPostNotFoundTest() throws Exception {
+        String entryID = "123";
+        String expectedMessage = "Post with entryID " + entryID + " not found.";
+
+        when(mockPostDB.getPostByEntryID(entryID)).thenThrow(new PostNotFoundException(entryID));
+
+        GetPostInputData inputData = new GetPostInputData(entryID);
+
+        Post result = interactor.getPost(inputData);
+
+        assertNull(result);
+        verify(mockPostDB).getPostByEntryID(entryID);
+        verify(mockPresenter).prepareFailView(expectedMessage);
+    }
+
+    @Test
+    void GetPostInvalidInputTest() {
+        GetPostInputData inputData = new GetPostInputData(null);
+
+        assertThrows(IllegalArgumentException.class, () -> interactor.getPost(inputData));
+    }
 
     @Test
     void GetPostPresenterCalledOnSuccessTest() throws Exception {
         String entryID = "123";
-        User author = new CommonUser("User One", "1234", "1", "bday", "name", "user1@example.com", null, null);
-        Content content = new PostContent("This is a sample post content.", "test/path", "type");
-        ArrayList<Comment> comments = new ArrayList<>();
+        String author = "Author1";
+        String contentBody = "This is another test content.";
+        String attachmentPath = "path/to/another/attachment";
+        String fileType = "image/png";
+        String title = "Another Post";
+        String category = "Updates";
         LocalDateTime postedDate = LocalDateTime.now();
-        LocalDateTime lastModifiedDate = LocalDateTime.now();
+        LocalDateTime lastModified = LocalDateTime.now();
+        int likes = 10;
+        int dislikes = 1;
 
-        Post expectedPost = new Post(
-                entryID,
-                author.getUserID(),
-                content,
-                postedDate,
-                lastModifiedDate,
-                10,
-                2,
-                "Sample Post Title",
-                comments,
-                "General"
+        // JSON response from mock database
+        JSONObject postJSON = new JSONObject();
+        postJSON.put("post_id", entryID);
+        postJSON.put("author", author);
+        postJSON.put("content_body", contentBody);
+        postJSON.put("attachment_path", attachmentPath);
+        postJSON.put("file_type", fileType);
+        postJSON.put("title", title);
+        postJSON.put("category", category);
+        postJSON.put("posted_date", postedDate.toString());
+        postJSON.put("last_modified", lastModified.toString());
+        postJSON.put("likes", likes);
+        postJSON.put("dislikes", dislikes);
+        postJSON.put("comments", new JSONArray());
 
-        );
-
-        JSONObject jsonExpected = new JSONObject();
-        jsonExpected.put("post_id", entryID);
-        jsonExpected.put("author", author.getUsername());
-        jsonExpected.put("content_body", content.getBody());
-        jsonExpected.put("attachment_path", content.getAttachmentPath());
-        jsonExpected.put("file_type", "type");
-        jsonExpected.put("title", "Sample Post Title");
-        jsonExpected.put("category", "General");
-        jsonExpected.put("posted_date", postedDate);
-        jsonExpected.put("last_modified", lastModifiedDate);
-        jsonExpected.put("likes", 10);
-        jsonExpected.put("dislikes", 2);
-        jsonExpected.put("comments", comments);
-        jsonExpected.put("likes", 3);
-
-        when(mockPostDB.getPostByEntryID(entryID)).thenReturn(jsonExpected);
+        when(mockPostDB.getPostByEntryID(entryID)).thenReturn(postJSON);
 
         GetPostInputData inputData = new GetPostInputData(entryID);
-        interactor = new GetPostInteractor(mockPostDB, mockPresenter);
+        Content expectedContent = new PostContent(contentBody, attachmentPath, fileType);
+        GetPostOutputData expectedOutputData = new GetPostOutputData(entryID, expectedContent);
 
-        GetPostOutputData outputData = new GetPostOutputData(entryID, content);
+        // Capture actual argument passed to presenter
+        ArgumentCaptor<GetPostOutputData> captor = ArgumentCaptor.forClass(GetPostOutputData.class);
 
-        Post result = interactor.getPost(inputData);
+        // Call the interactor
+        interactor.getPost(inputData);
 
-        assertEquals(expectedPost, result);
-
-        verify(mockPresenter).prepareSuccessView(outputData);
+        // Assertions
+        verify(mockPresenter).prepareSuccessView(captor.capture());
+        assertEquals(expectedOutputData, captor.getValue());
     }
+
 }
