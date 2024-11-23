@@ -10,7 +10,5 @@ public interface DeletePostInputBoundary {
      * @param DeletePostInputData the input data for the delete Post operation,
      *        typically containing the ID of the Post to be deleted
      */
-    boolean deletePost(DeletePostInputData DeletePostInputData);
-
-    void switchToDeletePostView();
+    void deletePost(DeletePostInputData DeletePostInputData);
 }

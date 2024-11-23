@@ -56,6 +56,10 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
     }
 
     // TODO check if there's any other operations missing
+    @Override
+    public boolean existsByID(String postId) {
+        return this.getPostByEntryID(postId) != null;
+    }
 
     @Override
     public void createPost(Post post) {
@@ -67,20 +71,21 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
         return new JSONObject(queryOnePostBy(ENTRY_ID, id).toJson());
     }
 
-    @Override
-    public List<JSONObject> getPostsByCategory(String category) {
-        List<JSONObject> posts = new ArrayList<>();
-        MongoCursor<Document> retrievedPosts = this.queryMultiplePostsBy(CATEGORY, category);
+    // TODO used for filtering posts, not implemented yet
+    // @Override
+    // public List<JSONObject> getPostsByCategory(String category) {
+    //     List<JSONObject> posts = new ArrayList<>();
+    //     MongoCursor<Document> retrievedPosts = this.queryMultiplePostsBy(CATEGORY, category);
 
-        try {
-            while (retrievedPosts.hasNext()) {
-                String jsonStr = retrievedPosts.next().toJson();
-                posts.add(new JSONObject(jsonStr));
-            }
-        } finally {
-            retrievedPosts.close();
-        }
-    }
+    //     try {
+    //         while (retrievedPosts.hasNext()) {
+    //             String jsonStr = retrievedPosts.next().toJson();
+    //             posts.add(new JSONObject(jsonStr));
+    //         }
+    //     } finally {
+    //         retrievedPosts.close();
+    //     }
+    // }
 
     @Override
     public List<Post> getAllPostsByUserID(String userID) {
@@ -93,7 +98,7 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
     // }
 
     @Override 
-    public boolean deletePost(String postID) {
+    public void deletePost(String postID) {
         Bson query = eq(ENTRY_ID, postID);
         
         try {
@@ -101,29 +106,7 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
         } catch (MongoException error) {
             // TODO throw some error, depending how the rest of the group implemts stuff.
         }
-        return false;
     }
-
-    @Override
-    public Post getPostByEntryId(String postId) {
-        // TODO this has to be changed but i dont really know how,
-        //  and for error problems i will just leave it
-        return null;
-    }
-
-    @Override
-    public boolean postExistsByID(String postId) {
-        try {
-            Document doc = queryOnePostBy(ENTRY_ID, postId);
-
-            return doc != null;
-        } catch (Exception e) {
-            System.err.println("Error checking if post exists by ID: " + e.getMessage());
-            return false;
-        }
-    }
-
-
 
     @Override
     public void updatePost(Post updatedContent) {
