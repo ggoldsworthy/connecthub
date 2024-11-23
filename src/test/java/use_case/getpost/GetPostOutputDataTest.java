@@ -1,9 +1,10 @@
+package use_case.getpost;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import entity.Content;
 import entity.PostContent;
-import use_case.getpost.GetPostOutputData;
 
 public class GetPostOutputDataTest {
 
