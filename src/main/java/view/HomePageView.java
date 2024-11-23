@@ -3,15 +3,28 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
+import controller.homepage.HomepageController;
 import controller.homepage.HomepageState;
 import controller.homepage.HomepageViewModel;
+import entity.Post;
+import java.util.List;
 
 /**
  * The View for the Home Page.
  */
 public class HomePageView {
+    private final int PAGE_SIZE = 20;
 
-    public static JPanel createHomepageView(JPanel mainContent, HomepageViewModel homePageViewModel) {
+    private final JPanel mainContent;
+    private final HomepageController homepageController;
+    private final HomepageViewModel homepageViewModel;
+    private final JPanel contentArea;
+
+    public HomePageView(HomepageController homepageController, HomepageViewModel homePageViewModel) {
+        this.mainContent = new JPanel(new CardLayout());
+        this.homepageController = homepageController;
+        this.homepageViewModel = homePageViewModel;
+
         final JPanel homepage = new JPanel();
         homepage.setLayout(new BorderLayout());
         homepage.setBackground(StyleConstants.BACKGROUND_COLOR);
@@ -24,9 +37,10 @@ public class HomePageView {
         final JPanel contentArea = new JPanel();
         contentArea.setLayout(new BoxLayout(contentArea, BoxLayout.Y_AXIS));
         contentArea.setBackground(Color.WHITE);
+        this.contentArea = contentArea;
 
         // Populate the center panel to display posts
-        PostPopulator.populate(contentArea, mainContent);
+        this.loadPosts();
 
         // Scroll bar
         final JScrollPane scrollPane = new JScrollPane(contentArea);
@@ -54,7 +68,20 @@ public class HomePageView {
                 contentArea.repaint();
             }
         });
+    }
 
-        return homepage;
+    public void loadPosts() {
+        this.contentArea.removeAll();
+
+        List<Post> posts = this.homepageController.fetchPosts(PAGE_SIZE);
+        for (int i = 0; i < posts.size(); i++) {
+            Post post = posts.get(i);
+            final JPanel postSpacer = new JPanel();
+            postSpacer.setBackground(StyleConstants.PANEL_COLOR);
+            postSpacer.setPreferredSize(new Dimension(0, 20));
+            this.contentArea.add(postSpacer);
+            this.contentArea.add(new PostBox(post.getPostTitle(), post.getContent().getBody(), 
+                i, this.mainContent).getPostBox());
+        }
     }
 }

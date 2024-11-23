@@ -1,14 +1,21 @@
-//package controller.homepage;
-//
-//public class HomepageController {
-//    public Controller(GetPostInputBoundary getPostInteractor) {
-//    }
-//} but wait so like the actual construction of the homepage is still going to stay in connecthub.java right??
-//
-//yea we are constructing the home page, but it has no posts filled in it,
-//thats what the states are for: the
-//
-//like u can u can use the get post interac
-//stnetnoc eht ni llif dluoc ew os ata
-//
-//oh hmm so the populating of the posts should bbeoh hmm so the populating of the posts should bbe done here (like we'd need a hoepage  interactor?)
+package controller.homepage;
+
+import java.util.List;
+
+import org.json.JSONArray;
+
+import entity.Post;
+import use_case.getpost.GetPostInputBoundary;
+
+public class HomepageController {
+    private final GetPostInputBoundary getPostInteractor;
+
+    public HomepageController(GetPostInputBoundary getPostInteractor) {
+        this.getPostInteractor = getPostInteractor;
+    }
+
+    public List<Post> fetchPosts(int size) {
+        List<Post> posts = this.getPostInteractor.fetchPosts(); // TODO edit
+        return posts.subList(size);
+    }
+}
