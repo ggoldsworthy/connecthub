@@ -30,21 +30,18 @@ public class GetPostOutputData {
      * This is so that testGetPost_PresenterCalledOnSuccess test passes
      */
     @Override
-    public boolean equals(Object obj) {
-        boolean isEqual = false;
-        if (this == obj) {
-            isEqual = true;
-        }
-        else if (obj != null && getClass() == obj.getClass()) {
-            final GetPostOutputData that = (GetPostOutputData) obj;
-            isEqual = entryID.equals(that.entryID) && postContent.equals(that.postContent);
-        }
-        return isEqual;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GetPostOutputData that = (GetPostOutputData) o;
+        return entryID.equals(that.entryID) &&
+                postContent.equals(that.postContent);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(entryID, postContent);
     }
+
 
 }
