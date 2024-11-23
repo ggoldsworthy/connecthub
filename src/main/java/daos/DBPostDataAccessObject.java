@@ -1,9 +1,8 @@
 package daos;
 
 import entity.Post;
-// TODO rename to whatever package/class name created by others
 import use_case.create_post.CreatePostDataAccessInterface;
-//import use_case.delete_post.DeletePostDataAccessInterface;
+import use_case.delete_post.DeletePostDataAccessInterface;
 import use_case.getpost.GetPostDataAccessInterface;
 import use_case.edit_post.EditPostDataAccessInterface;
 
@@ -12,6 +11,7 @@ import org.bson.conversions.Bson;
 import org.json.JSONObject;  
 
 import com.mongodb.MongoException;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Sorts;
@@ -31,7 +31,7 @@ import java.util.List;
  * MongoDB implementation of the DAO for storing user data. 
  */
 public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
-//                                               DeletePostDataAccessInterface,
+                                               DeletePostDataAccessInterface,
                                                EditPostDataAccessInterface,
                                                GetPostDataAccessInterface {
     private final String ENTRY_ID = "post_id";
@@ -88,8 +88,20 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
     // }
 
     @Override
-    public List<Post> getAllPostsByUserID(String userID) {
+    public List<JSONObject> getAllPostsByUserID(String userID) {
         return null;
+    }
+
+    @Override
+    public List<JSONObject> getAllPosts() {
+        List<JSONObject> res = new ArrayList<>();
+
+        FindIterable<Document> posts = this.postRepository.find();
+        for (Document post : posts) {
+            res.add(new JSONObject(post.toJson()));
+        }
+
+        return res;
     }
 
     // @Override
@@ -97,7 +109,7 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
     //     return null;
     // }
 
-//    @Override
+   @Override
     public void deletePost(String postID) {
         Bson query = eq(ENTRY_ID, postID);
         
@@ -120,7 +132,7 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
             Updates.set(LAST_MODIFIED, updatedContent.getLastModifiedDate()),
             Updates.set(LIKES, updatedContent.getLikes()),
             Updates.set(DISLIKES, updatedContent.getDislikes()),
-            Updates.set(COMMENTS, updatedContent.getComments()) // TODO type conversion? need testing
+            Updates.set(COMMENTS, updatedContent.getComments()) // TODO convert to appropriate type if error
         );
 
         // Instructs the driver to insert a new document if none match the query

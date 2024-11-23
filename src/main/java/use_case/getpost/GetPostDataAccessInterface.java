@@ -21,7 +21,13 @@ public interface GetPostDataAccessInterface {
     /**
      * Retrieve all posts made by a given user  post with a specific entryID.
      * @param userID the userID of the user to retreive posts
-     * @return a list of Post objects by the given user
+     * @return a list of Post json data of the given user
      */
-    List<Post> getAllPostsByUserID(String userID);
+    List<JSONObject> getAllPostsByUserID(String userID);
+
+    /**
+     * Retrieve all posts in the database.
+     * @return a list of Post objects
+     */
+    List<JSONObject> getAllPosts();
 }
