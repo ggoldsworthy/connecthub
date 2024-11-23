@@ -1,5 +1,7 @@
 package controller.login;
 
+import use_case.login.AccountDoesNotExistException;
+import use_case.login.IncorrectPasswordException;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInputData;
 
@@ -21,6 +23,12 @@ public class LoginController {
      */
     public void execute(String email, String password) {
         final LoginInputData loginInputData = new LoginInputData(email, password);
-        loginInputBoundary.LoginUser(loginInputData);
+        try {
+            loginInputBoundary.LoginUser(loginInputData);
+        } catch (AccountDoesNotExistException e){
+            //System.out.print("Error: Account doesn't exist");
+        } catch (IncorrectPasswordException e) {
+            //System.out.println("Error: Incorrect password");
+        }
     }
 }
