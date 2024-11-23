@@ -3,6 +3,7 @@ package use_case.getpost;
 import java.util.List;
 
 import entity.Post;
+import org.json.JSONObject;
 
 /**
  * DAO for the Get Post Use Case.
@@ -15,7 +16,7 @@ public interface GetPostDataAccessInterface {
      * @return the Post object with the given entryID
      * @throws PostNotFoundException if a post with the given entryID does not exist
      */
-    Post getPostByEntryID(String entryID) throws PostNotFoundException;
+    JSONObject getPostByEntryID(String entryID) throws PostNotFoundException;
 
     /**
      * Retrieve all posts made by a given user  post with a specific entryID.

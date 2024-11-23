@@ -47,7 +47,7 @@ class GetPostInteractorTest {
         when(mockPostDB.getPostByEntryID(entryID)).thenReturn(expectedPost);
 
         GetPostInputData inputData = new GetPostInputData(entryID);
-        interactor = new GetPostInteractor(inputData, mockPostDB, mockPresenter);
+        interactor = new GetPostInteractor(mockPostDB, mockPresenter);
 
         Post result = interactor.getPost(inputData);
 
@@ -64,7 +64,7 @@ class GetPostInteractorTest {
         when(mockPostDB.getPostByEntryID(entryID)).thenThrow(new PostNotFoundException(entryID));
 
         GetPostInputData inputData = new GetPostInputData(entryID);
-        interactor = new GetPostInteractor(inputData, mockPostDB, mockPresenter);
+        interactor = new GetPostInteractor(mockPostDB, mockPresenter);
 
         Post result = interactor.getPost(inputData);
 

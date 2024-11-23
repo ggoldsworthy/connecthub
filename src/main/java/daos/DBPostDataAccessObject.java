@@ -6,7 +6,7 @@ import entity.PostContent;
 import entity.PostFactory;
 // TODO rename to whatever package/class name created by others
 import use_case.create_post.CreatePostDataAccessInterface;
-import use_case.delete_post.DeletePostDataAccessInterface;
+//import use_case.delete_post.DeletePostDataAccessInterface;
 import use_case.getpost.GetPostDataAccessInterface;
 import use_case.getpost.PostNotFoundException;
 import use_case.edit_post.EditPostDataAccessInterface;
@@ -36,7 +36,7 @@ import java.util.List;
  * MongoDB implementation of the DAO for storing user data. 
  */
 public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
-                                               DeletePostDataAccessInterface,
+//                                               DeletePostDataAccessInterface,
                                                EditPostDataAccessInterface,
                                                GetPostDataAccessInterface {
     private final String ENTRY_ID = "post_id";
@@ -72,7 +72,7 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
         return new JSONObject(queryOnePostBy(ENTRY_ID, id).toJson());
     }
 
-    @Override
+//    @Override
     public List<JSONObject> getPostsByCategory(String category) {
         List<JSONObject> posts = new ArrayList<>();
         MongoCursor<Document> retrievedPosts = this.queryMultiplePostsBy(CATEGORY, category);
@@ -97,7 +97,7 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
     //     return null;
     // }
 
-    @Override 
+//    @Override
     public void deletePost(String postID) {
         Bson query = eq(ENTRY_ID, postID);
         
