@@ -6,16 +6,14 @@ package use_case.signup;
 public class SignupInputData {
 
     private final String username;
-    private final String userID;
     private final String password;
     private final String repeatPassword;
     private final String email;
     private final String birthDate;
     private final String fullName;
 
-    public SignupInputData(String username, String userID, String password, String repeatPassword, String email, String birthDate, String fullName) {
+    public SignupInputData(String username, String password, String repeatPassword, String email, String birthDate, String fullName) {
         this.username = username;
-        this.userID = userID;
         this.password = password;
         this.repeatPassword = repeatPassword;
         this.email = email;
@@ -45,9 +43,5 @@ public class SignupInputData {
 
     public String getEmail() {
         return email;
-    }
-
-    public String getUserID() {
-        return userID;
     }
 }
