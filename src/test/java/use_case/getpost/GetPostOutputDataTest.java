@@ -12,7 +12,6 @@ public class GetPostOutputDataTest {
 
     @BeforeEach
     public void setUp() {
-        // Create a mock content or real instance of Content (assuming PostContent for this example)
         postContent = new PostContent("Body content", "/path/to/attachment", "pdf");
         getPostOutputData = new GetPostOutputData("entry123", postContent);
     }

@@ -68,8 +68,7 @@ class GetPostInteractorTest {
 
         Post result = interactor.getPost(inputData);
 
-        // Assert field by field if needed
-        assertEquals(expectedPost, result, "Post objects dont match");
+        assertEquals(expectedPost, result, "Post objects don't match");
 
         verify(mockPostDB).getPostByEntryID(entryID);
         verify(mockPresenter).prepareSuccessView(expectedOutputData);
@@ -140,7 +139,6 @@ class GetPostInteractorTest {
         // Call the interactor
         interactor.getPost(inputData);
 
-        // Assertions
         verify(mockPresenter).prepareSuccessView(captor.capture());
         assertEquals(expectedOutputData, captor.getValue());
     }
