@@ -7,15 +7,16 @@ import entity.Post;
  */
 public interface DeletePostDataAccessInterface {
 
-    boolean deletePost(String postID) throws DeletePostFailedException;
+   boolean deletePost(String postID) throws DeletePostFailedException;
 
     /**
-     * Finds a post by its ID
+     * Retrieves a post by its ID.
      *
-     * @param postId The ID of the ost to find.
-     * @return The ost if found, or null if not.
+     * @param postId The ID of the post to retrieve.
+     * @return The Post object if found, or null if not.
      */
-    Post postExistsById(String postId);
-}
+    Post getPostByEntryId(String postId);
 
+    boolean postExistsByID(String postId);
+}
 

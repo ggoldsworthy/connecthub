@@ -1,7 +1,7 @@
 package use_case.delete_post;
 
 /**
- * The output boundary for the Delete Post Use Case
+ * The output boundary for the Delete Post Use Case.
  */
 public interface DeletePostOutputBoundary {
 
