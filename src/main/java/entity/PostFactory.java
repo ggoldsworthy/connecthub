@@ -17,7 +17,7 @@ public class PostFactory {
                            String postTitle, String category) {
         Content postContent = new PostContent(content, attachmentPath, fileType);
         List<Comment> comments = new ArrayList<Comment>();
-        Post post = new Post(entryID, author.getUserID(), postContent, LocalDateTime.now(), null, 
+        Post post = new Post(entryID, author.getUserID(), postContent, LocalDateTime.now(), LocalDateTime.now(), 
                              0, 0, postTitle, comments, category);
         return post;
     }
