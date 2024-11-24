@@ -1,5 +1,8 @@
 package view;
 
+import controller.homepage.HomepageController;
+import controller.homepage.HomepageViewModel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -11,9 +14,13 @@ import java.awt.event.MouseEvent;
 public class Navbar {
 
     private final JPanel navBar;
+    private final HomepageViewModel homePageViewModel;
+    private final HomepageController homepageController;
 
-    public Navbar(JPanel mainContent) {
+    public Navbar(JPanel mainContent, HomepageViewModel homePageViewModel, HomepageController homepageController) {
         this.navBar = initializeNavBar(mainContent);
+        this.homePageViewModel = homePageViewModel;
+        this.homepageController = homepageController;
     }
 
     /**
@@ -38,6 +45,7 @@ public class Navbar {
             public void mouseClicked(MouseEvent event) {
                 final CardLayout cl = (CardLayout) mainContent.getLayout();
                 cl.show(mainContent, "Homepage");
+
             }
         });
         titleLabel.setFont(StyleConstants.HEADER_FONT);

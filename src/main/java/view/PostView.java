@@ -1,5 +1,7 @@
 package view;
 
+import controller.homepage.HomepageController;
+import controller.homepage.HomepageViewModel;
 import controller.post.PostController;
 import controller.post.PostState;
 import controller.post.PostViewModel;
@@ -24,17 +26,23 @@ public class PostView extends JPanel implements PropertyChangeListener {
     private final JLabel postTitle = new JLabel();
     private final JTextArea postContent = new JTextArea();
     private final JPanel commentsPanel = new JPanel();
+    private final HomepageViewModel homePageViewModel;
+    private final HomepageController homepageController;
 
-    public PostView(PostController postController, PostViewModel postViewModel) {
+    public PostView(PostController postController, PostViewModel postViewModel,
+                    HomepageViewModel homePageViewModel, HomepageController homepageController) {
         this.postController = postController;
+        this.homepageController = homepageController;
         this.postViewModel = postViewModel;
+        this.homePageViewModel = homePageViewModel;
+
         postViewModel.addPropertyChangeListener(this);
 
         setLayout(new BorderLayout());
         setBackground(new Color(120, 133, 133)); // TODO change to constants HEADER
 
         // Add nav bar
-        final JPanel navBar = new Navbar(mainContent).getNavBar();
+        final JPanel navBar = new Navbar(mainContent, homePageViewModel, homepageController).getNavBar();
         add(navBar, BorderLayout.NORTH);
 
         // Back button (won't implement this for now)

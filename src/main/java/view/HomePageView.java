@@ -38,7 +38,7 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
         this.homepage.setBackground(StyleConstants.BACKGROUND_COLOR);
         
         // Add nav bar
-        final JPanel navBar = new Navbar(homepage).getNavBar();
+        final JPanel navBar = new Navbar(homepage, this.homepageViewModel, this.homepageController).getNavBar();
         mainContent.add(navBar, BorderLayout.NORTH);
 
         // Add navigation pane
