@@ -48,12 +48,12 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
         // Add center panel to display post previews
         this.contentArea.setLayout(new BoxLayout(contentArea, BoxLayout.Y_AXIS));
         this.contentArea.setBackground(Color.WHITE);
-        homepage.add(contentArea);
 
         // Scroll bar
         final JScrollPane scrollPane = new JScrollPane(contentArea);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setPreferredSize(new Dimension(800, 550));
         homepage.add(scrollPane, BorderLayout.CENTER);
 
         // Add right panel to center posts and also leave space for future features
@@ -80,7 +80,7 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
         //     }
         // });
     }
-    
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         final HomepageState state = (HomepageState) evt.getNewValue();
