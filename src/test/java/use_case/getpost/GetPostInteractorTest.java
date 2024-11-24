@@ -9,7 +9,9 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -40,6 +42,7 @@ class GetPostInteractorTest {
         LocalDateTime lastModified = LocalDateTime.now().withNano(0);
         int likes = 5;
         int dislikes = 2;
+        List<Comment> comments = new ArrayList<>();
 
         JSONObject postJSON = new JSONObject();
         postJSON.put("post_id", entryID);
@@ -64,7 +67,7 @@ class GetPostInteractorTest {
                 entryID, author, expectedContent, postedDate, lastModified, likes, dislikes, title, Collections.emptyList(), category
         );
 
-        GetPostOutputData expectedOutputData = new GetPostOutputData(entryID, expectedContent);
+        GetPostOutputData expectedOutputData = new GetPostOutputData(entryID, title, expectedContent, comments);
 
         Post result = interactor.getPost(inputData);
 
@@ -111,6 +114,7 @@ class GetPostInteractorTest {
         LocalDateTime lastModified = LocalDateTime.now();
         int likes = 10;
         int dislikes = 1;
+        List<Comment> comments = new ArrayList<>();
 
         // JSON response from mock database
         JSONObject postJSON = new JSONObject();
@@ -131,7 +135,7 @@ class GetPostInteractorTest {
 
         GetPostInputData inputData = new GetPostInputData(entryID);
         Content expectedContent = new PostContent(contentBody, attachmentPath, fileType);
-        GetPostOutputData expectedOutputData = new GetPostOutputData(entryID, expectedContent);
+        GetPostOutputData expectedOutputData = new GetPostOutputData(entryID, title, expectedContent, comments);
 
         // Capture actual argument passed to presenter
         ArgumentCaptor<GetPostOutputData> captor = ArgumentCaptor.forClass(GetPostOutputData.class);
