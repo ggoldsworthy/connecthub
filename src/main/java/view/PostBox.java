@@ -1,7 +1,7 @@
 package view;
 
 import controller.homepage.HomepageController;
-import controller.post.PostViewModel;
+import controller.post.PostController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,15 +18,12 @@ public class PostBox implements ActionListener {
     private JPanel mainContent;
     private String postId;
 
-    private HomepageController homepageController;
-
-    public PostBox(String title, String content, String postId, JPanel mainContent, HomepageController homepageController) {
+    public PostBox(String title, String content, String postId, JPanel mainContent, 
+                   HomepageController homepageController, PostController postController) {
         this.title = title;
         this.content = content;
         this.mainContent = mainContent; // Initialize mainContent here
         this.postId = postId;
-
-        this.homepageController = homepageController;
 
         this.postBox = new JPanel();
         postBox.setLayout(new BorderLayout());
@@ -70,6 +67,7 @@ public class PostBox implements ActionListener {
             new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
                     System.out.println("CLICKED VIEW POST");
+                    postController.execute(postId);
                     homepageController.switchToLoginView();
                 }
             }
@@ -109,5 +107,6 @@ public class PostBox implements ActionListener {
         button.setFocusPainted(false);
         return button;
     }
+
 
 }
