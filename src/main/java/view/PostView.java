@@ -105,15 +105,15 @@ public class PostView extends JPanel implements PropertyChangeListener {
         } 
     }
 
-    public void setPostTitle(PostState state) {
+    private void setPostTitle(PostState state) {
         this.postTitle.setText(state.getPostTitle());
     }
 
-    public void setPostContent(PostState state) {
+    private void setPostContent(PostState state) {
         this.postContent.setText(state.getPostContent());
     }
 
-    public void setComments(PostState state) {
+    private void setComments(PostState state) {
         this.commentsPanel.removeAll();
 
         List<Comment> comments = state.getComments();
