@@ -60,4 +60,10 @@ public class HomepagePresenter implements GetPostOutputBoundary {
         viewManagerModel.setState(postViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
+
+    @Override
+    public void switchToHomePageView() {
+        viewManagerModel.setState(homepageViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
+    }
 }

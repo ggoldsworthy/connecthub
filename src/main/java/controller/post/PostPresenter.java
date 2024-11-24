@@ -54,4 +54,7 @@ public class PostPresenter implements GetPostOutputBoundary {
 
     @Override
     public void switchToPostView() {}
+
+    public void switchToHomePageView() {}
+
 }

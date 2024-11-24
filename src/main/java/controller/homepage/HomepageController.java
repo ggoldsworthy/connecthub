@@ -16,4 +16,8 @@ public class HomepageController {
     public void switchToLoginView() {
         this.getPostInteractor.switchToPostView();
     }
+
+    public void switchToHomePageView() {
+        this.getPostInteractor.switchToHomePageView();
+    }
 }

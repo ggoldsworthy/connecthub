@@ -5,6 +5,7 @@ import controller.homepage.HomepageViewModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -43,9 +44,8 @@ public class Navbar {
         titleLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         titleLabel.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent event) {
-                final CardLayout cl = (CardLayout) mainContent.getLayout();
-                cl.show(mainContent, "Homepage");
-
+                homepageController.fetchAllPosts();
+                homepageController.switchToHomePageView();
             }
         });
         titleLabel.setFont(StyleConstants.HEADER_FONT);
