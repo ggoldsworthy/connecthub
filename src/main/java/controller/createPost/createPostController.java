@@ -18,16 +18,16 @@ public class createPostController {
         this.createPostInputBoundary = createPostInteractor;
     }
 
-    public void execute(String entryID, User author, PostContent content, LocalDateTime timestamp,
-                        LocalDateTime lastModified, int dislikes, int likes, String postTitle,
+    public void execute(String author, PostContent content, String attachmentPath,
+                        String fileType, int dislikes, int likes, String postTitle,
                         List<User> moderators, List<Comment> comments, String category) {
-        final CreatePostInputData createInputData = new CreatePostInputData(entryID, author, content,
-                timestamp, lastModified, dislikes, likes, postTitle, moderators, comments, category);
+        final CreatePostInputData createInputData = new CreatePostInputData(author, content,
+                attachmentPath, fileType, dislikes, likes, postTitle, moderators, comments, category);
 
         createPostInputBoundary.createPost(createInputData);
     }
 
-    // TODO: need to implmnet in the createpOST usecase
+    // TODO: will do after merge
     public void switchToHomePageview() {
 
     }

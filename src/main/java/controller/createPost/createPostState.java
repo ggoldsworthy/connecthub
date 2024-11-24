@@ -16,15 +16,16 @@ public class createPostState{
     private String author = "";
     private String authorError = "";
 
-    // TODO: what is ddefulat for this
     private PostContent content;
     private String contentError = "";
 
-    private LocalDateTime timestamp = LocalDateTime.now();
-    private String timestampError = "";
+    // Since these are generated using the database I thought they woudln't be necessary
 
-    private LocalDateTime lastModified = LocalDateTime.now();
-    private String lastModifiedError = "";
+//    private LocalDateTime timestamp = LocalDateTime.now();
+//    private String timestampError = "";
+//
+//    private LocalDateTime lastModified = LocalDateTime.now();
+//    private String lastModifiedError = "";
 
     private int dislikes = 0;
     private String dislikesError = "";
@@ -93,37 +94,7 @@ public class createPostState{
         this.contentError = contentError;
     }
 
-    public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
 
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public String getTimestampError() {
-        return timestampError;
-    }
-
-    public void setTimestampError(String timestampError) {
-        this.timestampError = timestampError;
-    }
-
-    public LocalDateTime getLastModified() {
-        return lastModified;
-    }
-
-    public void setLastModified(LocalDateTime lastModified) {
-        this.lastModified = lastModified;
-    }
-
-    public String getLastModifiedError() {
-        return lastModifiedError;
-    }
-
-    public void setLastModifiedError(String lastModifiedError) {
-        this.lastModifiedError = lastModifiedError;
-    }
 
     public int getDislikes() {
         return dislikes;
@@ -227,8 +198,6 @@ public class createPostState{
                 "entryID='" + entryID + '\'' +
                 ", author='" + author + '\'' +
                 ", content=" + content +
-                ", timestamp=" + timestamp +
-                ", lastModified=" + lastModified +
                 ", dislikes=" + dislikes +
                 ", likes=" + likes +
                 ", postTitle='" + postTitle + '\'' +
