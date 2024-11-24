@@ -39,7 +39,9 @@ public class GetPostInteractor implements GetPostInputBoundary {
 
             final GetPostOutputData retrievedPostOutputData = new GetPostOutputData(
                     retrievedPost.getEntryID(),
-                    retrievedPost.getContent());
+                    retrievedPost.getPostTitle(),
+                    retrievedPost.getContent(),
+                    retrievedPost.getComments());
             getPostPresenter.prepareSuccessView(retrievedPostOutputData);
             return retrievedPost;
         }

@@ -8,6 +8,7 @@ import java.beans.PropertyChangeListener;
 import controller.homepage.HomepageController;
 import controller.homepage.HomepageState;
 import controller.homepage.HomepageViewModel;
+import controller.post.PostController;
 import entity.Post;
 import java.util.List;
 
@@ -24,10 +25,12 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
     private final JPanel rightPaddingPanel = new JPanel();
 
     private final HomepageController homepageController;
+    private final PostController postController;
     private final HomepageViewModel homepageViewModel;
 
-    public HomePageView(HomepageController homepageController, HomepageViewModel homePageViewModel) {
+    public HomePageView(HomepageController homepageController, PostController postController, HomepageViewModel homePageViewModel) {
         this.homepageController = homepageController;
+        this.postController = postController;
         this.homepageViewModel = homePageViewModel;
         homePageViewModel.addPropertyChangeListener(this);
 
@@ -91,7 +94,7 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
         for (Post post : posts) {
             this.contentArea.add(new PostBox(
                 post.getPostTitle(), post.getContent().getBody(), 
-                post.getEntryID(), homepage, homepageController).getPostBox());
+                post.getEntryID(), homepage, homepageController, postController).getPostBox());
         }
     }
 
@@ -100,6 +103,10 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
     }
 
     private void addDummyPost() {
-        this.contentArea.add(new PostBox("test", "test", "1", homepage, homepageController).getPostBox());
+        this.contentArea.add(new PostBox(
+        "Test post", 
+        "This is a test post",
+        "1191bb2a-8870-4d3d-87f2-8c4ec522d793", 
+        homepage, homepageController, postController).getPostBox());
     }
 }

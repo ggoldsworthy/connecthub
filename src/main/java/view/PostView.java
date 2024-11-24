@@ -94,11 +94,16 @@ public class PostView extends JPanel implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         final PostState state = (PostState) evt.getNewValue();
+        System.out.println(state.getPostTitle());
+        this.setPostTitle(state);
+        this.setPostContent(state);
+        this.setComments(state);
+
         if (state.getPostContentError() != null) {
             JOptionPane.showMessageDialog(this, state.getPostContentError());
         } else if (state.getCommentsError() != null) {
             JOptionPane.showMessageDialog(this, state.getPostContent());
-        }
+        } 
     }
 
     public void setPostTitle(PostState state) {
@@ -110,6 +115,8 @@ public class PostView extends JPanel implements PropertyChangeListener {
     }
 
     public void setComments(PostState state) {
+        this.commentsPanel.removeAll();
+
         List<Comment> comments = state.getComments();
         for (Comment comment : comments) {
             JLabel commentLabel = new JLabel(comment.getContent().getBody());

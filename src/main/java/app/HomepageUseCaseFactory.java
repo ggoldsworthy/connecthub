@@ -4,6 +4,7 @@ import controller.ViewManagerModel;
 import controller.homepage.HomepageController;
 import controller.homepage.HomepagePresenter;
 import controller.homepage.HomepageViewModel;
+import controller.post.PostController;
 import controller.post.PostViewModel;
 import daos.DBPostDataAccessObject;
 import use_case.getpost.GetPostInputBoundary;
@@ -21,7 +22,8 @@ public class HomepageUseCaseFactory {
         DBPostDataAccessObject postDAO
     ) {
         final HomepageController homepageController = createHomepageController(viewManagerModel, homepageViewModel, postViewModel, postDAO);
-        return new HomePageView(homepageController, homepageViewModel);
+        final PostController postController = GetPostUseCaseFactory.createGetPostUseCase(viewManagerModel, postViewModel, postDAO);
+        return new HomePageView(homepageController, postController, homepageViewModel);
     }
 
     public static HomepageController createHomepageController(

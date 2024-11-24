@@ -3,6 +3,7 @@ package use_case.getpost;
 import java.util.List;
 import java.util.Objects;
 
+import entity.Comment;
 import entity.Content;
 import entity.Post;
 
@@ -12,19 +13,25 @@ import entity.Post;
 public class GetPostOutputData {
 
     private final String entryID;
+    private final String postTitle;
     private final Content postContent;
+    private final List<Comment> comments;
     private final List<Post> allPosts;
 
-    public GetPostOutputData(String entryID, Content postContent) {
+    public GetPostOutputData(String entryID, String postTitle, Content postContent, List<Comment> comments) {
         this.entryID = entryID;
         this.postContent = postContent;
+        this.postTitle = postTitle;
+        this.comments = comments;
         this.allPosts = null;
     }
 
     public GetPostOutputData(List<Post> allPosts) {
         this.allPosts = allPosts;
         this.entryID = null;
+        this.postTitle = null;
         this.postContent = null;
+        this.comments = null;
     }
 
     public String getEntryID() {
@@ -33,6 +40,14 @@ public class GetPostOutputData {
 
     public Content getPostContent() {
         return postContent;
+    }
+
+    public String getPostTitle() {
+        return postTitle;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
     }
 
     public List<Post> getAllPosts() {
