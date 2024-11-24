@@ -94,7 +94,6 @@ public class PostView extends JPanel implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         final PostState state = (PostState) evt.getNewValue();
-        System.out.println(state.getPostTitle());
         this.setPostTitle(state);
         this.setPostContent(state);
         this.setComments(state);
@@ -123,6 +122,7 @@ public class PostView extends JPanel implements PropertyChangeListener {
             commentLabel.setFont(new Font(FONT_TYPE, Font.PLAIN, 12));
             commentLabel.setForeground(Color.DARK_GRAY);
             commentLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+            // TODO Add content texts from the comment
             commentsPanel.add(commentLabel);
         }
     }
