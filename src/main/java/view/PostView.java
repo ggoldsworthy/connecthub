@@ -33,9 +33,9 @@ public class PostView extends JPanel implements PropertyChangeListener {
         setLayout(new BorderLayout());
         setBackground(new Color(120, 133, 133)); // TODO change to constants HEADER
 
-        // Add navbar
-        // final JPanel navBar = Navbar.createNavBar(mainContent);
-        // add(navBar, BorderLayout.NORTH);
+        // Add nav bar
+        final JPanel navBar = new Navbar(mainContent).getNavBar();
+        add(navBar, BorderLayout.NORTH);
 
         // Back button (won't implement this for now)
         // JButton backButton = new JButton("Back");
@@ -81,9 +81,10 @@ public class PostView extends JPanel implements PropertyChangeListener {
                 new Font(FONT_TYPE, Font.BOLD, 14),
                 Color.DARK_GRAY));
             
-        add(titlePanel, BorderLayout.NORTH);
-        add(new JScrollPane(postContent), BorderLayout.CENTER);
-        add(new JScrollPane(commentsPanel), BorderLayout.SOUTH);
+        mainContent.add(titlePanel, BorderLayout.NORTH);
+        mainContent.add(new JScrollPane(postContent), BorderLayout.CENTER);
+        mainContent.add(new JScrollPane(commentsPanel), BorderLayout.SOUTH);
+        add(mainContent);
     }
 
     public String getViewName() {
@@ -93,28 +94,35 @@ public class PostView extends JPanel implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         final PostState state = (PostState) evt.getNewValue();
+        this.setPostTitle(state);
+        this.setPostContent(state);
+        this.setComments(state);
+
         if (state.getPostContentError() != null) {
             JOptionPane.showMessageDialog(this, state.getPostContentError());
         } else if (state.getCommentsError() != null) {
             JOptionPane.showMessageDialog(this, state.getPostContent());
-        }
+        } 
     }
 
-    public void setPostTitle(PostState state) {
+    private void setPostTitle(PostState state) {
         this.postTitle.setText(state.getPostTitle());
     }
 
-    public void setPostContent(PostState state) {
+    private void setPostContent(PostState state) {
         this.postContent.setText(state.getPostContent());
     }
 
-    public void setComments(PostState state) {
+    private void setComments(PostState state) {
+        this.commentsPanel.removeAll();
+
         List<Comment> comments = state.getComments();
         for (Comment comment : comments) {
             JLabel commentLabel = new JLabel(comment.getContent().getBody());
             commentLabel.setFont(new Font(FONT_TYPE, Font.PLAIN, 12));
             commentLabel.setForeground(Color.DARK_GRAY);
             commentLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+            // TODO Add content texts from the comment
             commentsPanel.add(commentLabel);
         }
     }

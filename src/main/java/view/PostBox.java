@@ -1,21 +1,25 @@
 package view;
 
-import controller.post.PostViewModel;
+import controller.homepage.HomepageController;
+import controller.post.PostController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Posts displayed on the homepage are shown in individual PostBoxes
  */
-public class PostBox {
+public class PostBox implements ActionListener {
     private JPanel postBox;
     private String title;
     private String content;
     private JPanel mainContent;
-    private int postId;
+    private String postId;
 
-    public PostBox(String title, String content, int postId, JPanel mainContent) {
+    public PostBox(String title, String content, String postId, JPanel mainContent, 
+                   HomepageController homepageController, PostController postController) {
         this.title = title;
         this.content = content;
         this.mainContent = mainContent; // Initialize mainContent here
@@ -58,22 +62,16 @@ public class PostBox {
         final JButton likeButton = createStyledButton("Like");
         final JButton dislikeButton = createStyledButton("Dislike");
         final JButton viewPostButton = createStyledButton("View Post");
-        viewPostButton.addActionListener(e -> {
-            // Create the PostView for this post
-            System.out.println("CLICKED VIEW POST");
-            PostViewModel postViewModel = new PostViewModel(this.title, this.content);
-            PostView postView = new PostView(this.mainContent, postViewModel);
-
-            // Use a unique identifier that doesn't conflict
-            String postViewId = "PostView" + postId;  // Unique identifier using postId
-
-            // Add the PostView to the mainContent
-            this.mainContent.add(postView, postViewId);  // Use postId for unique key
-
-            // Switch to the "PostView" card the unique identifier
-            CardLayout layout = (CardLayout) this.mainContent.getLayout();
-            layout.show(this.mainContent, postViewId);  // Show the specific post view
-        });
+        
+        viewPostButton.addActionListener(
+            new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    System.out.println("CLICKED VIEW POST");
+                    postController.execute(postId);
+                    homepageController.switchToLoginView();
+                }
+            }
+        );
 
 
         likeButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Liked post " + postId));
@@ -90,6 +88,11 @@ public class PostBox {
         return this.postBox;
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // JOptionPane.showMessageDialog(this, "hi");
+    }
+
     private static JButton createStyledButton(String text) {
         final JButton button = new JButton(text);
         button.setFont(new Font(StyleConstants.FONT_TYPE, Font.PLAIN, 12));
@@ -104,5 +107,6 @@ public class PostBox {
         button.setFocusPainted(false);
         return button;
     }
+
 
 }

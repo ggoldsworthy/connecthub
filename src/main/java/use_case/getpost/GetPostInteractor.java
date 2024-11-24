@@ -39,7 +39,9 @@ public class GetPostInteractor implements GetPostInputBoundary {
 
             final GetPostOutputData retrievedPostOutputData = new GetPostOutputData(
                     retrievedPost.getEntryID(),
-                    retrievedPost.getContent());
+                    retrievedPost.getPostTitle(),
+                    retrievedPost.getContent(),
+                    retrievedPost.getComments());
             getPostPresenter.prepareSuccessView(retrievedPostOutputData);
             return retrievedPost;
         }
@@ -58,7 +60,14 @@ public class GetPostInteractor implements GetPostInputBoundary {
             posts.add(this.jsonToPost(postData));
         }
 
+        final GetPostOutputData retrievedPostOutputData = new GetPostOutputData(posts);
+        getPostPresenter.prepareSuccessView(retrievedPostOutputData);
         return posts;
+    }
+
+    @Override
+    public void switchToPostView() {
+        getPostPresenter.switchToPostView();
     }
 
     private Post jsonToPost(JSONObject postData) {

@@ -1,10 +1,5 @@
 package controller.homepage;
 
-import java.util.List;
-
-import org.json.JSONArray;
-
-import entity.Post;
 import use_case.getpost.GetPostInputBoundary;
 
 public class HomepageController {
@@ -14,8 +9,11 @@ public class HomepageController {
         this.getPostInteractor = getPostInteractor;
     }
 
-    public List<Post> fetchPosts(int size) {
-        List<Post> posts = this.getPostInteractor.fetchPosts(); // TODO edit
-        return posts.subList(size);
+    public void fetchAllPosts() {
+        this.getPostInteractor.getAllPosts(); 
+    }
+
+    public void switchToLoginView() {
+        this.getPostInteractor.switchToPostView();
     }
 }

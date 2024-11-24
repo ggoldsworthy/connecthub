@@ -5,19 +5,18 @@ import java.awt.CardLayout;
 import javax.swing.*;
 
 import com.mongodb.client.MongoCollection;
-import controller.post.PostViewModel;
 import org.bson.Document;
 
 import daos.DBPostDataAccessObject;
 import daos.DBUserDataAccessObject;
-import entity.CommonUserFactory;
 import controller.ViewManagerModel;
+import controller.homepage.HomepageViewModel;
 import controller.login.LoginViewModel;
-import controller.post.PostState;
 import controller.post.PostViewModel;
 //import controller.logged_in.LoggedInViewModel;
 //import controller.login.LoginViewModel;
 import controller.signup.SignupViewModel;
+import view.HomePageView;
 import view.PostView;
 //import view.LoggedInView;
 //import view.LoginView;
@@ -84,6 +83,7 @@ public class ConnectHub {
 		final SignupViewModel signupViewModel = new SignupViewModel();
 		final LoginViewModel loginViewModel = new LoginViewModel();
 		final PostViewModel postViewModel = new PostViewModel();
+		final HomepageViewModel homepageViewModel = new HomepageViewModel();
 
 		final SignupView signupView = SignupUseCaseFactory.create(viewManagerModel,
 				signupViewModel, loginViewModel, userDataAccessObject);
@@ -97,25 +97,16 @@ public class ConnectHub {
 //				loggedInViewModel, userDataAccessObject);
 //		views.add(loggedInView, loggedInView.getViewName());
 		
+		final HomePageView homepageView = HomepageUseCaseFactory.create(viewManagerModel, homepageViewModel, postViewModel, postDataAccessObject);
+		views.add(homepageView, homepageView.getViewName());
+		
 		final PostView postView = GetPostUseCaseFactory.create(viewManagerModel, postViewModel, postDataAccessObject);
 		views.add(postView, postView.getViewName());
 
-		viewManagerModel.setState(signupView.getViewName());
-		// viewManagerModel.setState(postView.getViewName());
+
+		// viewManagerModel.setState(signupView.getViewName());
+		viewManagerModel.setState(homepageView.getViewName());
 		viewManagerModel.firePropertyChanged();
-
-
-		// // Add a button to navigate to a PostView
-		// JButton postButton = new JButton("View Post 1");
-		// postButton.addActionListener(e -> {
-		// 	// Switch to PostView when the button is clicked
-		// 	cardLayout.show(views, "Post 1");  // Show the post view for the first dummy post
-		// });
-
-		// // Create and add the navigation bar
-		// final JPanel navBar = Navbar.createNavBar(views);
-		// application.add(navBar, BorderLayout.NORTH);
-		// application.add(postButton, BorderLayout.SOUTH); // Adding button at the bottom
 
 		application.pack();
 		application.setVisible(true);

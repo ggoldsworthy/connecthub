@@ -22,7 +22,16 @@ public class PostPresenter implements GetPostOutputBoundary {
     @Override
     public void prepareSuccessView(GetPostOutputData outputData) {
         final PostState postState = this.postViewModel.getState();
+        postState.setPostID(outputData.getEntryID());
+        postState.setPostTitle(outputData.getPostTitle());
         postState.setPostContent(outputData.getPostContent().getBody());
+        postState.setComments(outputData.getComments());
+
+        postState.setPostContentError(null);
+        postState.setCommentsError(null);
+        postState.setPostIDError(null);
+        postState.setPostTitleError(null);
+
         this.postViewModel.setState(postState);
         this.postViewModel.firePropertyChanged();
 
@@ -38,6 +47,11 @@ public class PostPresenter implements GetPostOutputBoundary {
     public void prepareFailView(String errorMessage) {
         final PostState postState = this.postViewModel.getState();
         postState.setPostContentError(errorMessage);
+        postState.setPostIDError(errorMessage);
+        postState.setPostTitleError(errorMessage);
         this.postViewModel.firePropertyChanged();
     }
+
+    @Override
+    public void switchToPostView() {}
 }
