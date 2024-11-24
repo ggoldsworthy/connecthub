@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class PageController {
     // bundled JavaScript files
-    private final String SIGN_UP_SCRIPT = "/js/sign_up/app.js"; 
-    private final String LOG_IN_SCRIPT = "/js/login/app.js"; 
-    private final String POST_SCRIPT = ""; 
-    private final String CREATE_POST_SCRIPT = "";  
-    private final String HOME_PAGE_SCRIPT = "";  
+    private final String SIGN_UP_SCRIPT = "/js/sign_up/app.js";
+    private final String LOG_IN_SCRIPT = "/js/login/app.js";
+    private final String POST_SCRIPT = "";
+    private final String CREATE_POST_SCRIPT = "";
+    private final String HOME_PAGE_SCRIPT = "/js/homepage/app.js";
     private final String STYLES_SCRIPT = "/js/styles/app.css";
-    
+
     private final String TEMPLATE_FILE = "index";
     private final String PAGE_TITLE = "page_title";
     private final String SCRIPT = "script";
