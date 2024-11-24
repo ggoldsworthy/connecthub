@@ -33,9 +33,9 @@ public class PostView extends JPanel implements PropertyChangeListener {
         setLayout(new BorderLayout());
         setBackground(new Color(120, 133, 133)); // TODO change to constants HEADER
 
-        // Add navbar
-        // final JPanel navBar = Navbar.createNavBar(mainContent);
-        // add(navBar, BorderLayout.NORTH);
+        // Add nav bar
+        final JPanel navBar = new Navbar(mainContent).getNavBar();
+        add(navBar, BorderLayout.NORTH);
 
         // Back button (won't implement this for now)
         // JButton backButton = new JButton("Back");
@@ -81,9 +81,10 @@ public class PostView extends JPanel implements PropertyChangeListener {
                 new Font(FONT_TYPE, Font.BOLD, 14),
                 Color.DARK_GRAY));
             
-        add(titlePanel, BorderLayout.NORTH);
-        add(new JScrollPane(postContent), BorderLayout.CENTER);
-        add(new JScrollPane(commentsPanel), BorderLayout.SOUTH);
+        mainContent.add(titlePanel, BorderLayout.NORTH);
+        mainContent.add(new JScrollPane(postContent), BorderLayout.CENTER);
+        mainContent.add(new JScrollPane(commentsPanel), BorderLayout.SOUTH);
+        add(mainContent);
     }
 
     public String getViewName() {

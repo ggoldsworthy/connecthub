@@ -18,6 +18,7 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
     private final String viewName = "home page";
     private final int PAGE_SIZE = 5;
 
+    private final JPanel mainContent = new JPanel(new BorderLayout());
     private final JPanel homepage = new JPanel();
     private final JPanel contentArea = new JPanel();
     private final JPanel rightPaddingPanel = new JPanel();
@@ -32,6 +33,10 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
 
         this.homepage.setLayout(new BorderLayout());
         this.homepage.setBackground(StyleConstants.BACKGROUND_COLOR);
+        
+        // Add nav bar
+        final JPanel navBar = new Navbar(homepage).getNavBar();
+        mainContent.add(navBar, BorderLayout.NORTH);
 
         // Add navigation pane
         final JPanel navigationPanel = NavigationPane.createNavigationPane(homepage);
@@ -40,6 +45,7 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
         // Add center panel to display post previews
         this.contentArea.setLayout(new BoxLayout(contentArea, BoxLayout.Y_AXIS));
         this.contentArea.setBackground(Color.WHITE);
+        homepage.add(contentArea);
 
         // Scroll bar
         final JScrollPane scrollPane = new JScrollPane(contentArea);
@@ -52,7 +58,8 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
         this.rightPaddingPanel.setPreferredSize(new Dimension(147, homepage.getHeight()));
         homepage.add(rightPaddingPanel, BorderLayout.EAST);
 
-        add(homepage);
+        mainContent.add(homepage);
+        add(mainContent);
 
         // Example of observing changes from ViewModel
         // homePageViewModel.addPropertyChangeListener(evt -> {
