@@ -93,7 +93,7 @@ html, body {
   align-items: center;
 }
 
-/* SIGN UP */
+/* ENTRY */
 .entry-form {
   display: flex;
   flex-direction: column;
@@ -197,3 +197,74 @@ input {
   color: var(--ACCENT); */
   opacity: 0.8;
 }
+
+/* NAV BAR */
+#nav-bar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(var(--BACKGROUND), var(--PRIMARY));
+  padding: 0 1rem;
+}
+
+#nav-bar-home-container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+#nav-bar-home-container img {
+  width: 70px;
+  height: 70px;
+}
+
+#nav-bar-home-container div {
+  font-weight: var(--WEIGHT_BOLD);
+}
+
+#nav-bar-user-container {
+  display: grid;
+  /* grid-template-columns: repeat(2, 1fr); */
+  /* grid-template-rows: 0.1fr 1fr; */
+  grid-template-areas:
+    "pfp username"
+    "pfp handle";
+}
+
+#nav-bar-user-container img {
+  grid-area: pfp;
+  margin-right: 20px;
+}
+
+#nav-bar-user-container .username {
+  grid-area: username;
+  font-weight: var(--WEIGHT_NORMAL);
+  font-size: var(--TEXT_MEDIUM);
+
+}
+
+#nav-bar-user-container .handle {
+  grid-area: handle;
+  font-weight: var(--WEIGHT_LIGHT);
+  font-size: var(--TEXT_SAMLL);
+}
+
+/* return (
+  <div id="nav-bar-container" onClick={() => navigateTo("/")}>
+    <div id="nav-bar-home-container" >
+      <img src={logo} alt="home logo" />
+      <div>Connect Hub</div>
+    </div>
+
+    <div id="nav-bar-user-container">
+      <img src="" alt=" " />
+      <div className="username">{"Need Use Case"}</div>
+      <div className="handle">{"@need_use_case"}</div>
+    </div>
+  </div>
+) */
