@@ -58,6 +58,8 @@ public class GetPostInteractor implements GetPostInputBoundary {
             posts.add(this.jsonToPost(postData));
         }
 
+        final GetPostOutputData retrievedPostOutputData = new GetPostOutputData(posts);
+        getPostPresenter.prepareSuccessView(retrievedPostOutputData);
         return posts;
     }
 

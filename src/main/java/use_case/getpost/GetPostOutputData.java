@@ -1,8 +1,10 @@
 package use_case.getpost;
 
+import java.util.List;
 import java.util.Objects;
 
 import entity.Content;
+import entity.Post;
 
 /**
  * The Input Data for the Get Post Use Case.
@@ -11,10 +13,18 @@ public class GetPostOutputData {
 
     private final String entryID;
     private final Content postContent;
+    private final List<Post> allPosts;
 
     public GetPostOutputData(String entryID, Content postContent) {
         this.entryID = entryID;
         this.postContent = postContent;
+        this.allPosts = null;
+    }
+
+    public GetPostOutputData(List<Post> allPosts) {
+        this.allPosts = allPosts;
+        this.entryID = null;
+        this.postContent = null;
     }
 
     public String getEntryID() {
@@ -23,6 +33,10 @@ public class GetPostOutputData {
 
     public Content getPostContent() {
         return postContent;
+    }
+
+    public List<Post> getAllPosts() {
+        return allPosts;
     }
 
     /**
@@ -42,6 +56,4 @@ public class GetPostOutputData {
     public int hashCode() {
         return Objects.hash(entryID, postContent);
     }
-
-
 }
