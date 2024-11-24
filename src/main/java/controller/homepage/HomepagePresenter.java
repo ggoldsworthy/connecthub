@@ -1,11 +1,16 @@
 package controller.homepage;
 
+import java.util.List;
+
 import controller.ViewManagerModel;
 import controller.post.PostViewModel;
+import entity.Post;
 import use_case.getpost.GetPostOutputBoundary;
 import use_case.getpost.GetPostOutputData;
 
 public class HomepagePresenter implements GetPostOutputBoundary {
+    private final int PER_PAGE = 10;
+
     private final ViewManagerModel viewManagerModel;
     private final HomepageViewModel homepageViewModel;
     private final PostViewModel postViewModel;
@@ -26,7 +31,12 @@ public class HomepagePresenter implements GetPostOutputBoundary {
     @Override
     public void prepareSuccessView(GetPostOutputData outputData) {
         final HomepageState homepageState = this.homepageViewModel.getState();
-        homepageState.setPosts(outputData.getAllPosts().subList(0, 10));
+        List<Post> posts = outputData.getAllPosts();
+
+        homepageState.setPosts(posts.subList(0, Math.min(posts.size(), PER_PAGE)));
+
+        homepageState.setPostsError(null);
+
         this.homepageViewModel.setState(homepageState);
         this.homepageViewModel.firePropertyChanged();
 

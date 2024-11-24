@@ -9,7 +9,7 @@ public class HomepageController {
         this.getPostInteractor = getPostInteractor;
     }
 
-    public void fetchPosts(int size) {
+    public void fetchAllPosts() {
         this.getPostInteractor.getAllPosts(); 
     }
 

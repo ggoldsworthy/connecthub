@@ -9,6 +9,7 @@ import controller.homepage.HomepageController;
 import controller.homepage.HomepageState;
 import controller.homepage.HomepageViewModel;
 import controller.post.PostController;
+import controller.post.PostState;
 import entity.Post;
 import java.util.List;
 
@@ -17,7 +18,6 @@ import java.util.List;
  */
 public class HomePageView extends JPanel implements PropertyChangeListener {
     private final String viewName = "home page";
-    private final int PAGE_SIZE = 5;
 
     private final JPanel mainContent = new JPanel(new BorderLayout());
     private final JPanel homepage = new JPanel();
@@ -61,15 +61,12 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
         this.rightPaddingPanel.setPreferredSize(new Dimension(147, homepage.getHeight()));
         homepage.add(rightPaddingPanel, BorderLayout.EAST);
 
-        addDummyPost();
-        addDummyPost();
-        addDummyPost();
-        addDummyPost();
+        populatePosts();
 
         mainContent.add(homepage);
         add(mainContent);
 
-        // Example of observing changes from ViewModel
+        // // Example of observing changes from ViewModel
         // homePageViewModel.addPropertyChangeListener(evt -> {
         //     // Update UI based on new state (e.g., posts updated)
         //     HomepageState state = homePageViewModel.getState();
@@ -86,10 +83,25 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
     
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        // Display message dialog if needed
+        final HomepageState state = (HomepageState) evt.getNewValue();
+        this.loadPosts(state.getPosts());
+
+        if (state.getPostsError() != null) {
+            JOptionPane.showMessageDialog(this, state.getPostsError());
+        } else if (state.getCurrentUserError() != null) {
+            JOptionPane.showMessageDialog(this, state.getCurrentUserError());
+        } 
     }
 
-    public void loadPosts(List<Post> posts) {
+    public String getViewName() {
+        return viewName;
+    }
+    
+    private void populatePosts() {
+        this.homepageController.fetchAllPosts();
+    }
+    
+    private void loadPosts(List<Post> posts) {
         this.contentArea.removeAll();
         for (Post post : posts) {
             this.contentArea.add(new PostBox(
@@ -97,11 +109,7 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
                 post.getEntryID(), homepage, homepageController, postController).getPostBox());
         }
     }
-
-    public String getViewName() {
-        return viewName;
-    }
-
+    // For testing purposes
     private void addDummyPost() {
         this.contentArea.add(new PostBox(
         "Test post", 
