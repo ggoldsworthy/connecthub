@@ -20,7 +20,6 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
 
     private final JPanel homepage = new JPanel();
     private final JPanel contentArea = new JPanel();
-    private final JScrollPane scrollPane = new JScrollPane(contentArea);
     private final JPanel rightPaddingPanel = new JPanel();
 
     private final HomepageController homepageController;
@@ -43,8 +42,9 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
         this.contentArea.setBackground(Color.WHITE);
 
         // Scroll bar
-        this.scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        this.scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        final JScrollPane scrollPane = new JScrollPane(contentArea);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         homepage.add(scrollPane, BorderLayout.CENTER);
 
         // Add right panel to center posts and also leave space for future features
