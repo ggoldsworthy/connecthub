@@ -1,7 +1,11 @@
 package view;
 
+import controller.homepage.HomepageController;
+import controller.homepage.HomepageViewModel;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -11,9 +15,13 @@ import java.awt.event.MouseEvent;
 public class Navbar {
 
     private final JPanel navBar;
+    private final HomepageViewModel homePageViewModel;
+    private final HomepageController homepageController;
 
-    public Navbar(JPanel mainContent) {
+    public Navbar(JPanel mainContent, HomepageViewModel homePageViewModel, HomepageController homepageController) {
         this.navBar = initializeNavBar(mainContent);
+        this.homePageViewModel = homePageViewModel;
+        this.homepageController = homepageController;
     }
 
     /**
@@ -36,8 +44,8 @@ public class Navbar {
         titleLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         titleLabel.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent event) {
-                final CardLayout cl = (CardLayout) mainContent.getLayout();
-                cl.show(mainContent, "Homepage");
+                homepageController.fetchAllPosts();
+                homepageController.switchToHomePageView();
             }
         });
         titleLabel.setFont(StyleConstants.HEADER_FONT);

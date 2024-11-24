@@ -1,6 +1,8 @@
 package app;
 
 import controller.ViewManagerModel;
+import controller.homepage.HomepageController;
+import controller.homepage.HomepageViewModel;
 import controller.post.PostController;
 import controller.post.PostPresenter;
 import controller.post.PostViewModel;
@@ -15,12 +17,12 @@ public class GetPostUseCaseFactory {
 
     }
 
-    public static PostView create(
-        ViewManagerModel viewManagerModel, PostViewModel postViewModel, 
-        DBPostDataAccessObject postDAO
-    ) {
+    public static PostView create(ViewManagerModel viewManagerModel, PostViewModel postViewModel,
+                                  HomepageViewModel homepageViewModel, DBPostDataAccessObject postDAO) {
         final PostController postController = createGetPostUseCase(viewManagerModel, postViewModel, postDAO);
-        return new PostView(postController, postViewModel);
+        final HomepageController homepageController = HomepageUseCaseFactory.createHomepageController(viewManagerModel,
+                homepageViewModel, postViewModel, postDAO);
+        return new PostView(postController, postViewModel, homepageViewModel, homepageController);
     }
 
     public static PostController createGetPostUseCase(

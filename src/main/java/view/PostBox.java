@@ -66,7 +66,6 @@ public class PostBox implements ActionListener {
         viewPostButton.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
-                    System.out.println("CLICKED VIEW POST");
                     postController.execute(postId);
                     homepageController.switchToLoginView();
                 }

@@ -19,4 +19,6 @@ public interface GetPostInputBoundary {
     List<Post> getAllPosts();
 
     void switchToPostView();
+
+    void switchToHomePageView();
 }
