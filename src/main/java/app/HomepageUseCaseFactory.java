@@ -1,36 +1,36 @@
 package app;
 
 import controller.ViewManagerModel;
-import controller.post.PostController;
-import controller.post.PostPresenter;
-import controller.post.PostViewModel;
+import controller.homepage.HomepageController;
+import controller.homepage.HomepagePresenter;
+import controller.homepage.HomepageViewModel;
 import daos.DBPostDataAccessObject;
 import use_case.getpost.GetPostInputBoundary;
 import use_case.getpost.GetPostInteractor;
 import use_case.getpost.GetPostOutputBoundary;
-import view.PostView;
+import view.HomePageView;
 
 public class HomepageUseCaseFactory {
     public HomepageUseCaseFactory() {
 
     }
 
-    public static PostView create(
-        ViewManagerModel viewManagerModel, PostViewModel postViewModel, 
+    public static HomePageView create(
+        ViewManagerModel viewManagerModel, HomepageViewModel homepageViewModel,
         DBPostDataAccessObject postDAO
     ) {
-        final PostController postController = createGetPostUseCase(viewManagerModel, postViewModel, postDAO);
-        return new PostView(postController, postViewModel);
+        final HomepageController homepageController = createHomepageController(viewManagerModel, homepageViewModel, postDAO);
+        return new HomePageView(homepageController, homepageViewModel);
     }
 
-    public static PostController createGetPostUseCase(
-        ViewManagerModel viewManagerModel, PostViewModel postViewModel, 
+    public static HomepageController createHomepageController(
+        ViewManagerModel viewManagerModel, HomepageViewModel homepageViewModel, 
         DBPostDataAccessObject postDAO
     ) {
-        final GetPostOutputBoundary getPostOutputBoundary = new PostPresenter(viewManagerModel, postViewModel);
+        final GetPostOutputBoundary homepagePresenter = new HomepagePresenter(viewManagerModel, homepageViewModel);
         
-        final GetPostInputBoundary getPostInteractor = new GetPostInteractor(postDAO, getPostOutputBoundary);
+        final GetPostInputBoundary getPostInteractor = new GetPostInteractor(postDAO, homepagePresenter);
         
-        return new PostController(getPostInteractor);
+        return new HomepageController(getPostInteractor);
     }
 }

@@ -13,9 +13,9 @@ public class PostBox {
     private String title;
     private String content;
     private JPanel mainContent;
-    private int postId;
+    private String postId;
 
-    public PostBox(String title, String content, int postId, JPanel mainContent) {
+    public PostBox(String title, String content, String postId, JPanel mainContent) {
         this.title = title;
         this.content = content;
         this.mainContent = mainContent; // Initialize mainContent here
@@ -58,22 +58,22 @@ public class PostBox {
         final JButton likeButton = createStyledButton("Like");
         final JButton dislikeButton = createStyledButton("Dislike");
         final JButton viewPostButton = createStyledButton("View Post");
-        viewPostButton.addActionListener(e -> {
-            // Create the PostView for this post
-            System.out.println("CLICKED VIEW POST");
-            PostViewModel postViewModel = new PostViewModel(this.title, this.content);
-            PostView postView = new PostView(this.mainContent, postViewModel);
+        // viewPostButton.addActionListener(e -> {
+        //     // Create the PostView for this post
+        //     System.out.println("CLICKED VIEW POST");
+        //     PostViewModel postViewModel = new PostViewModel(this.title, this.content);
+        //     PostView postView = new PostView(this.mainContent, postViewModel);
 
-            // Use a unique identifier that doesn't conflict
-            String postViewId = "PostView" + postId;  // Unique identifier using postId
+        //     // Use a unique identifier that doesn't conflict
+        //     String postViewId = "PostView" + postId;  // Unique identifier using postId
 
-            // Add the PostView to the mainContent
-            this.mainContent.add(postView, postViewId);  // Use postId for unique key
+        //     // Add the PostView to the mainContent
+        //     this.mainContent.add(postView, postViewId);  // Use postId for unique key
 
-            // Switch to the "PostView" card the unique identifier
-            CardLayout layout = (CardLayout) this.mainContent.getLayout();
-            layout.show(this.mainContent, postViewId);  // Show the specific post view
-        });
+        //     // Switch to the "PostView" card the unique identifier
+        //     CardLayout layout = (CardLayout) this.mainContent.getLayout();
+        //     layout.show(this.mainContent, postViewId);  // Show the specific post view
+        // });
 
 
         likeButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Liked post " + postId));
