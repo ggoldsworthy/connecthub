@@ -63,6 +63,11 @@ public class GetPostInteractor implements GetPostInputBoundary {
         return posts;
     }
 
+    @Override
+    public void switchToPostView() {
+        getPostPresenter.switchToPostView();
+    }
+
     private Post jsonToPost(JSONObject postData) {
         Content postContent = new PostContent(postData.getString("content_body"),
                 postData.getString("attachment_path"),

@@ -16,4 +16,5 @@ public interface GetPostOutputBoundary {
      */
     void prepareFailView(String errorMessage);
 
+    void switchToPostView();
 }

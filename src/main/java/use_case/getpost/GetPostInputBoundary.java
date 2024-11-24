@@ -17,4 +17,6 @@ public interface GetPostInputBoundary {
     Post getPost(GetPostInputData getPostInputData) throws Exception;
 
     List<Post> getAllPosts();
+
+    void switchToPostView();
 }

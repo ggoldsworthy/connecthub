@@ -12,4 +12,8 @@ public class HomepageController {
     public void fetchPosts(int size) {
         this.getPostInteractor.getAllPosts(); 
     }
+
+    public void switchToLoginView() {
+        this.getPostInteractor.switchToPostView();
+    }
 }

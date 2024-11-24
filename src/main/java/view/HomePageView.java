@@ -58,6 +58,11 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
         this.rightPaddingPanel.setPreferredSize(new Dimension(147, homepage.getHeight()));
         homepage.add(rightPaddingPanel, BorderLayout.EAST);
 
+        addDummyPost();
+        addDummyPost();
+        addDummyPost();
+        addDummyPost();
+
         mainContent.add(homepage);
         add(mainContent);
 
@@ -78,19 +83,23 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
     
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'propertyChange'");
+        // Display message dialog if needed
     }
 
     public void loadPosts(List<Post> posts) {
         this.contentArea.removeAll();
         for (Post post : posts) {
             this.contentArea.add(new PostBox(
-                post.getPostTitle(), post.getContent().getBody(), post.getEntryID(), homepage).getPostBox());            
+                post.getPostTitle(), post.getContent().getBody(), 
+                post.getEntryID(), homepage, homepageController).getPostBox());
         }
     }
 
     public String getViewName() {
         return viewName;
+    }
+
+    private void addDummyPost() {
+        this.contentArea.add(new PostBox("test", "test", "1", homepage, homepageController).getPostBox());
     }
 }

@@ -4,6 +4,7 @@ import controller.ViewManagerModel;
 import controller.homepage.HomepageController;
 import controller.homepage.HomepagePresenter;
 import controller.homepage.HomepageViewModel;
+import controller.post.PostViewModel;
 import daos.DBPostDataAccessObject;
 import use_case.getpost.GetPostInputBoundary;
 import use_case.getpost.GetPostInteractor;
@@ -16,18 +17,18 @@ public class HomepageUseCaseFactory {
     }
 
     public static HomePageView create(
-        ViewManagerModel viewManagerModel, HomepageViewModel homepageViewModel,
+        ViewManagerModel viewManagerModel, HomepageViewModel homepageViewModel, PostViewModel postViewModel,
         DBPostDataAccessObject postDAO
     ) {
-        final HomepageController homepageController = createHomepageController(viewManagerModel, homepageViewModel, postDAO);
+        final HomepageController homepageController = createHomepageController(viewManagerModel, homepageViewModel, postViewModel, postDAO);
         return new HomePageView(homepageController, homepageViewModel);
     }
 
     public static HomepageController createHomepageController(
-        ViewManagerModel viewManagerModel, HomepageViewModel homepageViewModel, 
+        ViewManagerModel viewManagerModel, HomepageViewModel homepageViewModel, PostViewModel postViewModel,
         DBPostDataAccessObject postDAO
     ) {
-        final GetPostOutputBoundary homepagePresenter = new HomepagePresenter(viewManagerModel, homepageViewModel);
+        final GetPostOutputBoundary homepagePresenter = new HomepagePresenter(viewManagerModel, homepageViewModel, postViewModel);
         
         final GetPostInputBoundary getPostInteractor = new GetPostInteractor(postDAO, homepagePresenter);
         
