@@ -3,7 +3,7 @@ import Topics from "./Topics.jsx"
 import Contents from "./Contents.jsx"
 import RecentActivities from "./RecentActivities.jsx"
 import { useEffect, useState } from "react"
-import api from './axios.config.js'
+import api from '../api/axios.config.js'
 
 export default function HomePage() {
   return (
@@ -19,19 +19,22 @@ function HomeContent() {
 
   useEffect(() => {
     api
-    .get("/posts")
+    .get("/all-posts")
     .then(response => {
-      console.log("HI")
+      // console.log(response.data)
+      setPosts(response.data)
     })
     .catch(() => {
       window.alert("Error fetching posts")
     })
   }, [])
 
+  useEffect(() => {}, [posts])
+
   return (
     <div id="home-page-container">
-      <Topics />
-      <Contents />
+      <Topics posts={posts} />
+      <Contents posts={posts} />
       <RecentActivities />
     </div>
   )

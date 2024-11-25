@@ -1,19 +1,48 @@
+import { useEffect, useRef, useState } from "react"
+
 export default function Contents(props) {
+  const [displayedPosts, setDisplayedPosts] = useState([])
+
+  useEffect(() => {
+    // TODO Temporary solution, should make posts paginable
+    const slicedPosts = props.posts.length < perPage
+      ? props.posts
+      : props.posts.slice(getRandomInt(props.posts.length - perPage), perPage)
+
+    setDisplayedPosts(slicedPosts)
+  }, [props.posts])
+
+  const perPage = 20
+
   return (
     <div id="contents-container">
-      <div className="content-header">
+      <div id="content-header">
         <div>See the latest posts</div>
         <button>+ Create Post</button>
       </div>
 
-      <PostBox authorPfp="" author="Doodle Wacker" timeStamp="Nov. 24, 2024" title="Test title very long" postContent="i am fucking cooked" topic="test" />
+      <div id="post-box-container">
+        {displayedPosts.map((post, index) => {
+          // TODO get user use case, or edit the post entity to return a User entity
+          return <PostBox
+            key={index}
+            postId={post.entryID}
+            authorPfp={""}
+            author={post.author}
+            timeStamp={post.postedDate}
+            title={post.postTitle}
+            content={post.content.body}
+            topic={post.category}
+          />
+        })}
+      </div>
     </div>
   )
 }
 
 function PostBox(props) {
   return (
-    <div className="post-box-container">
+    <div className="post-box">
       <div className="post-box-info">
         <img className="post-box-author-pfp" src={props.authorPfp} alt=" " />
         <div className="post-box-author">{props.author}</div>

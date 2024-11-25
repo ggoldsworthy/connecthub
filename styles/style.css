@@ -205,7 +205,8 @@ input {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  position: relative;
+  position: sticky;
+  z-index: 10;
   top: 0;
   left: 0;
   right: 0;
@@ -273,6 +274,7 @@ input {
   height: 100%;
   padding: 0 4rem;
   display: grid;
+  padding-top: 4rem;
   gap: 2rem;
   grid-template-columns: 1fr 3fr 1fr;
   grid-template-areas:
@@ -288,7 +290,6 @@ input {
   flex-direction: column;
   justify-content: start;
   align-items: center;
-  padding-top: 2rem;
 }
 
 #topics-container {
@@ -348,7 +349,7 @@ input {
   padding-right: 2rem;
 }
 
-.content-header {
+#content-header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -357,24 +358,37 @@ input {
   margin-bottom: 2rem;
 }
 
-.content-header div {
+#content-header div {
   font-size: var(--TEXT_MEDIUM);
   font-style: italic;
 }
 
-.content-header button {
+#content-header button {
   background-color: var(--ACCENT);
   border: none;
   border-radius: var(--BORDER_RADIUS);
   padding: 4px 16px;
   color: var(--BACKGROUND);
+  cursor: pointer;
 }
 
-.content-header button:hover {
+#content-header button:hover {
   opacity: 0.7;
 }
 
-.post-box-container {
+#post-box-container {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 2rem;
+  overflow-y: scroll;
+}
+
+.post-box {
   background-color: var(--PRIMARY);
   width: 100%;
   border-radius: var(--BORDER_RADIUS);
