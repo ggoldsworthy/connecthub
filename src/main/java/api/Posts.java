@@ -24,6 +24,6 @@ public class Posts {
     public ResponseEntity<List<Post>> getAllPosts() {
         // The posts should be paginated in the service. This is a temporary solution.
         List<Post> allPosts = getPostInteractor.getAllPosts();
-        return new ResponseEntity<>(posts, HttpStatus.OK);
+        return new ResponseEntity<>(allPosts, HttpStatus.OK);
     }
 }
