@@ -1,7 +1,6 @@
 package controller.create_post;
 
 import controller.ViewManagerModel;
-import controller.signup.SignupState;
 import use_case.create_post.CreatePostOutputBoundary;
 import use_case.create_post.CreatePostOutputData;
 ;

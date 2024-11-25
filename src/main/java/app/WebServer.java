@@ -1,6 +1,5 @@
 package app;
 
-import controller.homepage.HomepageViewModel;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -11,6 +10,8 @@ import com.mongodb.client.MongoCollection;
 import api.Authentification;
 import api.Posts;
 import controller.ViewManagerModel;
+import controller.create_post.CreatePostPresenter;
+import controller.create_post.CreatePostViewModel;
 import controller.homepage.HomepagePresenter;
 import controller.homepage.HomepageViewModel;
 import controller.login.LoginPresenter;
@@ -21,7 +22,11 @@ import controller.signup.SignupViewModel;
 import daos.DBPostDataAccessObject;
 import daos.DBUserDataAccessObject;
 import entity.CommonUserFactory;
+import entity.PostFactory;
 import entity.UserFactory;
+import use_case.create_post.CreatePostInputBoundary;
+import use_case.create_post.CreatePostInteractor;
+import use_case.create_post.CreatePostOutputBoundary;
 import use_case.getpost.GetPostInputBoundary;
 import use_case.getpost.GetPostInteractor;
 import use_case.getpost.GetPostOutputBoundary;
@@ -46,6 +51,7 @@ public class WebServer {
 
 		// Entity Factories
 		UserFactory commonUserFactory = new CommonUserFactory();
+		PostFactory postFactory = new PostFactory();
 
 		// Views (irrelavent for a web application)
 		final ViewManagerModel viewManagerModel = new ViewManagerModel();
@@ -53,20 +59,23 @@ public class WebServer {
 		final LoginViewModel loginViewModel = new LoginViewModel();
 		final HomepageViewModel homepageViewModel = new HomepageViewModel();
 		final PostViewModel postViewModel = new PostViewModel();
+		final CreatePostViewModel createPostViewModel = new CreatePostViewModel();
 
 		// Presenters (irrelavent for a web application)
 		final SignupOutputBoundary signupPresenter = new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel);
 		final LoginOutputBoundary loginPresenter = new LoginPresenter(viewManagerModel, homepageViewModel, loginViewModel, signupViewModel);
 		final GetPostOutputBoundary homepagePresenter = new HomepagePresenter(viewManagerModel, homepageViewModel, postViewModel);
+		final CreatePostOutputBoundary createPostPresenter = new CreatePostPresenter(createPostViewModel, viewManagerModel);
 
 		// Service Interactors
 		final SignupInputBoundary signUpInteractor = new SignupInteractor(userDAO, signupPresenter, commonUserFactory);
 		final LoginInputBoundary loginInteractor = new LoginInteractor(userDAO, loginPresenter, commonUserFactory);
 		final GetPostInputBoundary getPostInteractor = new GetPostInteractor(postDAO, homepagePresenter);
+		final CreatePostInputBoundary createPostInteractor = new CreatePostInteractor(postDAO, userDAO, createPostPresenter, postFactory);
 
 		// RestAPI
 		new Authentification(signUpInteractor, loginInteractor);
-		new Posts(getPostInteractor);
+		new Posts(getPostInteractor, createPostInteractor);
 
 		// Application Start
         SpringApplication.run(WebServer.class, args);
