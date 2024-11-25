@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Configuration;
 
 import com.mongodb.client.MongoCollection;
 
-import api.Authentification;
-import api.Posts;
+import api.AuthentificationController;
+import api.PostController;
 import controller.ViewManagerModel;
 import controller.create_post.CreatePostPresenter;
 import controller.create_post.CreatePostViewModel;
@@ -166,13 +166,15 @@ public class AppConfig {
 
     // RestAPIs
     @Bean
-    public Authentification authentification(SignupInputBoundary signupInteractor,
-                                             LoginInputBoundary loginInteractor) {
-        return new Authentification(signupInteractor, loginInteractor);
+    public AuthentificationController authentificationController(SignupInputBoundary signupInteractor,
+                                                                 LoginInputBoundary loginInteractor) {
+        return new AuthentificationController(signupInteractor, loginInteractor);
     }
 
     @Bean
-    public Posts posts(GetPostInputBoundary getPostInteractor, CreatePostInputBoundary createPostInteractor) {
-        return new Posts(getPostInteractor, createPostInteractor);
+    public PostController postController(DBUserDataAccessObject userDAO,
+                                         GetPostInputBoundary getPostInteractor,
+                                         CreatePostInputBoundary createPostInteractor) {
+        return new PostController(userDAO, getPostInteractor, createPostInteractor);
     }
 }

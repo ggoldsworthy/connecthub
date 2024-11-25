@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import daos.DBUserDataAccessObject;
 import use_case.create_post.CreatePostInputBoundary;
 import use_case.create_post.CreatePostInputData;
 import use_case.create_post.PostCreationFailedException;
@@ -20,13 +21,17 @@ import entity.User;
 import entity.Comment;
 
 @RestController
-public class Posts {
+public class PostController {
     private final GetPostInputBoundary getPostInteractor;
     private final CreatePostInputBoundary createPostInteractor;
+    private final DBUserDataAccessObject userDAO;
 
-    public Posts(GetPostInputBoundary getPostInteractor, CreatePostInputBoundary createPostInteractor) {
+    public PostController(DBUserDataAccessObject userDAO, // Change when there's a get user use case
+                          GetPostInputBoundary getPostInteractor,
+                          CreatePostInputBoundary createPostInteractor) {
         this.getPostInteractor = getPostInteractor;
         this.createPostInteractor = createPostInteractor;
+        this.userDAO = userDAO;
     }
 
     @GetMapping("/all-posts")
@@ -38,13 +43,16 @@ public class Posts {
 
     @PostMapping("/create-post")
     public ResponseEntity<String> createPost(@RequestBody Map<String, Object> requestBody) {
+        User currentUser = this.userDAO.getCurrentUser();
+        String currentUserID = currentUser == null ? null : currentUser.getUserID();
+
         final CreatePostInputData createPostInputData = new CreatePostInputData(
-            (String) requestBody.get("author"),
+            currentUserID,
             (String) requestBody.get("content"),
             (String) requestBody.get("attachment_path"),
             (String) requestBody.get("file_type"),
-            (int) requestBody.get("dislikes"),
-            (int) requestBody.get("likes"),
+            0,
+            0,
             (String) requestBody.get("post_title"),
             new ArrayList<User>(), // TODO temp sol, need changes in the use case: don't have too much time to refactor
             new ArrayList<Comment>(),

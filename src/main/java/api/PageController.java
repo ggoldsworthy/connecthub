@@ -10,8 +10,8 @@ public class PageController {
     private final String SIGN_UP_SCRIPT = "/js/sign_up/app.js";
     private final String LOG_IN_SCRIPT = "/js/login/app.js";
     private final String POST_SCRIPT = "";
-    private final String CREATE_POST_SCRIPT = "";
-    private final String HOME_PAGE_SCRIPT = "/js/homepage/app.js";
+    private final String CREATE_POST_SCRIPT = "/js/create_post/app.js";
+    private final String HOME_PAGE_SCRIPT = "/js/home_page/app.js";
     private final String STYLES_SCRIPT = "/js/styles/app.css";
 
     private final String TEMPLATE_FILE = "index";
@@ -57,7 +57,7 @@ public class PageController {
         return TEMPLATE_FILE;
     }
 
-    @GetMapping("/createPost")
+    @GetMapping("/create-post")
     public String createPost(Model model) {
         model.addAttribute(PAGE_TITLE, "Create Post");
         model.addAttribute(SCRIPT, CREATE_POST_SCRIPT);
