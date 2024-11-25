@@ -1,6 +1,7 @@
 import { navigateTo } from "../api/utils"
 import { useEffect, useState } from "react"
 
+const CREATE_POST_URL = "/create-post"
 export default function Contents(props) {
   const [displayedPosts, setDisplayedPosts] = useState([])
 
@@ -31,7 +32,7 @@ export default function Contents(props) {
     <div id="contents-container">
       <div id="content-header">
         <div>See the latest posts</div>
-        <button>+ Create Post</button>
+        <button onClick={() => navigateTo(CREATE_POST_URL)}>+ Create Post</button>
       </div>
 
       <div id="post-box-container">
