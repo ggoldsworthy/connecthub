@@ -6,7 +6,7 @@ export default function Contents(props) {
         <button>+ Create Post</button>
       </div>
 
-      <PostBox authorPfp="" author="Doodle Wacker" timeStamp="Nov. 24, 2024" />
+      <PostBox authorPfp="" author="Doodle Wacker" timeStamp="Nov. 24, 2024" title="Test title very long" postContent="i am fucking cooked" topic="test" />
     </div>
   )
 }
