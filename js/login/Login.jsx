@@ -31,8 +31,7 @@ function LoginForm() {
       "password": password
     }
 
-    logInUser(LOGIN_URL, loginData)
-    navigateTo(HOME_URL)
+    logInUser(LOGIN_URL, loginData, HOME_URL)
   }
 
   return (

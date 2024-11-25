@@ -55,8 +55,7 @@ function SignUpForm() {
       "full_name": fullName
     }
 
-    signUpUser(SIGN_UP_URL, userData)
-    navigateTo(HOME_URL)
+    signUpUser(SIGN_UP_URL, userData, HOME_URL)
   }
 
   return (
