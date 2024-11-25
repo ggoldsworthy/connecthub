@@ -24,7 +24,7 @@ function CreatePostBox() {
 
   return (
     <div id="create-post-container">
-      <form className="form">
+      <form id="create-post-form">
         <div id="email-input" className="input-group">
             {/* TODO to implement getting existing topics, we could store topics in the local storage, or have a root component with topics as its state */}
             <label>Topic: </label>
