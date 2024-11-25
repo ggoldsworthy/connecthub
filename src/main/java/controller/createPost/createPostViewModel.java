@@ -2,9 +2,9 @@ package controller.createPost;
 
 import controller.ViewModel;
 
-public class createPostViewModel extends ViewModel<createPostState> {
-    public createPostViewModel(String viewName) {
+public class CreatePostViewModel extends ViewModel<CreatePostState> {
+    public CreatePostViewModel(String viewName) {
         super("create post");
-        setState(new createPostState());
+        setState(new CreatePostState());
     }
 }
