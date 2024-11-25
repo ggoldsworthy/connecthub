@@ -1,7 +1,7 @@
 export default function Topics(props) {
   return (
     <div id="topics-container">
-      <div>BROWSE TOPICS</div>
+      <div className="section-title">BROWSE TOPICS</div>
       <TopicEntry topic="test" numPosts={5} />
     </div>
   )

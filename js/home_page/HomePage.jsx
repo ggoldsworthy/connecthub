@@ -14,11 +14,11 @@ export default function HomePage() {
 
 function HomeContent() {
   return (
-    <>
+    <div id="home-page-container">
       <Topics />
       <Contents />
       <RecentActivities />
-    </>
+    </div>
   )
 }
 
