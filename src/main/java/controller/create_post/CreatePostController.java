@@ -1,24 +1,21 @@
-package controller.createPost;
+package controller.create_post;
 
 import entity.Comment;
-import entity.PostContent;
 import entity.User;
-import use_case.createPost.CreatePostInputBoundary;
-import use_case.createPost.CreatePostInputData;
+import use_case.create_post.CreatePostInputBoundary;
+import use_case.create_post.CreatePostInputData;
 
-
-import java.time.LocalDateTime;
 import java.util.List;
 
-public class createPostController {
+public class CreatePostController {
 
     private final CreatePostInputBoundary createPostInputBoundary;
 
-    public createPostController(CreatePostInputBoundary createPostInteractor) {
+    public CreatePostController(CreatePostInputBoundary createPostInteractor) {
         this.createPostInputBoundary = createPostInteractor;
     }
 
-    public void execute(String author, PostContent content, String attachmentPath,
+    public void execute(String author, String content, String attachmentPath,
                         String fileType, int dislikes, int likes, String postTitle,
                         List<User> moderators, List<Comment> comments, String category) {
         final CreatePostInputData createInputData = new CreatePostInputData(author, content,
