@@ -1,6 +1,5 @@
 package app;
 
-import controller.homepage.HomepageViewModel;
 import org.bson.Document;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +9,8 @@ import com.mongodb.client.MongoCollection;
 import api.Authentification;
 import api.Posts;
 import controller.ViewManagerModel;
+import controller.create_post.CreatePostPresenter;
+import controller.create_post.CreatePostViewModel;
 import controller.homepage.HomepagePresenter;
 import controller.homepage.HomepageViewModel;
 import controller.login.LoginPresenter;
@@ -20,7 +21,11 @@ import controller.signup.SignupViewModel;
 import daos.DBPostDataAccessObject;
 import daos.DBUserDataAccessObject;
 import entity.CommonUserFactory;
+import entity.PostFactory;
 import entity.UserFactory;
+import use_case.create_post.CreatePostInputBoundary;
+import use_case.create_post.CreatePostInteractor;
+import use_case.create_post.CreatePostOutputBoundary;
 import use_case.getpost.GetPostInputBoundary;
 import use_case.getpost.GetPostInteractor;
 import use_case.getpost.GetPostOutputBoundary;
@@ -66,6 +71,11 @@ public class AppConfig {
         return new CommonUserFactory();
     }
 
+    @Bean
+    public PostFactory postFactory() {
+        return new PostFactory();
+    }
+
     // View Models
     @Bean
     public ViewManagerModel viewManagerModel() {
@@ -92,6 +102,11 @@ public class AppConfig {
         return new PostViewModel();
     }
 
+    @Bean
+    public CreatePostViewModel createPostViewModel() {
+        return new CreatePostViewModel();
+    }
+
     // Presenters
     @Bean
     public SignupOutputBoundary signupPresenter(ViewManagerModel viewManagerModel,
@@ -115,6 +130,11 @@ public class AppConfig {
         return new HomepagePresenter(viewManagerModel, homepageViewModel, postViewModel);
     }
 
+    @Bean
+    public CreatePostPresenter createPostPresenter(CreatePostViewModel createPostViewModel, ViewManagerModel viewManagerModel) {
+        return new CreatePostPresenter(createPostViewModel, viewManagerModel);
+    }
+
     // Services
     @Bean
     public SignupInputBoundary signupInteractor(DBUserDataAccessObject userDAO,
@@ -136,6 +156,14 @@ public class AppConfig {
         return new GetPostInteractor(postDAO, homepagePresenter);
     }
 
+    @Bean
+    public CreatePostInputBoundary createPostInteractor(DBPostDataAccessObject postDAO,
+                                                        DBUserDataAccessObject userDAO,
+                                                        CreatePostOutputBoundary createPostOutputBoundary,
+                                                        PostFactory postFactory) {
+        return new CreatePostInteractor(postDAO, userDAO, createPostOutputBoundary, postFactory);
+    }
+
     // RestAPIs
     @Bean
     public Authentification authentification(SignupInputBoundary signupInteractor,
@@ -144,7 +172,7 @@ public class AppConfig {
     }
 
     @Bean
-    public Posts posts(GetPostInputBoundary getPostInteractor) {
-        return new Posts(getPostInteractor);
+    public Posts posts(GetPostInputBoundary getPostInteractor, CreatePostInputBoundary createPostInteractor) {
+        return new Posts(getPostInteractor, createPostInteractor);
     }
 }

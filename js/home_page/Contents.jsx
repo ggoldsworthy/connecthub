@@ -15,6 +15,18 @@ export default function Contents(props) {
 
   const perPage = 20
 
+  const parseDate = (localDateTimeString) => {
+    const date = new Date(localDateTimeString);
+
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    const month = months[date.getMonth()];
+    const day = date.getDate();
+    const year = date.getFullYear();
+
+    return `${month}, ${day}, ${year}`;
+  }
+
   return (
     <div id="contents-container">
       <div id="content-header">
@@ -30,7 +42,7 @@ export default function Contents(props) {
             postId={post.entryID}
             authorPfp={""}
             author={post.author}
-            timeStamp={post.postedDate}
+            timeStamp={parseDate(post.postedDate)}
             title={post.postTitle}
             content={post.content.body}
             topic={post.category}
@@ -51,7 +63,7 @@ function PostBox(props) {
       </div>
 
       <div className="post-box-title">{props.title}</div>
-      <div className="post-box-content">{props.postContent}</div>
+      <div className="post-box-content">{props.content}</div>
       <div className="post-box-topic">{props.topic}</div>
     </div>
   )
