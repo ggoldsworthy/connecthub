@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react"
+import { navigateTo } from "../api/utils"
+import { useEffect, useState } from "react"
 
 export default function Contents(props) {
   const [displayedPosts, setDisplayedPosts] = useState([])
@@ -42,7 +43,7 @@ export default function Contents(props) {
 
 function PostBox(props) {
   return (
-    <div className="post-box">
+    <div className="post-box" onClick={() => navigateTo(`/post/${props.postId}`)}>
       <div className="post-box-info">
         <img className="post-box-author-pfp" src={props.authorPfp} alt=" " />
         <div className="post-box-author">{props.author}</div>
