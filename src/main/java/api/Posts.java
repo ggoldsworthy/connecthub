@@ -20,20 +20,10 @@ public class Posts {
         this.getPostInteractor = getPostInteractor;
     }
 
-    @GetMapping("/posts")
+    @GetMapping("/all-posts")
     public ResponseEntity<List<Post>> getAllPosts() {
         // The posts should be paginated in the service. This is a temporary solution.
         List<Post> allPosts = getPostInteractor.getAllPosts();
-
-        final int perPage = 20;
-        if (allPosts.size() <= perPage) return new ResponseEntity<>(allPosts, HttpStatus.OK);
-
-        int size = Math.min(allPosts.size(), perPage);
-        List<Post> posts = new ArrayList<>();
-        Random rand = new Random();
-        for (int i = 0; i < size; i++) {
-            posts.add(allPosts.get(rand.nextInt(allPosts.size())));
-        }
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 }
