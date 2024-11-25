@@ -1,0 +1,39 @@
+package api;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import use_case.getpost.GetPostInputBoundary;
+import entity.Post;
+
+@RestController
+public class Posts {
+    private GetPostInputBoundary getPostInteractor;
+
+    public Posts(GetPostInputBoundary getPostInteractor) {
+        this.getPostInteractor = getPostInteractor;
+    }
+
+    @GetMapping("/posts")
+    public ResponseEntity<List<Post>> getAllPosts() {
+        // The posts should be paginated in the service. This is a temporary solution.
+        List<Post> allPosts = getPostInteractor.getAllPosts();
+
+        final int perPage = 20;
+        if (allPosts.size() <= perPage) return new ResponseEntity<>(allPosts, HttpStatus.OK);
+
+        int size = Math.min(allPosts.size(), perPage);
+        List<Post> posts = new ArrayList<>();
+        Random rand = new Random();
+        for (int i = 0; i < size; i++) {
+            posts.add(allPosts.get(rand.nextInt(allPosts.size())));
+        }
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+}
