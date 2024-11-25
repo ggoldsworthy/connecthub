@@ -78,8 +78,9 @@ public class AppConfig {
     @Bean 
     public LoginOutputBoundary loginPresenter(ViewManagerModel viewManagerModel, 
                                               HomepageViewModel homepageViewModel,
-                                              LoginViewModel loginViewModel) {
-        return new LoginPresenter(viewManagerModel, homepageViewModel, loginViewModel);
+                                              LoginViewModel loginViewModel,
+                                              SignupViewModel signupViewModel) {
+        return new LoginPresenter(viewManagerModel, homepageViewModel, loginViewModel, signupViewModel);
     }
 
     // Services

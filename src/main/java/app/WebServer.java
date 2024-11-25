@@ -46,7 +46,8 @@ public class WebServer {
 
 		// Presenters (irrelavent for a web application)
 		final SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel);
-		final LoginOutputBoundary loginPresenter = new LoginPresenter(viewManagerModel, homepageViewModel, loginViewModel);
+		final LoginOutputBoundary loginPresenter = new LoginPresenter(viewManagerModel, homepageViewModel,
+				loginViewModel, signupViewModel);
 
 		// Service Interactors
 		final SignupInputBoundary signUpInteractor = new SignupInteractor(userDAO, signupOutputBoundary, commonUserFactory);
