@@ -38,7 +38,7 @@ function CreatePostBox() {
 
         <div id="password-input" className="input-group">
             <label>Content: </label>
-            <input name="content" id="post-content-input" ref={contentRef} />
+            <textarea name="content-text" id="post-content-input" ref={contentRef} />
         </div>
 
         <div id="sumbit-post-container">
