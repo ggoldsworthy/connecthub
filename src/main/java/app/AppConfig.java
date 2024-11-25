@@ -167,12 +167,14 @@ public class AppConfig {
     // RestAPIs
     @Bean
     public AuthentificationController authentificationController(SignupInputBoundary signupInteractor,
-                                             LoginInputBoundary loginInteractor) {
+                                                                 LoginInputBoundary loginInteractor) {
         return new AuthentificationController(signupInteractor, loginInteractor);
     }
 
     @Bean
-    public PostController postController(GetPostInputBoundary getPostInteractor, CreatePostInputBoundary createPostInteractor) {
-        return new PostController(getPostInteractor, createPostInteractor);
+    public PostController postController(DBUserDataAccessObject userDAO,
+                                         GetPostInputBoundary getPostInteractor,
+                                         CreatePostInputBoundary createPostInteractor) {
+        return new PostController(userDAO, getPostInteractor, createPostInteractor);
     }
 }

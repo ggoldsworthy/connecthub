@@ -75,7 +75,7 @@ public class WebServer {
 
 		// RestAPI
 		new AuthentificationController(signUpInteractor, loginInteractor);
-		new PostController(getPostInteractor, createPostInteractor);
+		new PostController(userDAO, getPostInteractor, createPostInteractor);
 
 		// Application Start
         SpringApplication.run(WebServer.class, args);
