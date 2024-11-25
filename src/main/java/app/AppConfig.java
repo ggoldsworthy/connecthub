@@ -83,7 +83,14 @@ public class AppConfig {
     }
 
     @Bean
-    public HomepageViewModel homepageViewModel(){return new HomepageViewModel();}
+    public HomepageViewModel homepageViewModel(){
+        return new HomepageViewModel();
+    }
+
+    @Bean
+    public PostViewModel postViewModel() {
+        return new PostViewModel();
+    }
 
     // Presenters
     @Bean
@@ -99,6 +106,13 @@ public class AppConfig {
                                               LoginViewModel loginViewModel,
                                               SignupViewModel signupViewModel) {
         return new LoginPresenter(viewManagerModel, homepageViewModel, loginViewModel, signupViewModel);
+    }
+
+    @Bean
+    public GetPostOutputBoundary homepagePresenter(ViewManagerModel viewManagerModel,
+                                                   HomepageViewModel homepageViewModel,
+                                                   PostViewModel postViewModel) {
+        return new HomepagePresenter(viewManagerModel, homepageViewModel, postViewModel);
     }
 
     // Services
