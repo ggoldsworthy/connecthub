@@ -395,6 +395,11 @@ input {
   padding: 16px;
 }
 
+.post-box:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
 .post-box-info {
   display: grid;
   grid-template-columns: 0.7fr 7fr 1.5fr;
