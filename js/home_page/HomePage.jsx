@@ -21,7 +21,6 @@ function HomeContent() {
     api
     .get("/all-posts")
     .then(response => {
-      // console.log(response.data)
       setPosts(response.data)
     })
     .catch(() => {
