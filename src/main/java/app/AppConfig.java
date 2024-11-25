@@ -1,5 +1,6 @@
 package app;
 
+import controller.homepage.HomepageViewModel;
 import org.bson.Document;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -82,14 +83,7 @@ public class AppConfig {
     }
 
     @Bean
-    public HomepageViewModel homepageViewModel() {
-        return new HomepageViewModel();
-    }
-
-    @Bean
-    public PostViewModel postViewModel() {
-        return new PostViewModel();
-    }
+    public HomepageViewModel homepageViewModel(){return new HomepageViewModel();}
 
     // Presenters
     @Bean
@@ -101,16 +95,10 @@ public class AppConfig {
 
     @Bean
     public LoginOutputBoundary loginPresenter(ViewManagerModel viewManagerModel,
+                                              HomepageViewModel homepageViewModel,
                                               LoginViewModel loginViewModel,
                                               SignupViewModel signupViewModel) {
-        return new LoginPresenter(viewManagerModel, loginViewModel, signupViewModel);
-    }
-
-    @Bean
-    public GetPostOutputBoundary homepagePresenter(ViewManagerModel viewManagerModel,
-                                                   HomepageViewModel homepageViewModel,
-                                                   PostViewModel postViewModel) {
-        return new HomepagePresenter(viewManagerModel, homepageViewModel, postViewModel);
+        return new LoginPresenter(viewManagerModel, homepageViewModel, loginViewModel, signupViewModel);
     }
 
     // Services

@@ -1,5 +1,6 @@
 package app;
 
+import controller.homepage.HomepageViewModel;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -55,7 +56,7 @@ public class WebServer {
 
 		// Presenters (irrelavent for a web application)
 		final SignupOutputBoundary signupPresenter = new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel);
-		final LoginOutputBoundary loginPresenter = new LoginPresenter(viewManagerModel, loginViewModel, signupViewModel);
+		final LoginOutputBoundary loginPresenter = new LoginPresenter(viewManagerModel, homepageViewModel, loginViewModel, signupViewModel);
 		final GetPostOutputBoundary homepagePresenter = new HomepagePresenter(viewManagerModel, homepageViewModel, postViewModel);
 
 		// Service Interactors
