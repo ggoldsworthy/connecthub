@@ -52,7 +52,7 @@ function CreatePostBox() {
       <form id="create-post-form">
         <div id="email-input" className="input-group">
             {/* TODO to implement getting existing topics, we could store topics in the local storage, or have a root component with topics as its state */}
-            <label>Topic: </label>
+            <label>Topic (No spaces and special characters): </label>
             <input name="topic" id="topic-input" placeholder="e.g. general" ref={topicRef} />
         </div>
 
