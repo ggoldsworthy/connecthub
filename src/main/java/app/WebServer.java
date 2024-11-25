@@ -7,8 +7,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.bson.Document;
 import com.mongodb.client.MongoCollection;
 
-import api.Authentification;
-import api.Posts;
+import api.AuthentificationController;
+import api.PostController;
 import controller.ViewManagerModel;
 import controller.create_post.CreatePostPresenter;
 import controller.create_post.CreatePostViewModel;
@@ -74,8 +74,8 @@ public class WebServer {
 		final CreatePostInputBoundary createPostInteractor = new CreatePostInteractor(postDAO, userDAO, createPostPresenter, postFactory);
 
 		// RestAPI
-		new Authentification(signUpInteractor, loginInteractor);
-		new Posts(getPostInteractor, createPostInteractor);
+		new AuthentificationController(signUpInteractor, loginInteractor);
+		new PostController(getPostInteractor, createPostInteractor);
 
 		// Application Start
         SpringApplication.run(WebServer.class, args);

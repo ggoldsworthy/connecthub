@@ -20,11 +20,11 @@ import entity.User;
 import entity.Comment;
 
 @RestController
-public class Posts {
+public class PostController {
     private final GetPostInputBoundary getPostInteractor;
     private final CreatePostInputBoundary createPostInteractor;
 
-    public Posts(GetPostInputBoundary getPostInteractor, CreatePostInputBoundary createPostInteractor) {
+    public PostController(GetPostInputBoundary getPostInteractor, CreatePostInputBoundary createPostInteractor) {
         this.getPostInteractor = getPostInteractor;
         this.createPostInteractor = createPostInteractor;
     }
