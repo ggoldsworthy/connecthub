@@ -1,4 +1,4 @@
-package controller.createPost;
+package controller.create_post;
 
 import controller.ViewManagerModel;
 import controller.signup.SignupState;
@@ -11,7 +11,7 @@ public class CreatePostPresenter implements CreatePostOutputBoundary {
     private final CreatePostViewModel createPostViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    public CreatePostPresenter(controller.createPost.CreatePostViewModel createPostViewModel, ViewManagerModel viewManagerModel) {
+    public CreatePostPresenter(CreatePostViewModel createPostViewModel, ViewManagerModel viewManagerModel) {
         this.createPostViewModel = createPostViewModel;
         this.viewManagerModel = viewManagerModel;
     }

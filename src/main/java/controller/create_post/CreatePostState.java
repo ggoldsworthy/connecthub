@@ -1,4 +1,4 @@
-package controller.createPost;
+package controller.create_post;
 
 import entity.Comment;
 import entity.Content;
