@@ -24,6 +24,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(this.getUserInteractor.getCurrentUser());
     }
 
+    // TODO temporary solution to fetching user info, there should be a better way to combine with SSR?
     @GetMapping("/user-info")
     public ResponseEntity<User> getUserInfo(@RequestParam("user_id") String userID) {
         return getUserInformation(userID);
