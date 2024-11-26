@@ -9,6 +9,7 @@ import com.mongodb.client.MongoCollection;
 
 import api.AuthentificationController;
 import api.PostController;
+import api.UserController;
 import controller.ViewManagerModel;
 import controller.create_post.CreatePostPresenter;
 import controller.create_post.CreatePostViewModel;
@@ -27,6 +28,9 @@ import entity.UserFactory;
 import use_case.create_post.CreatePostInputBoundary;
 import use_case.create_post.CreatePostInteractor;
 import use_case.create_post.CreatePostOutputBoundary;
+import use_case.get_user.GetUserInputBoundary;
+import use_case.get_user.GetUserInteractor;
+import use_case.get_user.GetUserOutputBoundary;
 import use_case.getpost.GetPostInputBoundary;
 import use_case.getpost.GetPostInteractor;
 import use_case.getpost.GetPostOutputBoundary;
@@ -72,10 +76,12 @@ public class WebServer {
 		final LoginInputBoundary loginInteractor = new LoginInteractor(userDAO, loginPresenter, commonUserFactory);
 		final GetPostInputBoundary getPostInteractor = new GetPostInteractor(postDAO, homepagePresenter);
 		final CreatePostInputBoundary createPostInteractor = new CreatePostInteractor(postDAO, userDAO, createPostPresenter, postFactory);
+		final GetUserInputBoundary getUserInteractor = new GetUserInteractor(userDAO, commonUserFactory);
 
 		// RestAPI
 		new AuthentificationController(signUpInteractor, loginInteractor);
 		new PostController(userDAO, getPostInteractor, createPostInteractor);
+		new UserController(getUserInteractor);
 
 		// Application Start
         SpringApplication.run(WebServer.class, args);

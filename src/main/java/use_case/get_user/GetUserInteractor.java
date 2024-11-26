@@ -20,7 +20,7 @@ public class GetUserInteractor implements GetUserInputBoundary {
 
     @Override
     public User getUserByID(GetUserInputData getUserInputData) {
-        if (this.userRepo.existsByID(getUserInputData.getUserID())) {
+        if (!this.userRepo.existsByID(getUserInputData.getUserID())) {
             throw new UserDoesNotExistException(
                 "User with ID " + getUserInputData.getUserID() + " does not exist");
         } else {

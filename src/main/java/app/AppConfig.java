@@ -4,6 +4,7 @@ import org.bson.Document;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.mongodb.annotations.Beta;
 import com.mongodb.client.MongoCollection;
 
 import api.AuthentificationController;
@@ -26,6 +27,8 @@ import entity.UserFactory;
 import use_case.create_post.CreatePostInputBoundary;
 import use_case.create_post.CreatePostInteractor;
 import use_case.create_post.CreatePostOutputBoundary;
+import use_case.get_user.GetUserInputBoundary;
+import use_case.get_user.GetUserInteractor;
 import use_case.getpost.GetPostInputBoundary;
 import use_case.getpost.GetPostInteractor;
 import use_case.getpost.GetPostOutputBoundary;
@@ -162,6 +165,12 @@ public class AppConfig {
                                                         CreatePostOutputBoundary createPostOutputBoundary,
                                                         PostFactory postFactory) {
         return new CreatePostInteractor(postDAO, userDAO, createPostOutputBoundary, postFactory);
+    }
+
+    @Bean
+    public GetUserInputBoundary getUserInteractor(DBUserDataAccessObject userDAO,
+                                                  UserFactory userFactory) {
+        return new GetUserInteractor(userDAO, userFactory);
     }
 
     // RestAPIs
