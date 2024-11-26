@@ -1,11 +1,9 @@
 package api;
 
-import java.util.Map;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import entity.User;
@@ -26,9 +24,9 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(this.getUserInteractor.getCurrentUser());
     }
 
-    @GetMapping("/user")
-    public ResponseEntity<User> getUserInfo(@RequestBody Map<String, String> requestBody) {
-        return getUserInformation((String) requestBody.get("user_id"));
+    @GetMapping("/user-info")
+    public ResponseEntity<User> getUserInfo(@RequestParam("user_id") String userID) {
+        return getUserInformation(userID);
     }
 
     private ResponseEntity<User> getUserInformation(String userID) {

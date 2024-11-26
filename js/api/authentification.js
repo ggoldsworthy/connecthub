@@ -1,10 +1,5 @@
 import api from './axios.config.js'
-import { navigateTo } from './utils.js'
-
-const REQ_HEADER = {
-  Accept: "application/json",
-  "Content-Type": "application/json;charset=UTF-8",
-}
+import { navigateTo, REQ_HEADER } from './utils.js'
 
 export function signUpUser(url, payload, destination) {
   return api
