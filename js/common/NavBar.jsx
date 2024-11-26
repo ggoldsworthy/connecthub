@@ -1,19 +1,18 @@
 import { useEffect, useState, useRef } from "react"
 import { navigateTo } from "../api/utils.js"
+import { logOutUser } from "../api/authentification.js"
 import api from "../api/axios.config.js"
 import logo from "../assets/logo.png"
 
 const GET_CURRENT_USER_URL = "/current-user"
+const LOG_OUT_URL = "/logout"
+const LOGIN_URL = "/login"
 
 export default function NavBar(props) {
   const [username, setUsername] = useState("")
   const [handle, setHandle] = useState("")
 
   const searchBarRef = useRef(null)
-
-  const formatHandle = (username => {
-    return `@${username.toLowerCase().replace(" ", "_")}`
-  })
 
   useEffect(() => {
     // fetch for current user
@@ -50,6 +49,14 @@ export default function NavBar(props) {
     };
   }, [])
 
+  const formatHandle = (username => {
+    return `@${username.toLowerCase().replace(" ", "_")}`
+  })
+
+  const handleLogOut = () => {
+    logOutUser(LOG_OUT_URL, {}, LOGIN_URL)
+  }
+
   return (
     <div id="nav-bar-container">
       <div id="nav-bar-home-container" onClick={() => navigateTo("/")}>
@@ -65,6 +72,7 @@ export default function NavBar(props) {
         <img src="" alt=" " />
         <div className="username">{username}</div>
         <div className="handle">{handle}</div>
+        {username === "" ? null : <button id="log-out-btn" onClick={() => handleLogOut()}>Log out</button>}
       </div>
     </div>
   )

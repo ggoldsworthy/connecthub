@@ -36,7 +36,6 @@ import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
 import use_case.logout.LogoutInputBoundary;
 import use_case.logout.LogoutInteractor;
-import use_case.logout.LogoutOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;

@@ -240,8 +240,8 @@ button:hover {
   /* grid-template-columns: repeat(2, 1fr); */
   /* grid-template-rows: 0.1fr 1fr; */
   grid-template-areas:
-    "pfp username"
-    "pfp handle";
+    "pfp username username"
+    "pfp handle logout";
 }
 
 #nav-bar-user-container img {
@@ -260,6 +260,13 @@ button:hover {
   grid-area: handle;
   font-weight: var(--WEIGHT_LIGHT);
   font-size: var(--TEXT_SAMLL);
+}
+
+#log-out-btn {
+  grid-area: logout;
+  font-size: 10px;
+  padding: 0 4px;
+  margin-left: 0.5rem;
 }
 
 #search-bar {

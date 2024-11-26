@@ -28,3 +28,14 @@ export function logInUser(url, payload, destination) {
       }
     })
 }
+
+export function logOutUser(url, payload, destination) {
+  return api
+    .post(url, payload, REQ_HEADER)
+    .then(response => {
+      window.alert("Logged out")
+      navigateTo(destination)
+    })
+    .catch(error => {
+    })
+}
