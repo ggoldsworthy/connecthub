@@ -1,5 +1,9 @@
 package use_case.get_user;
 
-public class GetUserInputBoundary {
-    
+import entity.User;
+
+public interface GetUserInputBoundary {
+    User getUserByID(GetUserInputData getUserInputData);
+
+    User getCurrentUser();
 }
