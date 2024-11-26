@@ -27,7 +27,6 @@ export default function NavBar(props) {
           setUsername(response.data.username)
           setHandle(formatHandle(response.data.username))
         }
-        console.log(response)
       })
       .catch(() => {
       })
