@@ -75,7 +75,7 @@ h1, h2, h3, h4, h5, h6 {
 
 html, body {
   height: 100%;
-  background-color: var(--BACKGROUND);
+  background: radial-gradient(var(--PRIMARY), var(--BACKGROUND));
   color: var(--TEXT);
   font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-size: 18px;
@@ -415,6 +415,7 @@ button:hover {
   width: 100%;
   border-radius: var(--BORDER_RADIUS);
   padding: 16px;
+  box-shadow: rgb(52, 52, 0, 0.3) 0px 3px 6px 0px;
 }
 
 .post-box:hover {
@@ -497,7 +498,6 @@ button:hover {
 
 /* Post */
 #postDiv {
-  background: radial-gradient(var(--PRIMARY), var(--BACKGROUND));
   padding: 6rem 23vw;
   display: flex;
   flex-direction: column;
