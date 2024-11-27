@@ -66,7 +66,7 @@ export default function NavBar(props) {
       </div>
 
       <div id="nav-bar-user-container">
-        <img src="" alt=" " />
+        <img className="pfp" src="" alt=" " />
         <div className="username">{username}</div>
         <div className="handle">{handle}</div>
         {username === "" ? null : <button id="log-out-btn" onClick={() => handleLogOut()}>Log out</button>}

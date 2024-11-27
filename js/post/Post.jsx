@@ -35,10 +35,10 @@ export default function Post() {
       setPostData({
         author: userData.data.username,
         authorId: userData.data.userID,
-        handle: formatHandle(userData.data.userID),
+        handle: formatHandle(userData.data.username),
         postTitle: post.data.postTitle,
         postBody: post.data.content.body,
-        topic: post.data.topic,
+        topic: post.data.category,
         likes: post.data.likes,
         dislikes: post.data.dislikes,
         createdDate: parseDate(post.data.postedDate),
@@ -54,6 +54,7 @@ export default function Post() {
     <>
       <NavBar />
       <div id="post-info">
+        <img className="pfp" src="" alt=" " />
         <div id="post-author-username">{postData.author}</div>
         <div id="post-author-handle">{postData.handle}</div>
         <div id="post-author-created-date">{postData.createdDate}</div>
@@ -67,7 +68,7 @@ export default function Post() {
       <div id="post-interaction">
         <button id="like-post">Like</button>
         <button id="dislike-post">Dislike</button>
-        <button id="share-post"></button>
+        <button id="share-post">{"."}</button>
       </div>
       <Comments comments={postData.comments} />
     </>

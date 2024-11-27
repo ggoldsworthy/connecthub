@@ -63,7 +63,7 @@ function PostBox(props) {
   return (
     <div className="post-box" onClick={() => navigateTo(`/post/${props.postId}`)}>
       <div className="post-box-info">
-        <img className="post-box-author-pfp" src={props.authorPfp} alt=" " />
+        <img className="pfp" src={props.authorPfp} alt=" " />
         <div className="post-box-author">{author}</div>
         <div className="post-box-timestamp">{props.timeStamp}</div>
       </div>
