@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react"
 import { navigateTo } from "../api/utils.js"
 import { logOutUser } from "../api/authentification.js"
+import { formatHandle } from "./utils.js"
 import api from "../api/axios.config.js"
 import logo from "../assets/logo.png"
 
@@ -48,10 +49,6 @@ export default function NavBar(props) {
       }
     };
   }, [])
-
-  const formatHandle = (username => {
-    return `@${username.toLowerCase().replace(" ", "_")}`
-  })
 
   const handleLogOut = () => {
     logOutUser(LOG_OUT_URL, {}, LOGIN_URL)
