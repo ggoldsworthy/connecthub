@@ -68,7 +68,7 @@ public class EditPostInteractor implements EditPostInputBoundary {
         return userId.equals(currentUserId);
     }
 
-    private Post jsonToPost(JSONObject postData) {
+    public Post jsonToPost(JSONObject postData) {
         try {
             Content postContent = new PostContent(postData.optString("content_body", ""),
                     postData.optString("attachment_path", ""),

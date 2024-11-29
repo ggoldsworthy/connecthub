@@ -32,6 +32,37 @@ class EditPostInteractorTest {
     }
 
     @Test
+    void testEditPostWithPermissionFailure() throws EditPostFailed {
+        // Arrange: Current user is different from the author
+        String postId = "post123";
+        String author = "user123";
+        String editor = "user456";  // This user doesn't have permission to edit
+
+        stubUserRepo.setCurrentUser(editor);
+        stubPostDB.addPost(postId, author, "Original Title", "Original Content",
+                "/original/path", "text/plain", "General", LocalDateTime.now());
+
+        EditPostInputData inputData = new EditPostInputData(
+                postId, editor, "Updated Title", "Updated Content", "/path/to/attachment", "image/png", "General"
+        );
+
+        // Act & Assert
+        EditPostFailed exception = assertThrows(EditPostFailed.class, () -> interactor.editPost(inputData));
+        assertEquals("You do not have permission to edit this post.", exception.getMessage());
+        assertEquals("User does not have permission to edit this post.", stubPresenter.getLastFailMessage());
+    }
+
+    @Test
+    void testJsonToPostWithMalformedJson() throws JSONException {
+        JSONObject invalidPostData = new JSONObject();
+        invalidPostData.put("post_id", "post123");
+        invalidPostData.put("author", "user123");
+        // Missing required fields like "content_body", "title" etc.
+
+        assertThrows(RuntimeException.class, () -> interactor.jsonToPost(invalidPostData));
+    }
+
+    @Test
     void editPostSuccessTest() throws Exception {
         // Arrange
         String entryID = "post123";
