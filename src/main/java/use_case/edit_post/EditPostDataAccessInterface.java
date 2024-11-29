@@ -10,3 +10,5 @@ public interface EditPostDataAccessInterface {
 
     JSONObject getPostByEntryID(String postID);
 }
+
+// create instance of this interface where you provide the body of this method
